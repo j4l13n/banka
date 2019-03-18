@@ -1,12 +1,99 @@
 @media only screen and (min-width: 500px){
     body {
-        background-color: lightgreen;
+        background-color: rgb(32, 67, 124, 0.6);
         background-repeat: no-repeat;
         background-attachment: fixed;
+        font-family: Arial, Helvetica, sans-serif;
     }
 
     .container {
-        margin: 15px;
+
+    }
+
+    label {
+        display: block;
+        position: relative;
+        color: rgb(32, 67, 124, 0.6);
+    }
+
+    .group {
+        padding-top: 10px;
+    }
+
+    .form {
+        padding-top: 8px;
+        padding-bottom: 8px;
+        border-top: none;
+        border-right: none;
+        border-left: none;
+        border-bottom: 2px solid rgb(32, 67, 124, 0.6);
+        width: 100%;
+    }
+
+    .form:focus {
+        padding-top: 8px;
+        padding-bottom: 8px;
+        width: 100%;
+        border-top: none;
+        border-right: none;
+        border-left: none;
+        outline: none;
+        border-bottom: 2px solid rgb(32, 67, 124, 0.6);
+    }
+
+    .btn {
+        padding-top: 8px;
+        padding-bottom: 8px;
+        padding-left: 8px;
+        padding-right: 8px; 
+        border: 1px solid rgb(32, 67, 124, 0.6);
+        border-radius: 5px;
+        color: white;
+    }
+
+    .btn:hover {
+        padding-top: 8px;
+        padding-bottom: 8px;
+        padding-left: 8px;
+        padding-right: 8px; 
+        border: 1px solid rgb(32, 67, 124, 0.6);
+        border-radius: 4px;
+        cursor: pointer;
+        color: rgb(32, 67, 124, 0.6);
+    }
+
+    .btn-pri {
+        background-color: rgb(32, 67, 124, 0.6);
+    }
+
+    .btn-pri:hover {
+        background-color: white;
+    }
+
+    a.btn {
+        text-decoration: none;
+        color: rgb(32, 67, 124, 0.6);
+        font-size: 12px;
+        float: right;
+    }
+
+    a.btn:hover {
+        background-color: rgb(32, 67, 124, 0.6);
+        color: white;
+    }
+
+    .column-4-sign {
+        width: 25%;
+        float: right;
+        background-color: white;
+        margin-top: 60px;
+        padding: 10px;
+        margin-right: 20px;
+        border-radius: 5px;
+        border: 1px solid white;
+		-moz-box-shadow: 0 0 20px white; 
+		-webkit-box-shadow: 0 0 20px white; 
+		box-shadow: 0 0 20px white;
     }
 
 }
