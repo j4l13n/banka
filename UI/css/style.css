@@ -93,7 +93,7 @@
         border: 1px solid white;
 		-moz-box-shadow: 0 0 20px white; 
 		-webkit-box-shadow: 0 0 20px white; 
-		box-shadow: 0 0 20px white;
+		box-shadow: 0 0 20px rgb(14, 4, 4);
     }
 
 }
