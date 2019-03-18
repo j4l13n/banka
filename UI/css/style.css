@@ -1,5 +1,12 @@
-body {
-    background-image: url();
-    background-repeat: no-repeat;
-    background-attachment: fixed;
+@media only screen and (min-width: 500px){
+    body {
+        background-color: lightgreen;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+    }
+
+    .container {
+        margin: 15px;
+    }
+
 }
