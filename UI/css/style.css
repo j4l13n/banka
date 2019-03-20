@@ -1,9 +1,11 @@
+@import url(https://fonts.googleapis.com/css?family=Open+Sans);
+
 @media only screen and (min-width: 500px){
     body {
         background-color: white;
         background-repeat: no-repeat;
         background-attachment: block;
-        font-family: Arial, Helvetica, sans-serif;
+        font-family: 'Open Sans',serif;
         background: url("/UI/img/bg.jpg") no-repeat center center fixed;
         -webkit-background-size: cover;
         -moz-background-size: cover;
@@ -129,7 +131,6 @@
 
     ul > li {
         float: right;
-        
     }
 
     li a {
@@ -137,5 +138,11 @@
         color: rgb(32, 67, 124, 0.6);
         text-decoration: none;
         padding-left: 14px;
+        padding-right: 14px;
     }
+
+    li a:hover {
+        color: rgb(32, 67, 124, 1);
+    }
+    
 }
