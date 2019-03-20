@@ -1,6 +1,6 @@
 @media only screen and (min-width: 500px){
     body {
-        background-color: rgb(32, 67, 124, 0.6);
+        background-color: white;
         background-repeat: no-repeat;
         background-attachment: fixed;
         font-family: Arial, Helvetica, sans-serif;
@@ -96,4 +96,40 @@
 		box-shadow: 0 0 20px rgb(14, 4, 4);
     }
 
+    .navigation {
+        display: block;
+        background-image: linear-gradient(to left, white, rgb(32, 67, 124, 0.6));
+        padding: 14px 16px;
+        margin-top: -8px;
+        margin-left: -8px;
+        margin-right: -8px;
+        border-bottom: 3px solid rgb(32, 67, 124, 0.6);
+    }
+
+    a.brand {
+        text-decoration: none;
+        font-size: 18px;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        color: white;
+    }
+
+    ul.nav {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        margin-top: -20px;
+        overflow: hidden;
+    }
+
+    ul > li {
+        float: right;
+        
+    }
+
+    li a {
+        display: block;
+        color: rgb(32, 67, 124, 0.6);
+        text-decoration: none;
+        padding-left: 14px;
+    }
 }
