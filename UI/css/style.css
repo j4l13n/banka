@@ -106,7 +106,7 @@
 
     .navigation {
         display: block;
-        background-image: linear-gradient(to left, orange, rgb(32, 67, 124, 0.6));
+        background-image: linear-gradient(to left, white, rgb(32, 67, 124, 0.6));
         padding: 14px 16px;
         margin-top: -8px;
         margin-left: -8px;
