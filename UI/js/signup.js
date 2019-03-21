@@ -59,30 +59,4 @@ document.addEventListener("DOMContentLoaded", () => {
             return false;
         }
     };
-
-    document.querySelector("#signup").onsubmit = () => {
-        if(!nameIsValid(document.querySelector("#firstname").value)) {
-            document.querySelector("#firstname").style.borderBottom = "2px solid red";
-            document.querySelector("#firstname").focus();
-            return false;
-        } else if(!nameIsValid(document.querySelector("#lastname").value)) {
-            document.querySelector("#lastname").style.borderBottom = "2px solid red";
-            document.querySelector("#lastname").focus();
-            return false;
-        } else if(!emailIsValie(document.querySelector("#email").value)) {
-            document.querySelector("#email").style.borderBottom = "2px solid red";
-            document.querySelector("#email").focus();
-            return false;
-        } else if(!checkPass(document.querySelector("#password").value)) {
-            document.querySelector("#password").style.borderBottom = "2px solid red";
-            document.querySelector("#password").focus();
-            return false;
-        } else if(!passMatch(document.querySelector("#password").value, document.querySelector("#confirm").value)) {
-            document.querySelector("#confirm").style.borderBottom = "2px solid red";
-            document.querySelector("#confirm").focus();
-            return false;
-        } else {
-            return true;
-        }
-    };
 });
