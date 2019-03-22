@@ -19,21 +19,33 @@ document.addEventListener("DOMContentLoaded", () => {
         return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
     };
 
+    
+
     const checkPass = pass => {
         return /(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}/.test(pass);
     };
 
+    document.querySelector("#button").onclick = () => {
+        return redirecting();
+    };
+
     document.querySelector("#login").onsubmit = () => {
-        if(!nameIsValid(document.querySelector("#firstname").value)) {
-            document.querySelector("#firstname").style.borderBottom = "2px solid red";
-            document.querySelector("#firstname").focus();
+        if(!nameIsValid(document.querySelector("#email").value)) {
+            document.querySelector("#email").style.borderBottom = "2px solid red";
+            document.querySelector("#email").focus();
             return false;
-        } else if(!nameIsValid(document.querySelector("#lastname").value)) {
-            document.querySelector("#lastname").style.borderBottom = "2px solid red";
-            document.querySelector("#lastname").focus();
+        } else if(!nameIsValid(document.querySelector("#password").value)) {
+            document.querySelector("#password").style.borderBottom = "2px solid red";
+            document.querySelector("#password").focus();
             return false;
         } else {
-            return true
+            (function myFunction() {
+                window.location = "file:///root/Desktop/banka/UI/login.html";
+            })();
+            return true;
         }
     };
+
+
+
 });
