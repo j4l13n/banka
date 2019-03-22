@@ -6,7 +6,7 @@
         background-repeat: no-repeat;
         background-attachment: block;
         font-family: 'Open Sans',serif;
-        background: url("/UI/img/bg.jpg") no-repeat center center fixed;
+        background: url("../img/bg.jpg") no-repeat center center fixed;
         -webkit-background-size: cover;
         -moz-background-size: cover;
         -o-background-size: cover;
