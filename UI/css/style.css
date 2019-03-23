@@ -234,4 +234,108 @@
         from {opacity: 0;}
         to {opacity: 1}
      }
+
+     .column-4-dash {
+        width: 20%;
+        float: right;
+        background-color: white;
+        margin-top: 60px;
+        padding: 10px;
+        margin-right: 20px;
+        border-radius: 5px;
+        border: 1px solid white;
+		-moz-box-shadow: 0 0 20px white; 
+		-webkit-box-shadow: 0 0 20px white; 
+        box-shadow: 0 0 20px rgb(14, 4, 4);
+        text-align: center;
+     }
+
+     .column-8-dash {
+        width: 72%;
+        float: left;
+        background-color: white;
+        margin-top: 60px;
+        padding: 10px;
+        margin-right: 20px;
+        border-radius: 5px;
+        border: 1px solid white;
+		-moz-box-shadow: 0 0 20px white; 
+		-webkit-box-shadow: 0 0 20px white; 
+        box-shadow: 0 0 20px rgb(14, 4, 4);
+        text-align: center;
+     }
+
+     .link {
+         float: left;
+         width: 24%;
+         margin-left: 5px;
+         padding-top: 50px;
+         padding-bottom: 50px;
+         border-radius: 5px;
+         border: 1px solid rgba(95, 111, 136, 1);
+		-moz-box-shadow: 0 0 20px rgba(95, 111, 136, 1); 
+		-webkit-box-shadow: 0 0 20px rgba(95, 111, 136, 1); 
+        box-shadow: 0 0 20px rgb(14, 4, 4);
+     }
+
+     .link-color-1 {
+        
+     }
+
+     .link-color-2 {
+        
+     }
+
+     .table {
+         width: 100%;
+         border: none;
+     }
+
+     table > thead {
+         background-image: linear-gradient(to right, rgba(95, 111, 136, 0.5), white);
+     }
+
+     tr > th {
+         padding-top: 10px;
+         padding-bottom: 10px;
+     }
+
+     tr > td {
+         padding-bottom: 10px;
+         padding-top: 10px;
+     }
+
+     #search {
+        background-image: url('../img/searchicon.png');
+        background-position: 10px 10px;
+        background-repeat: no-repeat;
+        width: 20%;
+        font-size: 16px;
+        padding: 12px 20px 12px 40px;
+        border: 1px solid #ddd;
+        margin-bottom: 12px;
+        float: left;
+      }
+      
+      .table {
+        border-collapse: collapse;
+        width: 100%;
+        border: 1px solid #ddd;
+        font-size: 18px;
+      }
+      
+      .table th, .table td {
+        text-align: left;
+        padding: 12px;
+      }
+      
+      .table tr {
+        border-bottom: 1px solid #ddd;
+      }
+      
+      .table tr > thead, .table tr:hover {
+        background-color: #f1f1f1;
+      }
+
+     
 }
