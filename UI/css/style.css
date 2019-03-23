@@ -251,12 +251,12 @@
      }
 
      .column-8-dash {
-        width: 72%;
+        width: 70%;
         float: left;
         background-color: white;
         margin-top: 60px;
         padding: 10px;
-        margin-right: 20px;
+        margin-left: 20px;
         border-radius: 5px;
         border: 1px solid white;
 		-moz-box-shadow: 0 0 20px white; 

@@ -1,6 +1,4 @@
 document.addEventListener("DOMContentLoaded", () => {
-
-
     document.querySelector(".search").onkeyup = () => {
         search();
     };
