@@ -1,4 +1,4 @@
-function openTab(evt, tabName) {
+const openTab = (evt, tabName) => {
     var i, tabContent, links;
 
     tabContent = document.getElementsByClassName("tabContent");
