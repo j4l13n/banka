@@ -164,6 +164,7 @@
         margin-left: 60px;
         height: 200px;
         border-radius: 50%;
+        border: 3px solid silver;
     }
 
 
@@ -233,6 +234,4 @@
         from {opacity: 0;}
         to {opacity: 1}
      }
-     
-    
 }
