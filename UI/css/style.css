@@ -144,5 +144,95 @@
     li a:hover {
         color: rgb(32, 67, 124, 1);
     }
+
+    .column-4-profile {
+        width: 25%;
+        float: right;
+        background-color: white;
+        margin-top: 60px;
+        padding: 10px;
+        margin-right: 20px;
+        border-radius: 5px;
+        border: 1px solid white;
+		-moz-box-shadow: 0 0 20px white; 
+		-webkit-box-shadow: 0 0 20px white; 
+		box-shadow: 0 0 20px rgb(14, 4, 4);
+    }
+
+    .responsive {
+        width: 60%;
+        margin-left: 60px;
+        height: 200px;
+        border-radius: 50%;
+    }
+
+
+    .profile-div-body {
+        width: 60%;
+        text-align: center;
+        margin-left: 60px;
+    }
+
+    .column-8-profile {
+        width: 67%;
+        float: left;
+        background-color: white;
+        margin-top: 60px;
+        padding: 10px;
+        margin-left: 20px;
+        border-radius: 5px;
+        border: 1px solid white;
+		-moz-box-shadow: 0 0 20px white; 
+		-webkit-box-shadow: 0 0 20px white; 
+		box-shadow: 0 0 20px rgb(14, 4, 4);
+    }
+
+    .tabs {
+        overflow: hidden;
+        border: 1px solid #ccc;
+        background-image: linear-gradient(to left, white, rgba(207, 69, 34, 0.931));
+     }
+     
+     .tabs button {
+         background-color: inherit;
+         float: left;
+         border: none;
+         outline: none;
+         cursor: pointer;
+         padding: 14px 16px;
+         transition: 0.3s;
+         color: white;
+     }
+     
+     .tabs button:hover {
+         background-color: rgba(95, 111, 136, 0.5);
+     }
+
+     .tabs button:focus {
+        background-color: rgba(95, 111, 136, 0.5);
+        border-bottom: 2px solid white;
+     }
+
+     .tabs button:active {
+        background-color: rgba(95, 111, 136, 0.5);
+        border-bottom: 2px solid white;
+     }
+     
+     .tabContent {
+        display: none;
+        padding: 6px 13px;
+        border: 1px;
+        border-top: none;
+     }
+     
+     .tabContent {
+        animation: fadeEffect 1s;
+     }
+     
+     @keyframes fadeEffect {
+        from {opacity: 0;}
+        to {opacity: 1}
+     }
+     
     
 }
