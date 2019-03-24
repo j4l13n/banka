@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Create Account</title>
+    <link rel="stylesheet" href="../../css/style.css">
+</head>
+<body>
+    <div class="container">
+        <nav class="navigation">
+            <div class="">
+                <a href="index.html" class="brand">Banka</a>
+            </div>
+            <ul class="nav nav-right">
+                <li><a href="./create_admin_staff.html">staff accounts</a></li>
+                <li><a href="#">accounts</a></li>
+                <li><a href="./index.html">home</a></li>
+            </ul>
+        </nav>
+        <div class="column-4-sign">
+            <form action="" method="post" id="signup">
+                <div class="group">
+                    <label for="">First Name</label>
+                    <input type="text" class="form" id="firstname" placeholder="Enter your first name" required/>
+                </div>
+                <div class="group">
+                    <label for="">Last Name</label>
+                    <input type="text" autocomplete="off" class="form" id="lastname" placeholder="Enter your last name" required/>
+                </div>
+                <div class="group">
+                    <label for="">Email</label>
+                    <input type="email" autocomplete="off" class="form" id="email" placeholder="Enter your Email" required/>
+                </div>
+                <div class="group">
+                    <label for="type">Type</label>
+                    <input type="text" class="form" autocomplete="off" id="type" list="account"  placeholder="Select  type" required/>
+                    <datalist id="account">
+                        <option>Staff</option>
+                        <option>Admin</option>
+                    </datalist>
+                </div>
+                <div class="group">
+                    <label for="">Password</label>
+                    <input type="password" class="form" id="password" placeholder="Enter your Password" required/>
+                </div>
+                <div class="group">
+                    <label for="">Confirm</label>
+                    <input type="password" class="form" id="confirm" placeholder="Retype password" required/>
+                </div>
+                <div class="group">
+                    <input type="submit" class="btn btn-pri" id="" value="Sign up"/>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

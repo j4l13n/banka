@@ -1,0 +1,26 @@
+{
+  "name": "banka",
+  "version": "1.0.0",
+  "description": "online banking",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/j4l13n/banka.git"
+  },
+  "keywords": [
+    "banka"
+  ],
+  "author": "julien",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/j4l13n/banka/issues"
+  },
+  "homepage": "https://github.com/j4l13n/banka#readme",
+  "devDependencies": {
+    "jasmine": "^3.3.1",
+    "mocha": "^6.0.2"
+  }
+}
