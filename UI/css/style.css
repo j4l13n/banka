@@ -315,27 +315,63 @@
         border: 1px solid #ddd;
         margin-bottom: 12px;
         float: left;
-      }
+    }
       
-      .table {
+    .table {
         border-collapse: collapse;
         width: 100%;
         border: 1px solid #ddd;
         font-size: 18px;
-      }
+    }
       
-      .table th, .table td {
+    .table th, .table td {
         text-align: left;
         padding: 12px;
-      }
+    }
       
-      .table tr {
+    .table tr {
         border-bottom: 1px solid #ddd;
-      }
+    }
       
-      .table tr > thead, .table tr:hover {
+    .table tr > thead, .table tr:hover {
         background-color: #f1f1f1;
-      }
+    }
 
-     
+    .row-admin {
+        width: 80%;
+        margin-left: 100px;
+    }
+
+    .column-8-admin {
+        width: 100%;
+        float: left;
+        background-color: white;
+        margin-top: 60px;
+        padding: 10px;
+        border-radius: 5px;
+        border: 1px solid white;
+		-moz-box-shadow: 0 0 20px white; 
+		-webkit-box-shadow: 0 0 20px white; 
+        box-shadow: 0 0 20px rgb(14, 4, 4);
+        text-align: center;
+    }
+
+    .activate {
+        text-decoration: none;
+        color: white;
+        background-color: rgba(88, 168, 13, 0.5);
+        padding-left: 12px;
+        padding-right: 12px;
+        font-size: 12px;
+    }
+
+    .deactivate {
+        text-decoration: none;
+        color: white;
+        background-color: rgba(245, 54, 7, 0.5);
+        padding-left: 5px;
+        padding-right: 5px;
+        font-size: 12px;
+    }
+    
 }

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Admin</title>
+    <link rel="stylesheet" href="../../css/style.css">
+</head>
+<body>
+    <div class="container">
+        <nav class="navigation">
+            <div class="">
+                <a href="index.html" class="brand">Banka</a>
+            </div>
+            <ul class="nav nav-right">
+                <li><a href="#">staff accounts</a></li>
+                <li><a href="#">accounts</a></li>
+                <li><a href="./index.html">home</a></li>
+            </ul>
+        </nav>
+        <div class="row-admin">
+            <div class="column-8-admin">
+                <div class="">
+                    <input type="text" class="search" placeholder="Search specific account..." id="search" title="Search account">
+                </div>
+                <div class="">
+                    <table class="table striped" id="table">
+                        <thead>
+                            <tr>
+                                <th>Create on</th>
+                                <th>Account name</th>
+                                <th>Account number</th>
+                                <th>Type</th>
+                                <th>Balance</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1/1/2019</td>
+                                <td>Karangwa Hirwa Julien</td>
+                                <td>19566332586523758</td>
+                                <td>Savings</td>
+                                <td>7000</td>
+                                <td><a href="#" class="activate">activate</a></td>
+                            </tr>
+                            <tr>
+                                <td>1/1/2018</td>
+                                <td>Kagabo Faustin</td>
+                                <td>19566332586523658</td>
+                                <td>Current</td>
+                                <td>8000</td>
+                                <td><a href="#" class="deactivate">deactivate</a></td>
+                            </tr>
+                            <tr>
+                                <td>1/1/2017</td>
+                                <td>Divin Claudel</td>
+                                <td>19566342586523658</td>
+                                <td>Savings</td>
+                                <td>7000</td>
+                                <td><a href="#" class="activate">activate</a></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="../../js/admin.js"></script>
+</body>
+</html>
