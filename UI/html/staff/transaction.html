@@ -18,6 +18,31 @@
                 <li><a href="./index.html">home</a></li>
             </ul>
         </nav>
+        <div class="column-4-sign">
+            <form action="" method="post" id="transaction">
+                <div class="group">
+                    <label for="">Account Number</label>
+                    <input type="text" autocomplete="off" class="form" maxlength="10" pattern="\d{10}" id="accountNumber" placeholder="Enter user account number" required/>
+                    <span class="email-error"></span>
+                </div>
+                <div class="group">
+                    <label for="">Transaction type</label>
+                    <input type="text" autocomplete="off" class="form" list="account" id="type" placeholder="Select transaction type (Debit, Credit)" required/>
+                    <datalist id="account">
+                        <option>Debit</option>
+                        <option>Credit</option>
+                    </datalist>
+                </div>
+                <div class="group">
+                    <label for="">Balance</label>
+                    <input type="text" autocomplete="off" class="form" id="balance" placeholder="Enter balance" required/>
+                </div>
+                <div class="group">
+                    <input type="submit" class="btn btn-pri" id="submit" value="Submit"/>
+                </div>
+            </form>
+        </div>
     </div>
+    <script src="../../js/transaction.js"></script>
 </body>
 </html>
