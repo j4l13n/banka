@@ -1,5 +1,4 @@
 let express = require("express");
-let mockdb = require('./mockdb/user');
 let bodyParser = require('body-parser');
 let router = require('./routes/routes');
 
