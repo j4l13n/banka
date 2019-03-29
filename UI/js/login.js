@@ -30,18 +30,15 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     document.querySelector("#login").onsubmit = () => {
-        if(!nameIsValid(document.querySelector("#email").value)) {
+        if(!emailIsValie(document.querySelector("#email").value)) {
             document.querySelector("#email").style.borderBottom = "2px solid red";
             document.querySelector("#email").focus();
             return false;
-        } else if(!nameIsValid(document.querySelector("#password").value)) {
+        } else if(!checkPass(document.querySelector("#password").value)) {
             document.querySelector("#password").style.borderBottom = "2px solid red";
             document.querySelector("#password").focus();
             return false;
         } else {
-            (function myFunction() {
-                window.location = "file:///root/Desktop/banka/UI/login.html";
-            })();
             return true;
         }
     };
