@@ -4,7 +4,7 @@
   "description": "online banking",
   "main": "index.js",
   "scripts": {
-    "test": "mocha",
+    "test": "mocha --require babel-register server/tests/test.js --exit",
     "start": "nodemon server/server.js --exec babel-node --"
   },
   "repository": {
@@ -21,14 +21,16 @@
   },
   "homepage": "https://github.com/j4l13n/banka#readme",
   "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
     "chai": "^4.2.0",
+    "chai-http": "^4.2.1",
     "jasmine": "^3.3.1",
     "mocha": "^6.0.2",
     "nodemon": "^1.18.10",
     "supertest": "^4.0.2"
   },
   "dependencies": {
-    "babel-cli": "^6.26.0",
     "babel-preset-es2015": "^6.24.1",
     "body-parser": "^1.18.3",
     "express": "^4.16.4"
