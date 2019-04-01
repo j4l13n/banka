@@ -1,4 +1,8 @@
 document.addEventListener("DOMContentLoaded", () => {
+
+    const email = "juliushirwa@gmail.com";
+    const password = "Reg5050";
+
     document.querySelector("#email").onkeyup = () => {
         if(emailIsValie(document.querySelector("#email").value)) {
             document.querySelector(".form").style.borderBottom = "2px solid green";
@@ -39,9 +43,26 @@ document.addEventListener("DOMContentLoaded", () => {
             document.querySelector("#password").focus();
             return false;
         } else {
-            return true;
+            if(checkAdmin(document.querySelector("#email").value, document.querySelector("#password").value)) {
+                let action = document.querySelector("#login");
+                action.setAttribute("action", "./../html/admin/index.html");
+                return true;
+                
+            } else {
+                let action = document.querySelector("#login");
+                action.setAttribute("action", "./index.html");
+                return true;
+            }
         }
     };
+
+    const checkAdmin = (email, password) => {
+        if(email === "juliushirwa@gmail.com" && password === "Reg5050") {
+            return true;
+        } else {
+            return false;
+        }
+    }
 
 
 

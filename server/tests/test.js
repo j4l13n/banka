@@ -30,6 +30,19 @@ describe("Users", () => {
 					done();
 				});
 		});
+
+		// Test to get not found if user does not exist
+		it("should get a not found message when user not exist", (done) => {
+			const id = 4;
+			chai.request(app)
+				.get(`/api/v1/users/${id}`)
+				.end((err, res) => {
+					res.should.have.status(404);
+					res.body.should.be.a('object');
+					res.body.should.have.property('message').eql('user not found');
+				done();
+				});
+		});
 	});
 
 	// tests put http request
