@@ -45,7 +45,7 @@ describe("Accounts", () => {
             };
 
             chai.request(app)
-                .post('/api/v1/accounts')
+                .post('/accounts')
                 .send(account)
                 .end((err, res) => {
                     res.should.have.status(201);
@@ -55,4 +55,14 @@ describe("Accounts", () => {
                 });
         });
     });
+
+    // Tests for update an account
+    /* describe("PUT/:id Accounts", () => {
+        it("it should update an account when id is found", (done) => {
+            let id = 1;
+            chai.request(app)
+                .put(`/api/v1/accounts/${id}`)
+                .send({ })
+        });
+    }); */
 });

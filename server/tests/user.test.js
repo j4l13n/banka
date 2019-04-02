@@ -76,7 +76,7 @@ describe("Users", () => {
 			};
 	
 			chai.request(app)
-				.post(`/api/v1/users/`)
+				.post(`/auth/signup`)
 				.send(user)
 				.end((err, res) => {
 					res.should.have.status(201);
