@@ -4,7 +4,7 @@
   "description": "online banking",
   "main": "index.js",
   "scripts": {
-    "test": "mocha --require babel-register server/tests/test.js --exit",
+    "test": "mocha --require babel-register server/tests/*.test.js --exit",
     "dev": "nodemon server/server.js --exec babel-node --",
     "start": "babel-node server/server.js"
   },

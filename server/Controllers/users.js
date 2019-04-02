@@ -1,4 +1,4 @@
-let userdb = require('../mockdb/user');
+import userdb from './../mockdb/user';
 
 class UsersController {
     getAllUsers(req, res) {
@@ -152,4 +152,4 @@ class UsersController {
 }
 
 const userController = new UsersController();
-module.exports = userController;
+export default userController;

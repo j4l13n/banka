@@ -11,5 +11,5 @@ class AccountsController {
 }
 
 
-const AccountController = new AccountsController();
-export default AccountController;
+const accountController = new AccountsController();
+export default accountController;
