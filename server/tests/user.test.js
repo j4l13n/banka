@@ -13,7 +13,7 @@ describe("Users", () => {
 			chai.request(app)
 				.get('/api/v1/users')
 				.end((err, res) => {
-					res.should.status(200);
+					res.should.have.status(200);
 					res.body.should.be.a('object');
 					done();
 				});
@@ -39,7 +39,7 @@ describe("Users", () => {
 				.end((err, res) => {
 					res.should.have.status(404);
 					res.body.should.be.a('object');
-					res.body.should.have.property('message').eql('user not found');
+					res.body.should.have.property('message').eql('User not found');
 				done();
 				});
 		});

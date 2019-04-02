@@ -10,20 +10,21 @@ class UsersController {
     }
 
     getUser(req, res) {
-        const id = parseInt(req.params.id, 10);
-        userdb.map(user => {
-            if(user.id == id) {
-                return res.status(200).send({
-                    status: 200,
-                    message: 'user retrieved successfully',
-                    user,
-                });
-            }
-        });
-        return res.status(404).send({
-            status: 404,
-            message: 'user not found',
-        });
+        const getuser = userdb.find(user => user.id === parseInt(req.params.id, 10));
+    
+        if(getuser) {
+            return res.status(200).send({
+                status: 200,
+                message: 'user retrieved successfully',
+                data: getuser,
+            });
+        } else {
+            return res.status(404).send({
+                status: 404,
+                message: "User not found"
+            });
+        }
+        
     }
 
     createUser(req, res) {
@@ -63,7 +64,7 @@ class UsersController {
         return res.status(201).send({
             status: 201,
             message: 'user added successfully',
-        })
+        });
     }
 
     updateUser(req, res) {
