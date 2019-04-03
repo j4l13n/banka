@@ -48,7 +48,11 @@ document.addEventListener("DOMContentLoaded", () => {
                 action.setAttribute("action", "./../html/admin/index.html");
                 return true;
                 
-            } else {
+            } else if(checkStaff(document.querySelector("#email").value, document.querySelector("#password").value)) {
+                let action = document.querySelector("#login");
+                action.setAttribute("action", "./../html/staff/index.html");
+                return true;
+            }else {
                 let action = document.querySelector("#login");
                 action.setAttribute("action", "./index.html");
                 return true;
@@ -64,6 +68,13 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
+    const checkStaff = (email, password) => {
+        if(email === "divin@gmail.com" && password === "Div5050") {
+            return true;
+        } else {
+            return false;
+        }
+    }
 
 
 });
