@@ -76,7 +76,8 @@ describe("Users", () => {
 				password: "reg183@hel89",
 				type: "client",
 				isAdmin: false
-			};
+			};const getuser = userdb.find(user => user.id === parseInt(req.params.id, 10));
+			if(getuser) {
 	
 			chai.request(app)
 				.post(`/api/v1/auth/signup`)
