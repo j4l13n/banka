@@ -16,6 +16,6 @@ for staff user interface:
   
 ## Users
 
-u can use any valid email and password which uppercase, lowercase characters and numbers.
+u can use any valid email and password which is compose with uppercase, lowercase characters and numbers.
 
-
+visit this link to browse [banka] (https://j4l13n.github.io/banka/UI/)
