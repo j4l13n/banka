@@ -1,10 +1,11 @@
 import chai from 'chai';
 import chaiHttp from 'chai-http';
 import app from '../server';
-
+import userdb from './../mockdb/user';
 // Configure chai
 chai.use(chaiHttp);
 chai.should();
+const {expect}=chai;
 describe("Users", () => {
 	// Test get http requests
 	describe("GET /", () => {
@@ -25,6 +26,8 @@ describe("Users", () => {
 			chai.request(app)
 				.get(`/api/v1/users/${id}`)
 				.end((err, res) => {
+					const singleUser = userdb.find( user => user.id === id);
+					expect(singleUser).to.be.an('object');
 					res.should.have.status(200);
 					res.body.should.be.a('object');
 					done();
@@ -41,7 +44,7 @@ describe("Users", () => {
 					res.body.should.be.a('object');
 					res.body.should.have.property('message').eql('User not found');
 				done();
-				});
+			});
 		});
 	});
 
@@ -76,12 +79,96 @@ describe("Users", () => {
 			};
 	
 			chai.request(app)
-				.post(`/auth/signup`)
+				.post(`/api/v1/auth/signup`)
 				.send(user)
 				.end((err, res) => {
 					res.should.have.status(201);
 					res.body.should.be.a('object');
 					res.body.should.have.property('message').eql('user added successfully');
+				done();
+				});
+		});
+
+		it("return an error if firstname is not provided", (done) => {
+			let user = {
+				id: 2,
+				lastname: "Faustin",
+				email: "faustinkagabo@gmail.com",
+				password: "reg183@hel89",
+				type: "client",
+				isAdmin: false
+			};
+	
+			chai.request(app)
+				.post(`/api/v1/auth/signup`)
+				.send(user)
+				.end((err, res) => {
+					res.should.have.status(400);
+					res.body.should.be.a('object');
+					res.body.should.have.property('message').eql('firstname is required');
+				done();
+				});
+		});
+
+		it("return an error if lastname is not provided", (done) => {
+			let user = {
+				id: 2,
+				firstname: "Faustin",
+				email: "faustinkagabo@gmail.com",
+				password: "reg183@hel89",
+				type: "client",
+				isAdmin: false
+			};
+	
+			chai.request(app)
+				.post(`/api/v1/auth/signup`)
+				.send(user)
+				.end((err, res) => {
+					res.should.have.status(400);
+					res.body.should.be.a('object');
+					res.body.should.have.property('message').eql('lastname is required');
+				done();
+				});
+		});
+
+		it("return an error if email is not provided", (done) => {
+			let user = {
+				id: 2,
+				firstname: "Kagabo",
+				lastname: "Faustin",
+				email: "faustinkagabo@gmail.com",
+				type: "client",
+				isAdmin: false
+			};
+	
+			chai.request(app)
+				.post(`/api/v1/auth/signup`)
+				.send(user)
+				.end((err, res) => {
+					res.should.have.status(400);
+					res.body.should.be.a('object');
+					res.body.should.have.property('message').eql('password is required');
+				done();
+				});
+		});
+
+		it("return an error if password is not provided", (done) => {
+			let user = {
+				id: 2,
+				firstname: "Kagabo",
+				lastname: "Faustin",
+				email: "faustinkagabo@gmail.com",
+				type: "client",
+				isAdmin: false
+			};
+	
+			chai.request(app)
+				.post(`/api/v1/auth/signup`)
+				.send(user)
+				.end((err, res) => {
+					res.should.have.status(400);
+					res.body.should.be.a('object');
+					res.body.should.have.property('message').eql('password is required');
 				done();
 				});
 		});
@@ -99,5 +186,17 @@ describe("Users", () => {
 					done();
 				});
 		});
+
+		it("it should return an error if user not found", (done) => {
+			let id = 5;
+			chai.request(app)
+				.delete(`/api/v1/users/${id}`)
+				.end((err, res) => {
+					res.should.have.status(404);
+					res.body.should.be.a('object');
+					res.body.should.have.property('message').eql('user not found');
+					done();
+				});
+		})
 	});
 });

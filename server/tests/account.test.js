@@ -29,6 +29,17 @@ describe("Accounts", () => {
 					done();
 				});
         });
+
+        it("it should return an error if account not found", (done) => {
+            const id = 4;
+			chai.request(app)
+				.get(`/api/v1/accounts/${id}`)
+				.end((err, res) => {
+					res.should.have.status(404);
+					res.body.should.be.a('object');
+					done();
+				});
+        });
     });
 
     // Test to open new account
@@ -45,7 +56,7 @@ describe("Accounts", () => {
             };
 
             chai.request(app)
-                .post('/accounts')
+                .post('/api/v1/accounts')
                 .send(account)
                 .end((err, res) => {
                     res.should.have.status(201);

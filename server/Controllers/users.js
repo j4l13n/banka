@@ -11,7 +11,6 @@ class UsersController {
 
     getUser(req, res) {
         const getuser = userdb.find(user => user.id === parseInt(req.params.id, 10));
-    
         if(getuser) {
             return res.status(200).send({
                 status: 200,
@@ -104,7 +103,7 @@ class UsersController {
             return res.status(400).send({
                 status: 400,
                 message: "password is required",
-            })
+            });
         }
 
         const newUser = {
