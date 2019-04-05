@@ -11,7 +11,7 @@ class UsersController {
 
     getUser(req, res) {
         const getuser = userdb.find(user => user.id === parseInt(req.params.id, 10));
-        if(getuser) {
+        if (getuser) {
             return res.status(200).send({
                 status: 200,
                 message: 'user retrieved successfully',
@@ -23,30 +23,30 @@ class UsersController {
                 message: "User not found"
             });
         }
-        
+
     }
 
     createUser(req, res) {
-        if(!req.body.firstname) {
+        if (!req.body.firstname) {
             return res.status(400).send({
                 status: 400,
                 message: "firstname is required",
             });
-        } else if(!req.body.lastname) {
+        } else if (!req.body.lastname) {
             return res.status(400).send({
                 status: 400,
                 message: "lastname is required",
             });
-        } else if(!req.body.email) {
+        } else if (!req.body.email) {
             return res.status(400).send({
                 status: 400,
                 message: "email is required",
             });
-        } else if(!req.body.password) {
+        } else if (!req.body.password) {
             return res.status(400).send({
                 status: 400,
                 message: "password is required",
-            })
+            });
         }
 
         const user = {
@@ -66,40 +66,55 @@ class UsersController {
         });
     }
 
+    signUser(req, res) {
+        const user = userdb.find(usr => usr.email === req.body.email && usr.password === req.body.password);
+        if (user) {
+            return res.status(201).send({
+                status: 201,
+                message: 'User signed in successfully.'
+            });
+        } else {
+            return res.status(404).send({
+                status: 404,
+                message: 'User can not be signed in.'
+            });
+        }
+    }
+
     updateUser(req, res) {
         const id = parseInt(req.params.id, 10);
         let userFound;
         let itemIndex;
         userdb.map((user, index) => {
-            if(user.id === id) {
+            if (user.id === id) {
                 userFound = id;
                 itemIndex = index;
             }
         });
 
-        if(!userFound) {
+        if (!userFound) {
             return res.status(404).send({
                 status: 404,
-                message: 'user not found',  
+                message: 'user not found',
             });
         }
 
-        if(!req.body.firstname) {
+        if (!req.body.firstname) {
             return res.status(400).send({
                 status: 400,
                 message: "firstname is required",
             });
-        } else if(!req.body.lastname) {
+        } else if (!req.body.lastname) {
             return res.status(400).send({
                 status: 400,
                 message: "lastname is required",
             });
-        } else if(!req.body.email) {
+        } else if (!req.body.email) {
             return res.status(400).send({
                 status: 400,
                 message: "email is required",
             });
-        } else if(!req.body.password) {
+        } else if (!req.body.password) {
             return res.status(400).send({
                 status: 400,
                 message: "password is required",
@@ -130,13 +145,13 @@ class UsersController {
         let userFound;
         let itemIndex;
         userdb.map((user, index) => {
-            if(user.id === id) {
+            if (user.id === id) {
                 userFound = user;
                 itemIndex = index;
             }
         });
 
-        if(!userFound) {
+        if (!userFound) {
             return res.status(404).send({
                 status: 404,
                 message: 'user not found',

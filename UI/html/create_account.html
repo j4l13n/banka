@@ -5,45 +5,51 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Create Account</title>
-    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="../css/style.css">
 </head>
 <body>
-    <div class="">
-        <div class="">
-            <nav class="navigation">
-                <div class="">
-                    <a href="./index.html" class="brand">Banka</a>
-                </div>
-                <ul class="nav nav-right">
-                    <li><a href="login.html">logout</a></li>
-                    <li><a href="create_account.html">create account</a></li>
-                </ul>
-            </nav>
-        </div>
-        <div class="column-4-sign">
-            <form action="./index.html" method="get" id="createAccount">
-                <div class="group">
-                    <label for="">Account number</label>
-                    <input type="text" autocomplete="off"class="form" id="accountNumber" maxlength="10" pattern="\d{10}" placeholder="Enter account number" required/>
-                </div>
-                <div class="group">
-                    <label for="">Account type</label>
-                    <input type="text" class="form" autocomplete="off" id="type" list="account"  placeholder="Select account type" required/>
-                    <datalist id="account">
-                        <option>Savings</option>
-                        <option>Current</option>
-                    </datalist>
-                </div>
-                <div class="group">
-                    <label for="">Balance</label>
-                    <input type="number" class="form" id="balance" maxlength="15" pattern="\d{15}" placeholder="Enter your balance" required/>
-                </div>
-                <div class="group">
-                    <input type="submit" class="btn btn-pri" id="" value="Create account"/>
-                </div>
-            </form>
-        </div>
+    <nav class="navbar">
+        <span class="navbar-toggle" id="js-navbar-toggle">
+            <i class="fa fa-bars fa-color"></i>
+        </span>
+        <a href="./index.html" class="logo">Banka</a>
+        <ul class="main-nav" id="js-menu">
+            <li>
+                <a href="./index.html" class="nav-links">home</a>
+            </li>
+            <li>
+                <a href="./profile.html" class="nav-links">profile</a>
+            </li>
+            <li>
+                <a href="login.html" class="nav-links">logout</a>
+            </li>
+        </ul>
+    </nav>
+    <div class="column-4-sign">
+        <form action="./index.html" method="get" id="createAccount">
+            <div class="group">
+                <label for="">Account number</label>
+                <input type="text" autocomplete="off"class="form" id="accountNumber" maxlength="10" pattern="\d{10}" placeholder="Enter account number" required/>
+            </div>
+            <div class="group">
+                <label for="">Account type</label>
+                <input type="text" class="form" autocomplete="off" id="type" list="account"  placeholder="Select account type" required/>
+                <datalist id="account">
+                    <option>Savings</option>
+                    <option>Current</option>
+                </datalist>
+            </div>
+            <div class="group">
+                <label for="">Balance</label>
+                <input type="number" class="form" id="balance" maxlength="15" pattern="\d{15}" placeholder="Enter your balance" required/>
+            </div>
+            <div class="group">
+                <input type="submit" class="btn btn-pri" id="" value="Create account"/>
+            </div>
+        </form>
     </div>
+    <script src="./../js/toggle.js"></script>
     <script src="../js/create.js"></script>
 </body>
 </html
