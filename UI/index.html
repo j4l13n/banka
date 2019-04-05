@@ -5,20 +5,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Index</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="./css/style.css">
 </head>
 <body>
-    <div class="">
-        <nav class="navigation">
-            <div class="">
-                <a href="index.html" class="brand">Banka</a>
-            </div>
-            <ul class="nav nav-right">
-                <li><a href="./html/signup.html">Sign up</a></li>
-                <li><a href="./html/login.html">Login</a></li>
-            </ul>
-        </nav>
-    </div>
+    <nav class="navbar">
+        <span class="navbar-toggle" id="js-navbar-toggle">
+            <i class="fa fa-bars fa-color"></i>
+        </span>
+        <a href="./index.html" class="logo">Banka</a>
+        <ul class="main-nav" id="js-menu">
+            <li>
+                <a href="./html/login.html" class="nav-links">login</a>
+            </li>
+            <li>
+                <a href="./html/signup.html" class="nav-links">sign up</a>
+            </li>
+        </ul>
+    </nav>
     <div class="">
         <div class="welcome-title">
             <h2>Welcome to Banka</h2>
@@ -29,6 +33,6 @@
             </div>
         </div>
     </div>
-    <script src="./js/index.js"></script>
+    <script src="./js/toggle.js"></script>
 </body>
 </html>
