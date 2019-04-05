@@ -12,7 +12,7 @@ class AccountsController {
     getAccount(req, res) {
         const getAcc = accountdb.find(acc => acc.id === parseInt(req.params.id, 10));
 
-        if(getAcc) {
+        if (getAcc) {
             return res.status(200).send({
                 status: 200,
                 message: 'Account retrieved successfully.',
@@ -28,7 +28,7 @@ class AccountsController {
 
     createAccount(req, res) {
         const account = {
-            id : 1,
+            id: 1,
             accountNumber: "56985236544785",
             createOn: Date.now(),
             owner: 1,

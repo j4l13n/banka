@@ -5,7 +5,7 @@ import userdb from './../mockdb/user';
 // Configure chai
 chai.use(chaiHttp);
 chai.should();
-const {expect}=chai;
+const { expect } = chai;
 describe("Users", () => {
 	// Test get http requests
 	describe("GET /", () => {
@@ -26,7 +26,7 @@ describe("Users", () => {
 			chai.request(app)
 				.get(`/api/v1/users/${id}`)
 				.end((err, res) => {
-					const singleUser = userdb.find( user => user.id === id);
+					const singleUser = userdb.find(user => user.id === id);
 					expect(singleUser).to.be.an('object');
 					res.should.have.status(200);
 					res.body.should.be.a('object');
@@ -43,8 +43,8 @@ describe("Users", () => {
 					res.should.have.status(404);
 					res.body.should.be.a('object');
 					res.body.should.have.property('message').eql('User not found');
-				done();
-			});
+					done();
+				});
 		});
 	});
 
@@ -59,14 +59,28 @@ describe("Users", () => {
 					res.should.have.status(201);
 					res.body.should.be.a('object');
 					res.body.should.have.property('message');
-				done();
-			});
+					done();
+				});
 		});
 	});
-	
+
 
 	// testing post http request
 	describe('/POST user', () => {
+		it("it should return response when user sign in", (done) => {
+			let user = {
+				email: "juliushirwa@gmail.com",
+				password: "reg183@hel89"
+			};
+			chai.request(app)
+				.post(`/api/v1/auth/signin`)
+				.send(user)
+				.end((err, res) => {
+					res.should.have.status(201);
+					res.body.should.be.an('object');
+					done();
+				});
+		});
 		it("it should post a user", (done) => {
 			let user = {
 				id: 2,
@@ -76,9 +90,8 @@ describe("Users", () => {
 				password: "reg183@hel89",
 				type: "client",
 				isAdmin: false
-			};const getuser = userdb.find(user => user.id === parseInt(req.params.id, 10));
-			if(getuser) {
-	
+			};
+
 			chai.request(app)
 				.post(`/api/v1/auth/signup`)
 				.send(user)
@@ -86,7 +99,7 @@ describe("Users", () => {
 					res.should.have.status(201);
 					res.body.should.be.a('object');
 					res.body.should.have.property('message').eql('user added successfully');
-				done();
+					done();
 				});
 		});
 
@@ -99,7 +112,7 @@ describe("Users", () => {
 				type: "client",
 				isAdmin: false
 			};
-	
+
 			chai.request(app)
 				.post(`/api/v1/auth/signup`)
 				.send(user)
@@ -107,7 +120,7 @@ describe("Users", () => {
 					res.should.have.status(400);
 					res.body.should.be.a('object');
 					res.body.should.have.property('message').eql('firstname is required');
-				done();
+					done();
 				});
 		});
 
@@ -120,7 +133,7 @@ describe("Users", () => {
 				type: "client",
 				isAdmin: false
 			};
-	
+
 			chai.request(app)
 				.post(`/api/v1/auth/signup`)
 				.send(user)
@@ -128,7 +141,7 @@ describe("Users", () => {
 					res.should.have.status(400);
 					res.body.should.be.a('object');
 					res.body.should.have.property('message').eql('lastname is required');
-				done();
+					done();
 				});
 		});
 
@@ -141,7 +154,7 @@ describe("Users", () => {
 				type: "client",
 				isAdmin: false
 			};
-	
+
 			chai.request(app)
 				.post(`/api/v1/auth/signup`)
 				.send(user)
@@ -149,7 +162,7 @@ describe("Users", () => {
 					res.should.have.status(400);
 					res.body.should.be.a('object');
 					res.body.should.have.property('message').eql('password is required');
-				done();
+					done();
 				});
 		});
 
@@ -162,7 +175,7 @@ describe("Users", () => {
 				type: "client",
 				isAdmin: false
 			};
-	
+
 			chai.request(app)
 				.post(`/api/v1/auth/signup`)
 				.send(user)
@@ -170,7 +183,7 @@ describe("Users", () => {
 					res.should.have.status(400);
 					res.body.should.be.a('object');
 					res.body.should.have.property('message').eql('password is required');
-				done();
+					done();
 				});
 		});
 	});
