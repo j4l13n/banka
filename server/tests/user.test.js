@@ -67,20 +67,20 @@ describe("Users", () => {
 
 	// testing post http request
 	describe('/POST user', () => {
-		it("it should return response when user sign in", (done) => {
-			let user = {
-				email: "juliushirwa@gmail.com",
-				password: "reg183@hel89"
-			};
-			chai.request(app)
-				.post(`/api/v1/auth/signin`)
-				.send(user)
-				.end((err, res) => {
-					res.should.have.status(201);
-					res.body.should.be.an('object');
-					done();
-				});
-		});
+		// it("it should return response when user sign in", (done) => {
+		// 	let user = {
+		// 		email: "juliushirwa@gmail.com",
+		// 		password: "reg183@hel89"
+		// 	};
+		// 	chai.request(app)
+		// 		.post(`/api/v1/auth/signin`)
+		// 		.send(user)
+		// 		.end((err, res) => {
+		// 			res.should.have.status(201);
+		// 			res.body.should.be.an('object');
+		// 			done();
+		// 		});
+		// });
 		it("it should post a user", (done) => {
 			let user = {
 				id: 2,
