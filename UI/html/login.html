@@ -5,39 +5,42 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Login</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" media="screen" href="../css/style.css">
 </head>
 <body>
-    <div class="container">
-        <div class="">
-            <nav class="navigation">
-                <div class="">
-                    <a href="../index.html" class="brand">Banka</a>
-                </div>
-                <ul class="nav nav-right">
-                    <li><a href="signup.html">sign up</a></li>
-                    <li><a href="login.html">login</a></li>
-                </ul>
-            </nav>
-        </div>
-        <div class="column-4-sign">
-            <form method="get" id="login">
-                <div class="group">
-                    <label for="">Email</label>
-                    <input type="email" autocomplete="off" class="form" id="email" placeholder="Enter your Email" required/>
-                    <span class="email-error"></span>
-                </div>
-                <div class="group">
-                    <label for="">Password</label>
-                    <input type="password" autocomplete="off" class="form" id="password" placeholder="Enter your Password" required/>
-                </div>
-                <div class="group">
-                    <input type="submit" class="btn btn-pri" id="button" value="Sign in"/>
-                    <a href="signup.html" class="btn btn-sec">Sign up</a>
-                </div>
-            </form>
-        </div>
+    <nav class="navbar">
+        <span class="navbar-toggle" id="js-navbar-toggle">
+            <i class="fa fa-bars fa-color"></i>
+        </span>
+        <a href="../index.html" class="logo">Banka</a>
+        <ul class="main-nav" id="js-menu">
+            <li>
+                <a href="login.html" class="nav-links">login</a>
+            </li>
+            <li>
+                <a href="signup.html" class="nav-links">sign up</a>
+            </li>
+        </ul>
+    </nav>
+    <div class="column-4-sign">
+        <form method="get" id="login">
+            <div class="group">
+                <label for="">Email</label>
+                <input type="email" autocomplete="off" class="form" id="email" placeholder="Email (youname@server.com)" required/>
+                <span class="email-error"></span>
+            </div>
+            <div class="group">
+                <label for="">Password</label>
+                <input type="password" autocomplete="off" class="form" id="password" placeholder="Password (Eg: Reg56@edit)" required/>
+            </div>
+            <div class="group">
+                <input type="submit" class="btn btn-pri" id="button" value="Sign in"/>
+                <a href="signup.html" class="btn btn-sec">Sign up</a>
+            </div>
+        </form>
     </div>
+    <script src="./../js/toggle.js"></script>
     <script src="../js/login.js"></script>
 </body>
 </html>

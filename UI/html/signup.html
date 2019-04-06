@@ -5,50 +5,53 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Sign Up</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" media="screen" href="../css/style.css">
 </head>
 <body>
-    <div class="container">
-        <div class="">
-            <nav class="navigation">
-                <div class="">
-                    <a href="../index.html" class="brand">Banka</a>
-                </div>
-                <ul class="nav nav-right">
-                    <li><a href="signup.html">sign up</a></li>
-                    <li><a href="login.html">login</a></li>
-                </ul>
-            </nav>
-        </div>
-        <div class="column-4-sign">
-            <form action="create_account.html" method="get" id="signup">
-                <div class="group">
-                    <label for="">First Name</label>
-                    <input type="text" class="form" id="firstname" placeholder="Enter your first name" required/>
-                </div>
-                <div class="group">
-                    <label for="">Last Name</label>
-                    <input type="text" autocomplete="off" class="form" id="lastname" placeholder="Enter your last name" required/>
-                </div>
-                <div class="group">
-                    <label for="">Email</label>
-                    <input type="email" autocomplete="off" class="form" id="email" placeholder="Enter your Email" required/>
-                </div>
-                <div class="group">
-                    <label for="">Password</label>
-                    <input type="password" class="form" id="password" placeholder="Enter your Password" required/>
-                </div>
-                <div class="group">
-                    <label for="">Confirm</label>
-                    <input type="password" class="form" id="confirm" placeholder="Retype password" required/>
-                </div>
-                <div class="group">
-                    <input type="submit" class="btn btn-pri" id="" value="Sign up"/>
-                    <a href="login.html" class="btn btn-sec">Sign in</a>
-                </div>
-            </form>
-        </div>
+    <nav class="navbar">
+        <span class="navbar-toggle" id="js-navbar-toggle">
+            <i class="fa fa-bars fa-color"></i>
+        </span>
+        <a href="../index.html" class="logo">Banka</a>
+        <ul class="main-nav" id="js-menu">
+            <li>
+                <a href="login.html" class="nav-links">login</a>
+            </li>
+            <li>
+                <a href="signup.html" class="nav-links">sign up</a>
+            </li>
+        </ul>
+    </nav>
+    <div class="column-4-sign">
+        <form action="create_account.html" method="get" id="signup">
+            <div class="group">
+                <label for="">First Name</label>
+                <input type="text" class="form" id="firstname" placeholder="first name (only letters)" required/>
+            </div>
+            <div class="group">
+                <label for="">Last Name</label>
+                <input type="text" autocomplete="off" class="form" id="lastname" placeholder="last name (only letters)" required/>
+            </div>
+            <div class="group">
+                <label for="">Email</label>
+                <input type="email" autocomplete="off" class="form" id="email" placeholder="your Email (yourname@server.com)" required/>
+            </div>
+            <div class="group">
+                <label for="">Password</label>
+                <input type="password" class="form" id="password" placeholder="Password (Eg: Reg56@edit)" required/>
+            </div>
+            <div class="group">
+                <label for="">Confirm</label>
+                <input type="password" class="form" id="confirm" placeholder="Retype password (Eg: Reg56@edit)" required/>
+            </div>
+            <div class="group">
+                <input type="submit" class="btn btn-pri" id="" value="Sign up"/>
+                <a href="login.html" class="btn btn-sec">Sign in</a>
+            </div>
+        </form>
     </div>
+    <script src="./../js/toggle.js"></script>
     <script src="../js/signup.js"></script>
 </body>
 </html>
