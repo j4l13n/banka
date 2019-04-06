@@ -5,78 +5,83 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Profile</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" media="screen" href="../css/style.css">
 </head>
 <body>
-    <div class="container">
-        <div class="">
-            <nav class="navigation">
-                <div class="">
-                    <a href="./index.html" class="brand">Banka</a>
-                </div>
-                <ul class="nav nav-right">
-                    <li><a href="login.html">logout</a></li>
-                    <li><a href="./profile.html">profile</a></li>
-                    <li><a href="./index.html">home</a></li>
-                </ul>
-            </nav>
+    <nav class="navbar">
+        <span class="navbar-toggle" id="js-navbar-toggle">
+            <i class="fa fa-bars fa-color"></i>
+        </span>
+        <a href="./index.html" class="logo">Banka</a>
+        <ul class="main-nav" id="js-menu">
+            <li>
+                <a href="./index.html" class="nav-links">home</a>
+            </li>
+            <li>
+                <a href="./profile.html" class="nav-links">profile</a>
+            </li>
+            <li>
+                <a href="login.html" class="nav-links">logout</a>
+            </li>
+        </ul>
+    </nav>
+    <div class="column-8-profile">
+        <div class="tabs">
+            <button class="links" onclick="openTab(event, 'Owner')" id="owner">Owner</button>
+            <button class="links" onclick="openTab(event, 'ChangePassword')">Change Password</button>
         </div>
-        <div class="column-8-profile">
-            <div class="tabs">
-                <button class="links" onclick="openTab(event, 'Owner')" id="owner">Owner</button>
-                <button class="links" onclick="openTab(event, 'ChangePassword')">Change Password</button>
-            </div>
-            <div id="Owner" class="tabContent">
-                <div class="">
-                    <h3>Names</h3>
-                    <p>Karangwa Hirwa Julien</p>
-                </div><hr />
-                <div class="">
-                    <h3>Email</h3>
-                    <p>juliushirwa@gmail.com</p>
-                </div><hr />
-                <div class="">
-                    <h3>Account Number</h3>
-                    <p>1965825547856</p>
-                </div><hr />
-                <div class="">
-                    <h3>Account Type</h3>
-                    <p>Savings</p>
-                </div><hr />
-            </div>
-            <div id="ChangePassword" class="tabContent">
-                <form action="./profile.html" method="get">
-                    <div class="group">
-                        <label><h4>Password</h4></label>
-                        <input type="password" name="password" autocomplete="off" placeholder="Enter password" value="Regedit56" class="form" />
-                    </div>
-                    <div class="group">
-                        <label><h4>Confirm</h4></label>
-                        <input type="password" name="confirm" autocomplete="off" placeholder="Confirm password" value="Regedit56" class="form" />
-                    </div>
-                    <div class="group">
-                        <h3></h3>
-                        <button type="submit" class="btn btn-pri">Change</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-        <div class="column-4-profile">
+        <div id="Owner" class="tabContent">
             <div class="">
-                <div class="profile-div">
-                    <img src="../img/profilee.png" alt="profile" class="responsive" title="profile" />
+                <h3>Names</h3>
+                <p>Karangwa Hirwa Julien</p>
+            </div><hr />
+            <div class="">
+                <h3>Email</h3>
+                <p>juliushirwa@gmail.com</p>
+            </div><hr />
+            <div class="">
+                <h3>Account Number</h3>
+                <p>1965825547856</p>
+            </div><hr />
+            <div class="">
+                <h3>Account Type</h3>
+                <p>Savings</p>
+            </div><hr />
+        </div>
+        <div id="ChangePassword" class="tabContent">
+            <form action="./profile.html" method="get">
+                <div class="group">
+                    <label><h4>Password</h4></label>
+                    <input type="password" name="password" autocomplete="off" placeholder="Enter password" value="Regedit56" class="form" />
                 </div>
-                <div class="profile-div-body">
-                    <div class="">
-                        <h3>Karangwa Hirwa Julien</h3>
-                    </div>
-                    <div class="">
+                <div class="group">
+                    <label><h4>Confirm</h4></label>
+                    <input type="password" name="confirm" autocomplete="off" placeholder="Confirm password" value="Regedit56" class="form" />
+                </div>
+                <div class="group">
+                    <h3></h3>
+                    <button type="submit" class="btn btn-pri">Change</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="column-4-profile">
+        <div class="">
+            <div class="profile-div">
+                <img src="../img/profilee.png" alt="profile" class="responsive" title="profile" />
+            </div>
+            <div class="profile-div-body">
+                <div class="">
+                    <h3>Karangwa Hirwa Julien</h3>
+                </div>
+                <div class="">
 
-                    </div>
                 </div>
             </div>
         </div>
     </div>
+    <script src="./../js/toggle.js"></script>
     <script src="../js/profile.js"></script>
 </body>
 </html>

@@ -5,64 +5,73 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Index</title>
-    <link rel="stylesheet" href="./../css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="../css/style.css">
 </head>
 <body>
+    <nav class="navbar">
+        <span class="navbar-toggle" id="js-navbar-toggle">
+            <i class="fa fa-bars fa-color"></i>
+        </span>
+        <a href="./index.html" class="logo">Banka</a>
+        <ul class="main-nav" id="js-menu">
+            <li>
+                <a href="./index.html" class="nav-links">home</a>
+            </li>
+            <li>
+                <a href="./profile.html" class="nav-links">profile</a>
+            </li>
+            <li>
+                <a href="login.html" class="nav-links">logout</a>
+            </li>
+        </ul>
+    </nav>
     <div class="">
-        <nav class="navigation">
+        <div class="row-admin">
+            <div class="column-8-admin">
             <div class="">
-                <a href="index.html" class="brand">Banka</a>
+                <input type="text" class="search" placeholder="Search specific account..." id="search" title="Search account">
             </div>
-            <ul class="nav nav-right">
-                <li><a href="./login.html">logout</a></li>
-                <li><a href="./profile.html">profile</a></li>
-                <li><a href="./index.html">home</a></li>
-            </ul>
-        </nav>
-    </div>
-    <div class="row-admin">
-        <div class="column-8-admin">
-        <div class="">
-            <input type="text" class="search" placeholder="Search specific account..." id="search" title="Search account">
-        </div>
-        <div class="">
-            <table class="table striped" id="table">
-                <thead>
-                    <tr>
-                        <th>Create on</th>
-                        <th>Type</th>
-                        <th>Account number</th>
-                        <th>Amount</th>
-                        <th>Balance</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>1/1/2019</td>
-                        <td>Debit</td>
-                        <td>19566332586523758</td>
-                        <td>15000</td>
-                        <td>7000</td>
-                    </tr>
-                    <tr>
-                        <td>1/1/2018</td>
-                        <td>Debit</td>
-                        <td>19566332586523658</td>
-                        <td>15000</td>
-                        <td>7000</td>
-                    </tr>
-                    <tr>
-                        <td>1/1/2017</td>
-                        <td>Debit</td>
-                        <td>19566332586523658</td>
-                        <td>15000</td>
-                        <td>7000</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+            <div class="">
+                <table class="table striped" id="table">
+                    <thead>
+                        <tr>
+                            <th>Create on</th>
+                            <th>Type</th>
+                            <th>Account number</th>
+                            <th>Amount</th>
+                            <th>Balance</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1/1/2019</td>
+                            <td>Debit</td>
+                            <td>19566332586523758</td>
+                            <td>15000</td>
+                            <td>7000</td>
+                        </tr>
+                        <tr>
+                            <td>1/1/2018</td>
+                            <td>Debit</td>
+                            <td>19566332586523658</td>
+                            <td>15000</td>
+                            <td>7000</td>
+                        </tr>
+                        <tr>
+                            <td>1/1/2017</td>
+                            <td>Debit</td>
+                            <td>19566332586523658</td>
+                            <td>15000</td>
+                            <td>7000</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            </div>
         </div>
     </div>
+    <script src="./../js/toggle.js"></script>
     <script src="./../js/index.js"></script>
 </body>
 </html>
