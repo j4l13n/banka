@@ -1,6 +1,7 @@
 import chai from 'chai';
 import chaiHttp from 'chai-http';
 import app from './../server';
+import userdb from './../mockdb/account';
 
 // Configure chai
 chai.use(chaiHttp);
@@ -76,4 +77,31 @@ describe("Accounts", () => {
                 .send({ })
         });
     }); */
+
+    // Tests for delete account
+    describe("DELETE / Account", () => {
+        it("it should return response when an account is deleted", done => {
+            let id = 1;
+            chai.request(app)
+                .delete(`/api/v1/accounts/${id}`)
+                .end((err, res) => {
+                    res.should.have.status(200);
+                    res.body.should.be.an('object');
+                    res.body.should.have.property('message').eql('Account successfully deleted');
+                    done();
+                });
+        });
+
+        it("it should return an error when an account is not available", done => {
+            let id = 5;
+            chai.request(app)
+                .delete(`/api/v1/accounts/${id}`)
+                .end((err, res) => {
+                    res.should.have.status(404);
+                    res.body.should.be.a('object');
+                    res.body.should.have.property('error').eql('Account not found');
+                    done();
+                })
+        })
+    });
 });
