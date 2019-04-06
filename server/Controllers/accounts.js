@@ -43,6 +43,31 @@ class AccountsController {
             message: "account created successfully."
         });
     }
+
+    deleteAccount(req, res) {
+        const id = parseInt(req.params.id, 10);
+        let accountFound;
+        let itemIndex;
+        accountdb.map((account, index) => {
+            if (account.id === id) {
+                accountFound = account;
+                itemIndex = index;
+            }
+        });
+
+        if (!accountFound) {
+            return res.status(404).send({
+                status: 404,
+                error: 'Account not found',
+            });
+        }
+
+        accountdb.splice(itemIndex, 1);
+        return res.status(200).send({
+            status: 200,
+            message: 'Account successfully deleted',
+        });
+    }
 }
 
 
