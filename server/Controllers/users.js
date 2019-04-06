@@ -67,15 +67,15 @@ class UsersController {
     }
 
     signUser(req, res) {
-        const user = userdb.find(usr => usr.email === req.body.email && usr.password === req.body.password);
-        if (user) {
+        const getuser = userdb.find( user => user.email === req.body.email && user.password === req.body.password);
+        if (getuser) {
             return res.status(201).send({
                 status: 201,
                 message: 'User signed in successfully.'
             });
         } else {
-            return res.status(404).send({
-                status: 404,
+            return res.status(400).send({
+                status: 400,
                 message: 'User can not be signed in.'
             });
         }
