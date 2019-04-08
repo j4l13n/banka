@@ -53,7 +53,7 @@ describe("Accounts", () => {
                 owner: 1,
                 type: "Current",
                 status: "active",
-                balance: 200000.0
+                balance: 0
             };
 
             chai.request(app)
@@ -69,14 +69,19 @@ describe("Accounts", () => {
     });
 
     // Tests for update an account
-    /* describe("PUT/:id Accounts", () => {
-        it("it should update an account when id is found", (done) => {
+    describe("PUT/:id Accounts", () => {
+        it("it should activate an account", (done) => {
             let id = 1;
             chai.request(app)
-                .put(`/api/v1/accounts/${id}`)
-                .send({ })
+                .patch(`/api/v1/accounts/${id}`)
+                .end((err, res) =>{
+                    res.should.have.status(200);
+                    res.body.should.be.a('object');
+                    res.body.should.have.property('message');
+                    done();
+                });
         });
-    }); */
+    });
 
     // Tests for delete account
     describe("DELETE / Account", () => {
