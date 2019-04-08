@@ -16,7 +16,7 @@ app.use(router);
 
 // Start the server on specified port
 app.listen(config.port, () => {
-    console.log("App started on port " + config.port)
+    console.log("App started on port ", config.port)
 });
 
 export default app;

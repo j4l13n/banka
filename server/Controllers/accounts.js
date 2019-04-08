@@ -78,6 +78,43 @@ class AccountsController {
             message: 'Account successfully deleted',
         });
     }
+
+    activateAccount(req, res) {
+        const id = parseInt(req.params.id, 10);
+        
+        let accountFound;
+        let accountIndex;
+        accountdb.map((account, index) => {
+            if(account.id === id) {
+                accountFound = account;
+                accountIndex = index;
+            }
+        })
+
+        if(!accountFound) {
+            return res.status(404).send({
+                status: 404,
+                message: "Account not found"
+            })
+        }
+
+        const account = {
+            id : 1,
+            accountNumber: accountFound.accountNumber,
+            createOn: accountFound.createOn,
+            owner: accountFound.owner,
+            type: accountFound.type,
+            status: req.body.status,
+            balance: accountFound.balance
+        };
+
+        accountdb.splice(accountIndex, 1, account);
+        return res.status(200).send({
+            accountNumber: account.accountNumber,
+            status: account.status
+        });
+        
+    }
 }
 
 

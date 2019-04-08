@@ -14,5 +14,6 @@ router.get("/api/v1/accounts", accountController.getAllAccounts);
 router.post("/api/v1/accounts", accountController.createAccount);
 router.get("/api/v1/accounts/:id", accountController.getAccount);
 router.delete("/api/v1/accounts/:id", accountController.deleteAccount);
+router.patch("/api/v1/accounts/:id", accountController.activateAccount);
 
 export default router;
