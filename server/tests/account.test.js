@@ -74,13 +74,26 @@ describe("Accounts", () => {
             let id = 1;
             chai.request(app)
                 .patch(`/api/v1/accounts/${id}`)
+                .send({ status: "active" })
                 .end((err, res) =>{
                     res.should.have.status(200);
                     res.body.should.be.a('object');
-                    res.body.should.have.property('message');
+                    res.body.should.have.property('status');
                     done();
                 });
         });
+
+        it("it should return an error whe account not found", (done) => {
+            let id = 5;
+            chai.request(app)
+                .patch(`/api/v1/accounts/${id}`)
+                .send({ status: "active" })
+                .end((err, res) => {
+                    res.should.have.status(404);
+                    res.body.should.be.a('object');
+                    done();
+                });
+        }); 
     });
 
     // Tests for delete account
