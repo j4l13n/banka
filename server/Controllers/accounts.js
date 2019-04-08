@@ -1,4 +1,5 @@
-import accountdb from './../mockdb/account';
+import accountdb from './../mockdb/account'
+import userdb from './../mockdb/user'
 
 class AccountsController {
     getAllAccounts(req, res) {
@@ -28,19 +29,28 @@ class AccountsController {
 
     createAccount(req, res) {
         const account = {
-            id: 1,
-            accountNumber: "56985236544785",
+            id: accountdb.length + 1,
+            accountNumber:"12348765433456",
             createOn: Date.now(),
-            owner: 1,
-            type: "Current",
+            owner: req.body.owner,
+            type: req.body.type,
             status: "active",
-            balance: 200000.0
+            balance: 0
         };
 
         accountdb.push(account);
+        const getuser = userdb.find(user => user.id === req.body.owner);
         return res.status(201).send({
             status: 201,
-            message: "account created successfully."
+            message: "account created successfully.",
+            data: {
+                accountNumber: account.accountNumber,
+                firstname: getuser.firstname,
+                lastname: getuser.lastname,
+                email: getuser.email,
+                type: account.type,
+                openingBalance: account.balance
+            }
         });
     }
 
