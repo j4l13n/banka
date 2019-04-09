@@ -8,6 +8,6 @@ const users = [
         type: "client",
         isAdmin: false
     },
-]
+];
 
 export default users;

@@ -8,6 +8,6 @@ const account = [
         status: "active",
         balance: 500000.0
     },
-]
+];
 
 export default account;

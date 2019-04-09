@@ -1,5 +1,5 @@
-import accountdb from './../mockdb/account'
-import userdb from './../mockdb/user'
+import accountdb from './../mockdb/account';
+import userdb from './../mockdb/user';
 
 class AccountsController {
     getAllAccounts(req, res) {
@@ -89,13 +89,13 @@ class AccountsController {
                 accountFound = account;
                 accountIndex = index;
             }
-        })
+        });
 
         if(!accountFound) {
             return res.status(404).send({
                 status: 404,
                 message: "Account not found"
-            })
+            });
         }
 
         const account = {

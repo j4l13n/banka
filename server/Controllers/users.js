@@ -57,7 +57,7 @@ class UsersController {
             password: req.body.password,
             type: "client",
             isAdmin: false
-        }
+        };
 
         userdb.push(user);
         return res.status(201).send({

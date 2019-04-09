@@ -313,6 +313,6 @@ describe("Users", () => {
 					res.body.should.have.property('message').eql('user not found');
 					done();
 				});
-		})
+		});
 	});
 });

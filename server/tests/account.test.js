@@ -119,7 +119,7 @@ describe("Accounts", () => {
                     res.body.should.be.a('object');
                     res.body.should.have.property('error').eql('Account not found');
                     done();
-                })
-        })
+                });
+        });
     });
 });
