@@ -47,10 +47,7 @@ describe("Accounts", () => {
     describe("POST / Accounts", () => {
         it("it should post a user bank account", (done) => {
             let account = {
-                id : 2,
-                accountNumber: 12334567898767,
-                createOn: Date.now(),
-                owner: 1,
+                owner: 109605343276,
                 type: "Current",
                 status: "active",
                 balance: 0

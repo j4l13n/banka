@@ -1,6 +1,7 @@
 import userdb from './../mockdb/user';
 import jwt from 'jsonwebtoken';
 import config from './../config/config';
+import crypto from 'crypto';
 import expressJwt from 'express-jwt';
 
 
@@ -13,7 +14,26 @@ class AuthController {
                 error: "User not found"
             });
         }
-        if(findOne.password !== req.body.password) {
+
+        const salt = findOne.salt;
+
+        const encryptPassword = function(password) {
+            if(!password) return '';
+            try {
+                return crypto
+                        .createHmac('sha1', salt)
+                        .update(password)
+                        .digest('hex');
+            } catch (err) {
+                return '';
+            }
+        };
+
+        const authenticate = (plainText) => {
+            return encryptPassword(plainText) === findOne.password;
+        };
+
+        if(!authenticate(req.body.password)) {
             res.status(401).send({
                 status: 401,
                 error: "Email and password don't match"
@@ -24,7 +44,7 @@ class AuthController {
             _id: findOne.id
         }, config.jwtSecret);
 
-        res.cookie("t", token, {
+        res.cookie("token", token, {
             expire: new Date() + 9999
         });
 
@@ -42,7 +62,17 @@ class AuthController {
     }
 
     signout(req, res) {
-        
+        res.clearCookie("token");
+        return res.status(200).send({
+            message: "Signed out"
+        });
+    }
+
+    requireSignin() {
+        return expressJwt({
+            secret: config.jwtSecret,
+            userProperty: 'auth'
+        });
     }
 }
 

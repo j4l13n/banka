@@ -28,9 +28,11 @@ class AccountsController {
     }
 
     createAccount(req, res) {
+        const randomInt = (low, high) =>  Math.floor(Math.random() * (high - low) + low);
+
         const account = {
-            id: accountdb.length + 1,
-            accountNumber:"12348765433456",
+            id: Math.floor(Date.now() * Math.random()),
+            accountNumber: randomInt(121112121, 999999999),
             createOn: Date.now(),
             owner: req.body.owner,
             type: req.body.type,
