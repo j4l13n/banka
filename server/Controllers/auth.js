@@ -67,13 +67,6 @@ class AuthController {
             message: "Signed out"
         });
     }
-
-    requireSignin() {
-        return expressJwt({
-            secret: config.jwtSecret,
-            userProperty: 'auth'
-        });
-    }
 }
 
 const authController = new AuthController();
