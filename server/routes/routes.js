@@ -1,6 +1,7 @@
 import express from 'express';
 import userController from './../Controllers/users';
 import accountController from './../Controllers/accounts';
+import transactionController from './../Controllers/transactions';
 
 const router = express.Router();
 
@@ -15,5 +16,7 @@ router.post("/api/v1/accounts", accountController.createAccount);
 router.get("/api/v1/accounts/:id", accountController.getAccount);
 router.delete("/api/v1/accounts/:id", accountController.deleteAccount);
 router.patch("/api/v1/accounts/:id", accountController.activateAccount);
+router.get("/api/v1/transactions", transactionController.getAll);
+router.post("/api/v1/transactions/:account/debit", transactionController.debitAccount);
 
 export default router;

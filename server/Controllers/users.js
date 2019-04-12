@@ -1,4 +1,6 @@
 import userdb from './../mockdb/user';
+import crypto from 'crypto';
+import { encryptPassword, makeSalt } from './authentication';
 
 class UsersController {
     getAllUsers(req, res) {
@@ -49,14 +51,33 @@ class UsersController {
             });
         }
 
+        const encryptPassword = function(password, salt) {
+            if(!password) return '';
+            try {
+                return crypto
+                        .createHmac('sha1', salt)
+                        .update(password)
+                        .digest('hex');
+            } catch (err) {
+                return '';
+            }
+        };
+        
+        const makeSalt = () => {
+            return Math.round((new Date().valueOf() * Math.random())) + '';
+        };
+
+        const salt = makeSalt();
+
         const user = {
             id: userdb.length + 1,
             firstname: req.body.firstname,
             lastname: req.body.lastname,
             email: req.body.email,
-            password: req.body.password,
+            password: encryptPassword(req.body.password, salt),
             type: "client",
-            isAdmin: false
+            isAdmin: false,
+            salt: salt
         };
 
         userdb.push(user);

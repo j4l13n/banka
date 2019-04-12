@@ -6,7 +6,8 @@ const users = [
         email: "juliushirwa@gmail.com",
         password: "reg183@hel89",
         type: "client",
-        isAdmin: false
+        isAdmin: false,
+        salt: '1234543'
     },
 ];
 
