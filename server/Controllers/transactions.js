@@ -119,7 +119,7 @@ class TransactionController {
                 const newtransaction = {
                     id: Math.floor(Date.now() * Math.random()),
                     createOn: Date.now(),
-                    type: "debit",
+                    type: "credit",
                     accountNumber: accountFound.accountNumber,
                     cashier: parseInt(req.body.cashier),
                     amount: parseFloat(req.body.amount),
