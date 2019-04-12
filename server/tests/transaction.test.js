@@ -15,84 +15,63 @@ describe("Transactions", () => {
                 .post(`/api/v1/transactions/${account}/debit`)
                 .send({ cashier: 1, amount: 5000, })
                 .end((err, res) => {
-                    const getAccount = accountdb.find(account => account.accountNumber === account);
-                    expect(getAccount).should.be.an('object');
+                    const findOne = accountdb.find(acc => acc.accountNumber === account);
+                    expect(findOne).should.be.an('object');
                     done();
                 });
         });
 
-        // it("it should return account found response", done => {
-        //     let account = "1233";
-        //     chai.request(app)
-        //         .post(`/api/v1/transactions/${account}/debit`)
-        //         .end((err, res) => {
-        //             res.should.have.status(200);
-        //             done();
-        //         });
-        // });
-
-        it("it should return an error when account not found", done => {
-            let account = "123444";
+        it("it should return not found when account is not valid", done => {
+            let acc = "1234";
             chai.request(app)
-                .post(`/api/v1/transactions/${account}/debit`)
-                .send({ cashier: 1, amount: 5000, })
+                .post(`/api/v1/transactions/${acc}/debit`)
                 .end((err, res) => {
                     res.should.have.status(404);
-                    res.body.should.have.property('message').eql('Account not found');
-                    done();
+                done();
             });
         });
 
-        it("it should return a response when an account is not found", done => {
-            let account = "1234";
-            chai.request(app)
-                .post(`/api/v1/transactions/${account}/debit`)
-                .send({ cashier: 1, amount: 5000, })
-                .end((err, res) => {
-                    res.should.have.status(404);
-                    res.body.should.be.an('object');
-                    res.body.should.have.property('message');
-                    done();
-                });
-        });
-
-        // it("it should return an error when amount not specified", done => {
+        // it("it should return accountfound when account", done => {
         //     let account = "1233";
         //     chai.request(app)
         //         .post(`/api/v1/transactions/${account}/debit`)
-        //         .send({ cashier: 1, })
+        //         .send({ cashier: 1, amount: 5000, })
         //         .end((err, res) => {
-        //             res.should.have.status(400);
+        //             res.should.have.status(200);
         //             res.body.should.be.an('object');
-        //             res.body.should.have.property('error');
-        //             done();
-        //         });
+        //         done();
+        //     });
         // });
 
-        // it("it should return an error when cashier not specified", done => {
-        //     let account = "1233";
+        // it("it should return an error when balance is not enough", done => {
+        //     let trans = {
+        //         cashier: 1,
+        //         amount: 6000000
+        //     };
+        //     let acc = "1233";
         //     chai.request(app)
-        //         .post(`/api/v1/transactions/${account}/debit`)
-        //         .send({ amount: 5000 })
+        //         .post(`/api/v1/transactions/${acc}/debit`)
+        //         .send(trans)
         //         .end((err, res) => {
         //             res.should.have.status(400);
-        //             res.body.should.be.an('object');
-        //             res.body.should.have.property('error');
         //             done();
         //         });
         // });
+        
+        
     });
 
+    // Test get request for transaction
     describe("GET /", () => {
         it("it should return all transactions", done => {
             chai.request(app)
                 .get(`/api/v1/transactions`)
                 .end((err, res) => {
                     res.should.have.status(200);
-                    res.body.should.be.a('object');
-                    res.body.should.have.property('message');
-                done();
-            });
+                    res.body.should.be.an('object');
+                    res.body.should.have.property('data');
+                    done();
+                });
         });
     });
 });
