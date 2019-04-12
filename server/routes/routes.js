@@ -36,6 +36,7 @@ router.delete("/api/v1/accounts/:id", accountController.deleteAccount);
 router.patch("/api/v1/accounts/:id", accountController.activateAccount);
 router.get("/api/v1/transactions", transactionController.getAll);
 router.post("/api/v1/transactions/:acc/debit", transactionController.debitAccount);
+router.post("/api/v1/transactions/:acc/credit", transactionController.creditAccount);
 router.get("/api/v1/signout", authController.signout);
 
 export default router;

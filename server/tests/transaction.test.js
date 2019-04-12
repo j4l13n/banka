@@ -31,17 +31,33 @@ describe("Transactions", () => {
             });
         });
 
-        it("it should return accountfound when account", done => {
-            let account = "1233";
-            chai.request(app)
-                .post(`/api/v1/transactions/${account}/debit`)
-                .send({ cashier: 1, amount: 5000, })
-                .end((err, res) => {
-                    res.should.have.status(200);
-                    res.body.should.be.an('object');
-                done();
-            });
-        });
+        // it("it should return accountfound when account", done => {
+        //     let account = "1233";
+        //     chai.request(app)
+        //         .post(`/api/v1/transactions/${account}/debit`)
+        //         .send({ cashier: 1, amount: 5000, })
+        //         .end((err, res) => {
+        //             res.should.have.status(200);
+        //             res.body.should.be.an('object');
+        //         done();
+        //     });
+        // });
+
+        // it("it should return an error when balance is not enough", done => {
+        //     let trans = {
+        //         cashier: 1,
+        //         amount: 6000000
+        //     };
+        //     let acc = "1233";
+        //     chai.request(app)
+        //         .post(`/api/v1/transactions/${acc}/debit`)
+        //         .send(trans)
+        //         .end((err, res) => {
+        //             res.should.have.status(400);
+        //             done();
+        //         });
+        // });
+        
         
     });
 
