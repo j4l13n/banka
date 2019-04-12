@@ -1,4 +1,7 @@
 import userdb from './../mockdb/user';
+import crypto from 'crypto';
+import jwt from 'jsonwebtoken';
+import config from './../config/config';
 
 class UsersController {
     getAllUsers(req, res) {
@@ -49,94 +52,53 @@ class UsersController {
             });
         }
 
-        const user = {
-            id: userdb.length + 1,
-            firstname: req.body.firstname,
-            lastname: req.body.lastname,
-            email: req.body.email,
-            password: req.body.password,
-            type: "client",
-            isAdmin: false
-        }
-
-        userdb.push(user);
-        return res.status(201).send({
-            status: 201,
-            message: 'user added successfully',
-        });
-    }
-
-    signUser(req, res) {
-        const getuser = userdb.find( user => user.email === req.body.email && user.password === req.body.password);
-        if (getuser) {
-            return res.status(201).send({
-                status: 201,
-                message: 'User signed in successfully.'
-            });
-        } else {
-            return res.status(400).send({
-                status: 400,
-                message: 'User can not be signed in.'
-            });
-        }
-    }
-
-    updateUser(req, res) {
-        const id = parseInt(req.params.id, 10);
-        let userFound;
-        let itemIndex;
-        userdb.map((user, index) => {
-            if (user.id === id) {
-                userFound = id;
-                itemIndex = index;
+        const encryptPassword = function(password, salt) {
+            if(!password) return '';
+            try {
+                return crypto
+                        .createHmac('sha1', salt)
+                        .update(password)
+                        .digest('hex');
+            } catch (err) {
+                return '';
             }
-        });
-
-        if (!userFound) {
-            return res.status(404).send({
-                status: 404,
-                message: 'user not found',
-            });
-        }
-
-        if (!req.body.firstname) {
-            return res.status(400).send({
-                status: 400,
-                message: "firstname is required",
-            });
-        } else if (!req.body.lastname) {
-            return res.status(400).send({
-                status: 400,
-                message: "lastname is required",
-            });
-        } else if (!req.body.email) {
-            return res.status(400).send({
-                status: 400,
-                message: "email is required",
-            });
-        } else if (!req.body.password) {
-            return res.status(400).send({
-                status: 400,
-                message: "password is required",
-            });
-        }
-
-        const newUser = {
-            id: id,
-            firstname: req.body.firstname,
-            lastname: req.body.lastname,
-            email: req.body.email,
-            password: req.body.password,
-            type: "client",
-            isAdmin: false,
+        };
+        
+        const makeSalt = () => {
+            return Math.round((new Date().valueOf() * Math.random())) + '';
         };
 
-        userdb.splice(itemIndex, 1, newUser);
+        const salt = makeSalt();
+        const user = {
+            id: Math.floor(Date.now() * Math.random()),
+            firstname: req.body.firstname,
+            lastname: req.body.lastname,
+            email: req.body.email,
+            password: encryptPassword(req.body.password, salt),
+            type: "client",
+            isAdmin: false,
+            salt: salt
+        };
+
+        userdb.push(user);
+        const token = jwt.sign({
+            _id: user.id
+        }, config.jwtSecret);
+
+        res.cookie("token", token, {
+            expire: new Date() + 9999
+        });
 
         return res.status(201).send({
             status: 201,
             message: 'user added successfully',
-            newUser,
+            data: {
+                token: token,
+                id: user.id,
+                firstName: user.firstname,
+                lastName: user.lastname,
+                email: user.email
+            }
         });
     }
 
