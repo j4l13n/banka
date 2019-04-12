@@ -18,14 +18,13 @@ class AuthController {
         const salt = findOne.salt;
 
         const encryptPassword = function(password) {
-            if(!password) return '';
             try {
                 return crypto
                         .createHmac('sha1', salt)
                         .update(password)
                         .digest('hex');
             } catch (err) {
-                return '';
+                
             }
         };
 

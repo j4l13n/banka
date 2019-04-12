@@ -41,6 +41,22 @@ describe("Users", () => {
 				done();
 			});
 		});
+
+		it("it should return an error when user sign in with bad password", done => {
+			const usr = {
+				email: "juliushirwa@gmail.com",
+				password: "regedi"
+			};
+			chai.request(app)
+				.post(`/api/v1/auth/signin`)
+				.send(usr)
+				.end((err, res) => {
+					res.should.have.status(401);
+					res.body.should.be.a('object');
+				done();
+			});
+		});
+
 		it("it should sign up a user", (done) => {
 			let user = {
 				firstname: "Kagabo",
@@ -70,6 +86,25 @@ describe("Users", () => {
 				lastname: "Faustin",
 				email: "faustinkagabo@gmail.com",
 				password: "reg183@hel89",
+				type: "client",
+				isAdmin: false
+			};
+
+			chai.request(app)
+				.post(`/api/v1/auth/signup`)
+				.send(user)
+				.end((err, res) => {
+					res.should.have.status(400);
+					res.body.should.be.a('object');
+					res.body.should.have.property('message').eql('firstname is required');
+					done();
+				});
+		});
+
+		it("return an error if password is not provided", (done) => {
+			let user = {
+				lastname: "Faustin",
+				email: "faustinkagabo@gmail.com",
 				type: "client",
 				isAdmin: false
 			};
@@ -174,6 +209,17 @@ describe("Users", () => {
 				.end((err, res) => {
 					res.should.have.status(200);
 					res.body.should.be.a('object');
+					done();
+				});
+		});
+
+		it("it should sign out a use", done => {
+			chai.request(app)
+				.get(`/api/v1/signout`)
+				.end((err, res) => {
+					res.should.have.status(200);
+					res.body.should.be.an('object');
+					res.body.should.have.property('message');
 					done();
 				});
 		});
