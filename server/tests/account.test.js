@@ -68,7 +68,7 @@ describe("Accounts", () => {
     // Tests for update an account
     describe("PUT/:id Accounts", () => {
         it("it should activate an account", (done) => {
-            let id = 1;
+            let id = 1233;
             chai.request(app)
                 .patch(`/api/v1/accounts/${id}`)
                 .send({ status: "active" })
@@ -96,7 +96,7 @@ describe("Accounts", () => {
     // Tests for delete account
     describe("DELETE / Account", () => {
         it("it should return response when an account is deleted", done => {
-            let id = 1;
+            let id = 1233;
             chai.request(app)
                 .delete(`/api/v1/accounts/${id}`)
                 .end((err, res) => {

@@ -11,7 +11,7 @@ class TransactionController {
     }
 
     debitAccount(req, res) {
-        const accountN = parseInt(req.params.acc);
+        const accountN = parseInt(req.params.acc, 10);
         let accountFound;
         let accountIndex;
         accountdb.map((acc, index) => {

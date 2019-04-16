@@ -13,7 +13,7 @@ describe("Transactions", () => {
             let account = "1233";
             chai.request(app)
                 .post(`/api/v1/transactions/${account}/debit`)
-                .send({ cashier: 1, amount: 5000, })
+                .send({ cashier: 1, amount: 5000 })
                 .end((err, res) => {
                     const findOne = accountdb.find(acc => acc.accountNumber === account);
                     expect(findOne).should.be.an('object');
@@ -31,15 +31,15 @@ describe("Transactions", () => {
             });
         });
 
-        // it("it should credit for a specific user account", done => {
-        //     let acc = "1233";
-        //     chai.request(app)
-        //         .post(`/api/v1/transactions/${acc}/credit`)
-        //         .end((err, res) => {
-        //             res.should.have.status(200);
-        //         done();
-        //     });
-        // });
+        it("it should credit for a specific user account", done => {
+            let acc = "1233";
+            chai.request(app)
+                .post(`/api/v1/transactions/${acc}/credit`)
+                .end((err, res) => {
+                    res.should.have.status(200);
+                done();
+            });
+        });
     });
 
     // Test get request for transaction

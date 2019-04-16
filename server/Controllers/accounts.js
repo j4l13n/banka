@@ -61,7 +61,7 @@ class AccountsController {
         let accountFound;
         let itemIndex;
         accountdb.map((account, index) => {
-            if (account.id === id) {
+            if (account.accountNumber === id) {
                 accountFound = account;
                 itemIndex = index;
             }
@@ -87,7 +87,7 @@ class AccountsController {
         let accountFound;
         let accountIndex;
         accountdb.map((account, index) => {
-            if(account.id === id) {
+            if(account.accountNumber === id) {
                 accountFound = account;
                 accountIndex = index;
             }
