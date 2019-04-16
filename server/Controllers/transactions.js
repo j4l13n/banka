@@ -24,7 +24,7 @@ class TransactionController {
         if(!accountFound) {
             return res.status(404).send({
                 status: 404,
-                message: "Account not found"
+                error: "Account not found"
             });
         } else {
 
