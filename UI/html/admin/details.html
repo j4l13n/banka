@@ -4,11 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Admin</title>
+    <title>Details</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="../../css/style.css">
 </head>
-<body>
-    <div class="container">
+    <body>
         <nav class="navbar">
             <span class="navbar-toggle" id="js-navbar-toggle">
                 <i class="fa fa-bars fa-color"></i>
@@ -29,8 +29,9 @@
                 </li>
             </ul>
         </nav>
-        <div class="row-admin">
-            <div class="column-8-admin">
+        <div class="container">
+            <div class="row-admin">
+                <div class="column-8-admin">
                 <div class="">
                     <input type="text" class="search" placeholder="Search specific account..." id="search" title="Search account">
                 </div>
@@ -39,40 +40,39 @@
                         <thead>
                             <tr>
                                 <th>Create on</th>
-                                <th>Account name</th>
-                                <th>Account number</th>
                                 <th>Type</th>
-                                <th>Action</th>
+                                <th>Account number</th>
+                                <th>Amount</th>
+                                <th>Balance</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
                                 <td>1/1/2019</td>
-                                <td>Karangwa Hirwa Julien</td>
+                                <td>Debit</td>
                                 <td>19566332586523758</td>
-                                <td>Savings</td>
-                                <td><a href="#" class="activate">activate</a></td>
+                                <td>15000</td>
+                                <td>7000</td>
                             </tr>
                             <tr>
                                 <td>1/1/2018</td>
-                                <td>Kagabo Faustin</td>
+                                <td>Debit</td>
                                 <td>19566332586523658</td>
-                                <td>Current</td>
-                                <td><a href="#" class="deactivate">deactivate</a></td>
+                                <td>15000</td>
+                                <td>7000</td>
                             </tr>
                             <tr>
                                 <td>1/1/2017</td>
-                                <td>Divin Claudel</td>
-                                <td>19566342586523658</td>
-                                <td>Savings</td>
-                                <td><a href="#" class="activate">activate</a></td>
+                                <td>Debit</td>
+                                <td>19566332586523658</td>
+                                <td>15000</td>
+                                <td>7000</td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
-            </div>
         </div>
-    </div>
-    <script src="../../js/admin.js"></script>
-</body>
+        <script src="./../../js/toggle.js"></script>
+        <script src="./../../js/details.js"></script>
+    </body>
 </html>
