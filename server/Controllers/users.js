@@ -2,6 +2,7 @@ import userdb from './../mockdb/user';
 import crypto from 'crypto';
 import jwt from 'jsonwebtoken';
 import config from './../config/config';
+import validate from '../validations/validations';
 
 class UsersController {
     getAllUsers(req, res) {
@@ -49,6 +50,26 @@ class UsersController {
             return res.status(400).send({
                 status: 400,
                 message: "password is required",
+            });
+        } else if(!validate.isValidName(req.body.firstname)) {
+            return res.status(400).send({
+                status: 400,
+                error: "firstname is not valid"
+            });
+        } else if(!validate.isValidName(req.body.lastname)) {
+            return res.status(400).send({
+                status: 400,
+                error: "lastname is not valid"
+            });
+        } else if(!validate.isValidEmail(req.body.email)) {
+            return res.status(400).send({
+                status: 400,
+                error: "email is not valid"
+            });
+        } else if(!validate.isValidPassword(req.body.password)) {
+            return res.status(400).send({
+                status: 400,
+                error: "password is not valid (use lowercase, uppercase and characters)"
             });
         }
 
