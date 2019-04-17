@@ -14,6 +14,37 @@
 
     }
 
+    .about-sign {
+        float: left;
+        margin-left: 20px;
+        margin-top: 20px;
+        text-align: center;
+        width: 60%;
+    }
+
+    .about-title {
+        font-size: 30px;
+        color: rgb(32, 67, 124, 0.6);
+        margin-left: 100px;
+        background-color: #f1f1f185;
+        padding-left: 50px;
+        padding-right: 50px;
+        border-radius: 5px;
+    }
+
+    .about-body {
+        margin-top: -30px;
+        font-size: 24px;
+        color: rgb(32, 67, 124, 0.6);
+        margin-left: 100px;
+        background-color: #f1f1f185;
+        padding-left: 50px;
+        padding-right: 50px;
+        border-radius: 5px;
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+
     label {
         display: block;
         position: relative;
@@ -480,6 +511,10 @@
         -o-background-size: cover;
         background-size: cover;
 
+    }
+
+    .about-sign {
+        display: none;
     }
 
     label {
@@ -951,6 +986,7 @@
     color: rgba(40, 106, 230, 0.281);
 }
 
+
 .main-nav {
     list-style-type: none;
     display: none;
@@ -1026,5 +1062,9 @@
         -moz-box-shadow: 0 0 20px white;
         -webkit-box-shadow: 0 0 20px white;
         box-shadow: 0 0 20px rgb(14, 4, 4);
+    }
+
+    .about-sign {
+        display: none;
     }
 }
