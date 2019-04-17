@@ -62,7 +62,7 @@ describe("Users", () => {
 				firstname: "Kagabo",
 				lastname: "Faustin",
 				email: "faustinkagabo@gmail.com",
-				password: "reg183@hel89",
+				password: "Regedit189",
 				type: "client",
 				isAdmin: false
 			};
@@ -116,6 +116,90 @@ describe("Users", () => {
 					res.should.have.status(400);
 					res.body.should.be.a('object');
 					res.body.should.have.property('message').eql('firstname is required');
+					done();
+				});
+		});
+
+		it("return an error if firstname is not valid", (done) => {
+			let user = {
+				firstname: "23nmeng",
+				lastname: "Faustin",
+				email: "faustinkagabo@gmail.com",
+				password: "regedt56",
+				type: "client",
+				isAdmin: false
+			};
+
+			chai.request(app)
+				.post(`/api/v1/auth/signup`)
+				.send(user)
+				.end((err, res) => {
+					res.should.have.status(400);
+					res.body.should.be.a('object');
+					res.body.should.have.property('error');
+					done();
+				});
+		});
+
+		it("return an error if password is not valid", (done) => {
+			let user = {
+				firstname: "Kagabo",
+				lastname: "Faustin",
+				email: "faustinkagabo@gmail.com",
+				password: "regedt56",
+				type: "client",
+				isAdmin: false
+			};
+
+			chai.request(app)
+				.post(`/api/v1/auth/signup`)
+				.send(user)
+				.end((err, res) => {
+					res.should.have.status(400);
+					res.body.should.be.a('object');
+					res.body.should.have.property('error');
+					done();
+				});
+		});
+
+		it("return an error if lastname is not valid", (done) => {
+			let user = {
+				firstname: "Kagabo",
+				lastname: "Faustin77",
+				email: "faustinkagabo@gmail.com",
+				password: "regedt56",
+				type: "client",
+				isAdmin: false
+			};
+
+			chai.request(app)
+				.post(`/api/v1/auth/signup`)
+				.send(user)
+				.end((err, res) => {
+					res.should.have.status(400);
+					res.body.should.be.a('object');
+					res.body.should.have.property('error');
+					done();
+				});
+		});
+
+		it("return an error if email is not valid", (done) => {
+			let user = {
+				firstname: "Kagabo",
+				lastname: "Faustin",
+				email: "faustinkagabo@gmailcom",
+				password: "regedt56",
+				type: "client",
+				isAdmin: false
+			};
+
+			chai.request(app)
+				.post(`/api/v1/auth/signup`)
+				.send(user)
+				.end((err, res) => {
+					res.should.have.status(400);
+					res.body.should.be.a('object');
+					res.body.should.have.property('error');
 					done();
 				});
 		});

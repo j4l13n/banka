@@ -1,5 +1,6 @@
 import accountdb from './../mockdb/account';
 import userdb from './../mockdb/user';
+import validate from './../validations/validations';
 
 class AccountsController {
     getAllAccounts(req, res) {
@@ -30,30 +31,42 @@ class AccountsController {
     createAccount(req, res) {
         const randomInt = (low, high) =>  Math.floor(Math.random() * (high - low) + low);
 
-        const account = {
-            id: Math.floor(Date.now() * Math.random()),
-            accountNumber: randomInt(121112121, 999999999),
-            createOn: Date.now(),
-            owner: req.body.owner,
-            type: req.body.type,
-            status: "active",
-            balance: 0
-        };
-
-        accountdb.push(account);
-        const getuser = userdb.find(user => user.id === req.body.owner);
-        return res.status(201).send({
-            status: 201,
-            message: "account created successfully.",
-            data: {
-                accountNumber: account.accountNumber,
-                firstname: getuser.firstname,
-                lastname: getuser.lastname,
-                email: getuser.email,
-                type: account.type,
-                openingBalance: account.balance
-            }
-        });
+        if(!validate.isValidNumber(req.body.owner)) {
+            return res.status(400).send({
+                status: 400,
+                error: "You must send owner Id"
+            });
+        } else if(!validate.isValidAccountType(req.body.type)) {
+            return res.status(400).send({
+                status: 400,
+                error: "Invalid account type"
+            });
+        } else {
+            const account = {
+                id: Math.floor(Date.now() * Math.random()),
+                accountNumber: randomInt(121112121, 999999999),
+                createOn: Date.now(),
+                owner: req.body.owner,
+                type: req.body.type,
+                status: "dormant",
+                balance: 0
+            };
+    
+            accountdb.push(account);
+            const getuser = userdb.find(user => user.id === req.body.owner);
+            return res.status(201).send({
+                status: 201,
+                message: "account created successfully.",
+                data: {
+                    accountNumber: account.accountNumber,
+                    firstname: getuser.firstname,
+                    lastname: getuser.lastname,
+                    email: getuser.email,
+                    type: account.type,
+                    openingBalance: account.balance
+                }
+            });
+        }
     }
 
     deleteAccount(req, res) {
