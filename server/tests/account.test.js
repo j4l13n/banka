@@ -48,9 +48,7 @@ describe("Accounts", () => {
         it("it should post a user bank account", (done) => {
             let account = {
                 owner: 109605343276,
-                type: "Current",
-                status: "active",
-                balance: 0
+                type: "current",
             };
 
             chai.request(app)
@@ -60,6 +58,38 @@ describe("Accounts", () => {
                     res.should.have.status(201);
                     res.body.should.be.a('object');
                     res.body.should.have.property('message').eql('account created successfully.');
+                    done();
+                });
+        });
+
+        it("it should return an error if account is string", (done) => {
+            let account = {
+                owner: "10960kl43276",
+                type: "current",
+            };
+
+            chai.request(app)
+                .post('/api/v1/accounts')
+                .send(account)
+                .end((err, res) => {
+                    res.should.have.status(400);
+                    res.body.should.be.a('object');
+                    done();
+                });
+        });
+
+        it("it should return an error if type is not current or savings", (done) => {
+            let account = {
+                owner: 109605343276,
+                type: "currentsll",
+            };
+
+            chai.request(app)
+                .post('/api/v1/accounts')
+                .send(account)
+                .end((err, res) => {
+                    res.should.have.status(400);
+                    res.body.should.be.a('object');
                     done();
                 });
         });

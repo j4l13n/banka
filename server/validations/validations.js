@@ -11,7 +11,7 @@ class Validate {
         return /^\d*$/.test(number);
     }
 
-    isValidAccountStatus(status) {
+    isValidAccountType(status) {
         if(status === "savings" || status === "current") {
             return true;
         } else {
