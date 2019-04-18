@@ -53,7 +53,7 @@ class AccountsController {
             };
     
             accountdb.push(account);
-            const getuser = userdb.find(user => user.id === req.body.owner);
+            const getuser = userdb.find(user => user.id === parseInt(req.body.owner));
             return res.status(201).send({
                 status: 201,
                 message: "account created successfully.",
