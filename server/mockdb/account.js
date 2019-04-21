@@ -14,7 +14,7 @@ const account = [
         createOn: Date.now(),
         owner: 1,
         type: "Savings",
-        status: "active",
+        status: "dormant",
         balance: 500000.0
     },
 ];
