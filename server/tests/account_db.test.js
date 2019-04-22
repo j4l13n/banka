@@ -33,5 +33,19 @@ describe("Test account from db", () => {
                     done();
                 });
         });
+
+        it("should activate or deactivate a user account", done => {
+            const acc = {
+                status: "active"
+            };
+            const accountNumber = 66671251;
+            chai.request(app)
+                .post(`/api/v2/account/${accountNumber}`)
+                .send(acc)
+                .end((err, res) => {
+                    res.should.have.status(200);
+                    done();
+                });
+        });
     });
 });
