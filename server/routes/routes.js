@@ -7,6 +7,7 @@ import checkUser from './protect';
 import 'babel-polyfill';
 import userControllerDb from './../controllers/users';
 import dotenv from 'dotenv';
+import accountControllerDb from './../controllers/accounts';
 
 dotenv.config();
 
@@ -32,5 +33,6 @@ router.get("/api/v1/signout", authController.signout);
 router.post("/api/v2/auth/signup", userControllerDb.signup);
 router.post("/api/v2/auth/signin", userControllerDb.signin);
 router.get("/api/v2/users", userControllerDb.getAll);
+router.post("/api/v2/accounts", accountControllerDb.create);
 
 export default router;

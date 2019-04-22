@@ -31,7 +31,7 @@ class Db {
         CREATE TABLE IF NOT EXISTS
         accounts(
             id SERIAL PRIMARY KEY,
-            accountNumber VARCHAR(150) NOT NULL,
+            accountNumber BIGINT UNIQUE NOT NULL,
             createOn TIMESTAMP,
             owner SERIAL REFERENCES users(id) ON DELETE CASCADE,
             type VARCHAR(40) NOT NULL,
