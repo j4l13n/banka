@@ -46,7 +46,7 @@ class Db {
           id SERIAL PRIMARY KEY,
           createOn TIMESTAMP,
           type VARCHAR(30) NOT NULL,
-          accountNumber VARCHAR(200) NOT NULL,
+          accountNumber BIGINT NOT NULL,
           cashier SERIAL REFERENCES users(id) ON DELETE CASCADE,
           amount INT NOT NULL,
           oldBalance INT NOT NULL,
