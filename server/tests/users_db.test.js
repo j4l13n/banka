@@ -38,6 +38,48 @@ describe("Users from database", () => {
                     done();
                 });
         });
+
+        it("should login a user", done => {
+            const user = {
+                email: "juliushirwa@gmail.com",
+                password: "regedit56"
+            };
+            chai.request(app)
+                .post(`/api/v2/auth/signin`)
+                .send(user)
+                .end((err, res) => {
+                    res.should.have.status(200);
+                    done();
+                });
+        });
+
+        it("should not login a user if user not found", done => {
+            const user = {
+                email: "julius@gmail.com",
+                password: "regedit"
+            };
+            chai.request(app)
+                .post(`/api/v2/auth/signin`)
+                .send(user)
+                .end((err, res) => {
+                    res.should.have.status(400);
+                    done();
+                });
+        });
+
+        it("should not login a user if password is incorrect", done => {
+            const user = {
+                email: "juliushirwa@gmail.com",
+                password: "regedit"
+            };
+            chai.request(app)
+                .post(`/api/v2/auth/signin`)
+                .send(user)
+                .end((err, res) => {
+                    res.should.have.status(400);
+                    done();
+                });
+        });
     }); 
 
     describe("GET /", () => {

@@ -30,6 +30,7 @@ router.get("/api/v1/signout", authController.signout);
 
 // banka version 2 api routes
 router.post("/api/v2/auth/signup", userControllerDb.signup);
+router.post("/api/v2/auth/signin", userControllerDb.signin);
 router.get("/api/v2/users", userControllerDb.getAll);
 
 export default router;
