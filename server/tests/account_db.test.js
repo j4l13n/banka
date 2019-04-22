@@ -5,6 +5,7 @@ import app from './../server';
 chai.use(chaiHttp);
 chai.should();
 
+let accountCreated = 0;
 describe("Test account from db", () => {
     describe("POST /", () => {
         it("it should create a user account", done => {
@@ -17,6 +18,7 @@ describe("Test account from db", () => {
                 .send(acc)
                 .end((err, res) => {
                     res.should.have.status(201);
+                    accountCreated = res.body.data.accountNumber;
                     done();
                 });
         });
@@ -33,15 +35,29 @@ describe("Test account from db", () => {
                     done();
                 });
         });
+    });
 
+    describe("PUT /", () => {
         it("should activate or deactivate a user account", done => {
             const acc = {
                 status: "active"
             };
-            const accountNumber = 66671251;
+            const accountNumber = accountCreated;
             chai.request(app)
-                .post(`/api/v2/account/${accountNumber}`)
+                .put(`/api/v2/account/${accountNumber}`)
                 .send(acc)
+                .end((err, res) => {
+                    res.should.have.status(200);
+                    done();
+                });
+        });
+    });
+
+    describe("DELETE /", () => {
+        it("it should delete an existing account", done => {
+            const accountNumber = accountCreated;
+            chai.request(app)
+                .delete(`/api/v2/account/${accountNumber}`)
                 .end((err, res) => {
                     res.should.have.status(200);
                     done();
