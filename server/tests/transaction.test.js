@@ -1,7 +1,7 @@
 import chai from 'chai';
 import chaiHttp from 'chai-http';
-import app from './../server';
-import accountdb from './../mockdb/account';
+import app from '../server';
+import accountdb from '../mockdb/account';
 
 chai.use(chaiHttp);
 chai.should();
