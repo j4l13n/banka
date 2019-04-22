@@ -75,6 +75,25 @@ class AccountController {
             }
         });
     }
+    deleteAccount(req, res) {
+        const {
+            accountNumber
+        } = req.params;
+        const acc = parseInt(accountNumber);
+        const query = `SELECT * FROM accounts WHERE accountnumber='${acc}'`;
+        Db.query(query).then(result => {
+            if(result.rows.length) {
+                const sql = `DELETE FROM accounts WHERE accountnumber='${acc}' RETURNING *`;
+                Db.query(sql).then(result => {
+                    console.log(result.rows);
+                    return res.status(200).json({
+                        status: 200,
+                        message: "Account successfully deleted"
+                    });
+                });
+            }
+        });
+    }
 }
 
 const account = new AccountController();
