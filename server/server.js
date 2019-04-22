@@ -2,6 +2,7 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import router from './routes/routes';
 import config from './config/config';
+import userController from './controllers/users';
 
 // Instatiate express
 let app = express();
