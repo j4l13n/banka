@@ -8,6 +8,7 @@ import 'babel-polyfill';
 import userControllerDb from './../controllers/users';
 import dotenv from 'dotenv';
 import accountControllerDb from './../controllers/accounts';
+import transactionControllerDb from './../controllers/transactions';
 
 dotenv.config();
 
@@ -36,6 +37,7 @@ router.get("/api/v2/users", userControllerDb.getAll);
 router.post("/api/v2/accounts", accountControllerDb.create);
 router.put("/api/v2/account/:accountNumber", accountControllerDb.activateOrDeactivate);
 router.delete("/api/v2/account/:accountNumber", accountControllerDb.deleteAccount);
+router.post("/api/v2/transactions/:accountNumber/debit", transactionControllerDb.debit);
 
 
 export default router;
