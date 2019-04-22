@@ -48,6 +48,33 @@ class AccountController {
             }
         });
     }
+
+    activateOrDeactivate(req, res) {
+        const {
+            accountNumber
+        } = req.params;
+        let acc = parseInt(accountNumber);
+        const {
+            status
+        } = req.body;
+        const query = `SELECT * FROM accounts WHERE accountnumber='${acc}'`;
+        Db.query(query).then(result => {
+            if(result.rows.length) {
+                
+                const sql = `UPDATE accounts SET status='${status}' WHERE accountnumber='${acc}' RETURNING *    `;
+                Db.query(sql).then(result => {
+                    console.log(result.rows);
+                    return res.status(200).json({
+                        status: 200,
+                        data: {
+                            accountNumber: acc,
+                            status: status
+                        }
+                    });
+                });
+            }
+        });
+    }
 }
 
 const account = new AccountController();

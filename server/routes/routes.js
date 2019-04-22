@@ -34,5 +34,7 @@ router.post("/api/v2/auth/signup", userControllerDb.signup);
 router.post("/api/v2/auth/signin", userControllerDb.signin);
 router.get("/api/v2/users", userControllerDb.getAll);
 router.post("/api/v2/accounts", accountControllerDb.create);
+router.post("/api/v2/account/:accountNumber", accountControllerDb.activateOrDeactivate);
+
 
 export default router;
