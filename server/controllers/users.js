@@ -2,6 +2,7 @@ import jwt from "jsonwebtoken";;
 import Db  from "./../db/index";
 import moment from 'moment';
 import crypto from 'crypto';
+import config from './../config/config';
 
 class UserController{
     signup(req,res){
@@ -91,6 +92,64 @@ class UserController{
                 return res.json({
                     status: 200,
                     data: result.rows
+                });
+            }
+        });
+    }
+
+    signin(req, res) {
+        const {
+            email,
+            password
+        } = req.body;
+
+        Db.query(`SELECT * FROM users WHERE email='${email}'`).then(result => {
+            if(result.rows.length) {
+                const encryptPassword = function(password) {
+                    try {
+                        return crypto
+                                .createHmac('sha1', result.rows[0].salt)
+                                .update(password)
+                                .digest('hex');
+                    } catch (err) {
+                        
+                    }
+                };
+        
+                const authenticate = (plainText) => {
+                    return encryptPassword(plainText) === result.rows[0].password;
+                };
+                if(authenticate(password)){
+                    console.log(result.rows[0].password);
+                    const token = jwt.sign({
+                        _id: result.rows[0].id,
+                        email: result.rows[0].email,
+                        password: result.rows[0].password,
+                        isAdmin: result.rows[0].isAdmin
+                    }, config.jwtSecret);
+            
+                    res.cookie("token", token, {
+                        expire: new Date() + 9999
+                    });
+                    res.status(200).json({
+                        status: 200,
+                        data: {
+                            token: token,
+                            firstname: result.rows[0].firstname,
+                            lastname: result.rows[0].lastname,
+                            email: result.rows[0].email
+                        }
+                    });
+                } else {
+                    res.status(400).json({
+                        status: 400,
+                        error: "password is not correct"
+                    });
+                }
+            } else {
+                res.status(400).json({
+                    status: 400,
+                    error: "user does not exists"
                 });
             }
         });
