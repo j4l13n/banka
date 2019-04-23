@@ -42,6 +42,7 @@ router.post("/api/v2/transactions/:accountNumber/credit", transactionControllerD
 router.get("/api/v2/accounts/:accountNumber/transactions", transactionControllerDb.userHistory);
 router.get("/api/v2/transactions/:id", transactionControllerDb.getTransaction);
 router.get("/api/v2/user/:email/accounts", accountControllerDb.viewAccounts);
+router.get("/api/v2/accounts", accountControllerDb.getAll);
 
 
 export default router;

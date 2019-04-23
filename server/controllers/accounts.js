@@ -115,6 +115,17 @@ class AccountController {
             }
         });
     }
+
+    getAll(req, res) {
+        Db.query("SELECT * FROM accounts").then((result) => {
+            if(result.rows.length) {
+                return res.json({
+                    status: 200,
+                    data: result.rows
+                });
+            }
+        });
+    }
 }
 
 const account = new AccountController();
