@@ -137,5 +137,15 @@ describe("Test transactions db", () => {
                     done();
                 });
         });
+
+        it("should get one transaction", done => {
+            const id = 2;
+            chai.request(app)
+                .get(`/api/v2/transactions/${id}`)
+                .end((err, res) => {
+                    res.should.have.status(200);
+                    done();
+                });
+        });
     });
 });
