@@ -47,6 +47,15 @@ describe("Test account from db", () => {
                     done();
                 }); 
         });
+
+        it("should return all accounts", done => {
+            chai.request(app)
+                .get(`/api/v2/accounts`)
+                .end((err, res) => {
+                    res.should.have.status(200);
+                    done();
+                }); 
+        });
     });
 
     describe("PUT /", () => {
