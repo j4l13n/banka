@@ -94,6 +94,27 @@ class AccountController {
             }
         });
     }
+
+    viewAccounts(req, res) {
+        const {
+            email
+        } = req.params;
+        const query1 = `SELECT * FROM users WHERE email = '${email}'`;
+        Db.query(query1).then(result => {
+            if(result.rows.length) {
+                const owner = result.rows[0].id;
+                const query2 = `SELECT * FROM accounts WHERE owner='${owner}'`;
+                Db.query(query2).then(result => {
+                    if(result.rows.length) {
+                        res.status(200).json({
+                            status: 200,
+                            data: result.rows
+                        }); 
+                    }
+                });
+            }
+        });
+    }
 }
 
 const account = new AccountController();

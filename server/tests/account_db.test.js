@@ -37,6 +37,18 @@ describe("Test account from db", () => {
         });
     });
 
+    describe("GET /", () => {
+        it("should return user all accounts", done => {
+            const email = "juliushirwa@gmail.com";
+            chai.request(app)
+                .get(`/api/v2/user/${email}/accounts`)
+                .end((err, res) => {
+                    res.should.have.status(200);
+                    done();
+                }); 
+        });
+    });
+
     describe("PUT /", () => {
         it("should activate or deactivate a user account", done => {
             const acc = {
