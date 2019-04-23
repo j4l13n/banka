@@ -8,8 +8,8 @@ class UserController{
     signup(req,res){
         const{
             email,
-            firstName,
-            lastName,
+            firstname,
+            lastname,
             password,
         } = req.body;
         const type = "client";
@@ -26,7 +26,7 @@ class UserController{
             }else{
                 const token = jwt.sign({
                     email,
-                    firstName
+                    firstname
                 },
                     'secret',
                     {
@@ -54,8 +54,8 @@ class UserController{
 
                 const newUser = [
                     email,
-                    firstName,
-                    lastName,
+                    firstname,
+                    lastname,
                     hashed_password,
                     type,
                     false,
@@ -64,7 +64,7 @@ class UserController{
                     salt
                 ];
                 console.log(newUser);
-                const sql = "INSERT INTO users(email,firstName,lastName,password,type,isAdmin,created_date,modified_date,salt) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9) RETURNING *";
+                const sql = "INSERT INTO users(email,firstname,lastname,password,type,isadmin,created_date,modified_date,salt) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9) RETURNING *";
                 
                 Db.query(sql, newUser).then((result) => {
                     console.log(result.rows);
@@ -72,8 +72,8 @@ class UserController{
                         status: 201,
                         data: {
                             token: token,
-                            firstname: firstName,
-                            lastname: lastName,
+                            firstname: firstname,
+                            lastname: lastname,
                             email: email,
                             hashed_password: hashed_password,
                             type: type,
