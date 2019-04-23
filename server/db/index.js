@@ -36,7 +36,7 @@ class Db {
             owner SERIAL REFERENCES users(id) ON DELETE CASCADE,
             type VARCHAR(40) NOT NULL,
             status VARCHAR(40) NOT NULL,
-            balance INT NOT NULL
+            balance NUMERIC NOT NULL
         )
         `;
 
@@ -48,11 +48,11 @@ class Db {
           type VARCHAR(30) NOT NULL,
           accountNumber BIGINT NOT NULL,
           cashier SERIAL REFERENCES users(id) ON DELETE CASCADE,
-          amount INT NOT NULL,
-          oldBalance INT NOT NULL,
-          newBalancee INT NOT NULL
+          amount NUMERIC NOT NULL,
+          oldBalance NUMERIC NOT NULL,
+          newBalancee NUMERIC NOT NULL
         )
-        `;
+        `; 
 
         this.initDb();
     }

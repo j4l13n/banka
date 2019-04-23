@@ -45,6 +45,11 @@ class TransactionsController {
                                         transactionType: result.rows[0].type,
                                         accountBalance: newBalance
                                     }
+                                }).catch(error => {
+                                    res.status(400).json({
+                                        status: 400,
+                                        error: "Account not created"
+                                    });
                                 });
                             });
                         } else {
@@ -53,12 +58,12 @@ class TransactionsController {
                                 error: "Your balance is not enough to withdraw."
                             });
                         }
-                    } else {
-                        res.status(400).json({
-                            status: 400,
-                            error: "Account number not found"
-                        });
                     }
+                }).catch(error => {
+                    res.status(404).json({
+                        status: 404,
+                        error: "Account not found"
+                    });
                 });
             } else {
                 res.status(400).json({
@@ -84,7 +89,7 @@ class TransactionsController {
             if(result.rows.length) {
                 const query2 = `SELECT * FROM accounts WHERE accountnumber='${parseAcc}'`;
                 Db.query(query2).then(result => {
-                    if(result.rows.length) {
+                    if(result.rows) {
                         const newBalance = result.rows[0].balance + parseAmount;
                         const sql = `UPDATE accounts SET balance='${newBalance}' WHERE accountnumber='${parseAcc}'`;
                         Db.query(sql).then(result => {
@@ -112,11 +117,16 @@ class TransactionsController {
                                     accountBalance: newBalance
                                 }
                             });
+                        }).catch(error => {
+                            res.status(400).json({
+                                status: 400,
+                                error: "User was not created. " + error
+                            });
                         });
                     } else {
                         res.status(400).json({
                             status: 400,
-                            error: "Account number not found"
+                            error: "Account number not found."
                         });
                     }
                 });
@@ -126,6 +136,11 @@ class TransactionsController {
                     error: "You are not allowed to credit, please use staff account!"
                 });
             }
+        }).catch(error => {
+            res.status(404).json({
+                status: 404,
+                error: error
+            });
         });
     }
 
@@ -173,6 +188,11 @@ class TransactionsController {
                             });
                         }
                     }
+                }).catch(error => {
+                    res.status(404).json({
+                        status: 404,
+                        error: "Account number not found"
+                    });
                 });
             }
         });

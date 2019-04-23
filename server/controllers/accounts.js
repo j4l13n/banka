@@ -91,6 +91,11 @@ class AccountController {
                         message: "Account successfully deleted"
                     });
                 });
+            } else {
+                res.status(404).json({
+                    status: 404,
+                    error: "Account not found to be deleted"
+                });
             }
         });
     }
@@ -110,7 +115,17 @@ class AccountController {
                             status: 200,
                             data: result.rows
                         }); 
+                    } else {
+                        res.status(404).json({
+                            status: 404,
+                            error: `no accounts found for ${email}` 
+                        });
                     }
+                });
+            } else {
+                res.status(404).json({
+                    status: 404,
+                    error: "user not found for checking his/her accounts"
                 });
             }
         });
@@ -132,18 +147,19 @@ class AccountController {
             });
         } else {
             Db.query("SELECT * FROM accounts").then((result) => {
-                if(result.rows.length) {
+                if(result.rows) {
                     return res.json({
                         status: 200,
                         data: result.rows
                     });
+                } else {
+                    res.status(404).json({
+                        status: 404,
+                        error: "There is no created account yet, you just can create it"
+                    });
                 }
             });
         }
-        
-    }
-
-    allActive(req, res) {
         
     }
 }
