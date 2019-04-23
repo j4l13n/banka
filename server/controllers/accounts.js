@@ -59,20 +59,37 @@ class AccountController {
         } = req.body;
         const query = `SELECT * FROM accounts WHERE accountnumber='${acc}'`;
         Db.query(query).then(result => {
+            console.log(result.rows);
             if(result.rows.length) {
-                
-                const sql = `UPDATE accounts SET status='${status}' WHERE accountnumber='${acc}' RETURNING *    `;
+                const sql = `UPDATE accounts SET status='${status}' WHERE accountnumber='${acc}' RETURNING *`;
                 Db.query(sql).then(result => {
                     console.log(result.rows);
-                    return res.status(200).json({
-                        status: 200,
-                        data: {
-                            accountNumber: acc,
-                            status: status
-                        }
-                    });
+                    if(result.rows) {
+                        return res.status(200).json({
+                            status: 200,
+                            data: {
+                                accountNumber: acc,
+                                status: status
+                            }
+                        });
+                    } else {
+                        res.status(404).json({
+                            status: 404,
+                            error: "Account not updated"
+                        });
+                    }
+                });
+            } else {
+                res.status(404).json({
+                    status: 404,
+                    error: "Account not found"
                 });
             }
+        }).catch(error => {
+            res.status(404).json({
+                status: 404,
+                error: "Account not found"
+            });
         });
     }
     deleteAccount(req, res) {
@@ -86,9 +103,21 @@ class AccountController {
                 const sql = `DELETE FROM accounts WHERE accountnumber='${acc}' RETURNING *`;
                 Db.query(sql).then(result => {
                     console.log(result.rows);
-                    return res.status(200).json({
-                        status: 200,
-                        message: "Account successfully deleted"
+                    if(result.rows) {
+                        return res.status(200).json({
+                            status: 200,
+                            message: "Account successfully deleted"
+                        });
+                    } else {
+                        res.status(404).json({
+                            status: 404,
+                            error: "Account not deleted"
+                        });
+                    }
+                }).catch(error => {
+                    res.status(404).json({
+                        status: 404,
+                        error: "Account not deleted"
                     });
                 });
             } else {
@@ -137,13 +166,23 @@ class AccountController {
         if(status === "dormant" || status === "active") {
             console.log(status);
             Db.query(`SELECT * FROM accounts WHERE status='${status}'`).then((result) => {
-                if(result.rows.length) {
+                if(result.rows) {
                     console.log(result.rows);
                     res.status(200).json({
                         status: 200,
                         data: result.rows
                     });
+                } else {
+                    res.status(404).json({
+                        status: 404,
+                        error: "No account found"
+                    });
                 }
+            }).catch(error => {
+                res.status(404).json({
+                    status: 404,
+                    error: "No account found"
+                });
             });
         } else {
             Db.query("SELECT * FROM accounts").then((result) => {
@@ -158,6 +197,11 @@ class AccountController {
                         error: "There is no created account yet, you just can create it"
                     });
                 }
+            }).catch(error => {
+                res.status(404).json({
+                    status: 404,
+                    error: "No accounts found in database"
+                });
             });
         }
         

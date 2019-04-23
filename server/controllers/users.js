@@ -25,14 +25,9 @@ class UserController{
                 });
             }else{
                 const token = jwt.sign({
-                    email,
-                    firstname
-                },
-                    'secret',
-                    {
-                        expiresIn: "1h",
-                    }
-                );
+                    email: email,
+                    isadmin: result.rows[0].isadmin
+                }, config.jwtSecret);
 
                 const encryptPassword = function(password, salt) {
                     try {
@@ -152,6 +147,91 @@ class UserController{
                     error: "user does not exists"
                 });
             }
+        });
+    }
+
+    createStaff(req, res) {
+        const{
+            email,
+            firstname,
+            lastname,
+            password,
+        } = req.body;
+        const type = "cashier";
+        const sql1 =`SELECT * FROM users WHERE email='${email}'`;
+        
+        Db.query(sql1).then((result) =>{
+            console.log(result.rows);
+
+            if (result.rows.length){
+                return res.status(400).json({
+                    status: 400,
+                    error: `user with ${email} as email already exists`
+                });
+            }else{
+                
+                const encryptPassword = function(password, salt) {
+                    try {
+                        return crypto
+                                .createHmac('sha1', salt)
+                                .update(password)
+                                .digest('hex');
+                    } catch (err) {
+                        
+                    }
+                };
+                
+                const makeSalt = () => {
+                    return Math.round((new Date().valueOf() * Math.random())) + '';
+                };
+                const salt = makeSalt();
+                const hashed_password = encryptPassword(password, salt);
+                
+
+                const newUser = [
+                    email,
+                    firstname,
+                    lastname,
+                    hashed_password,
+                    type,
+                    true,
+                    moment(new Date()),
+                    moment(new Date()),
+                    salt
+                ];
+                console.log(newUser);
+                const sql = "INSERT INTO users(email,firstname,lastname,password,type,isadmin,created_date,modified_date,salt) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9) RETURNING *";
+                
+                Db.query(sql, newUser).then((result) => {
+                    console.log(result.rows);
+                    if(result.rows) {
+                        const token = jwt.sign({
+                            email: email,
+                            type: type,
+                            isadmin: true
+                        }, config.jwtSecret);
+                        
+                        res.status(201).json({
+                            status: 201,
+                            data: {
+                                token: token,
+                                firstname: firstname,
+                                lastname: lastname,
+                                email: email,
+                                hashed_password: hashed_password,
+                                type: type,
+                                isAdmin: true
+                            }
+                        });
+                    } else {
+                        res.status(400).json({
+                            status: 400,
+                            error: "Staff not created"
+                        });
+                    }
+                });
+            }
+
         });
     }
     

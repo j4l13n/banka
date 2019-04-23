@@ -4,22 +4,24 @@ import moment from 'moment';
 class TransactionsController {
     debit(req, res) {
         const {
-            email,
+            email
+        } = req.userInfo.email;
+        const {
             amount
         } = req.body;
         const {
             accountNumber
         } = req.params;
-        const parseAmount = parseInt(amount);
+        const parseAmount = parseFloat(amount);
         const parseAcc = parseInt(accountNumber);
-        const query1 = `SELECT * FROM users WHERE email='${email}'`;
+        const query1 = `SELECT * FROM users WHERE email='${email}' and type='cashier'`;
         Db.query(query1).then(result => {
-            if(result.rows.length) {
+            if(result.rows) {
                 const query2 = `SELECT * FROM accounts WHERE accountnumber='${parseAcc}'`;
                 Db.query(query2).then(result => {
-                    if(result.rows.length) {
+                    if(result.rows) {
                         if(parseAmount < result.rows[0].balance) {
-                            const newBalance = result.rows[0].balance - parseAmount;
+                            const newBalance = parseFloat(result.rows[0].balance) - parseAmount;
                             const sql = `UPDATE accounts SET balance='${newBalance}' WHERE accountnumber='${parseAcc}'`;
                             Db.query(sql).then(result => {
                                 console.log(result.rows);
@@ -76,21 +78,23 @@ class TransactionsController {
 
     credit(req, res) {
         const {
-            email,
+            email
+        } = req.userInfo.email;
+        const {
             amount
         } = req.body;
         const {
             accountNumber
         } = req.params;
-        const parseAmount = parseInt(amount);
+        const parseAmount = parseFloat(amount);
         const parseAcc = parseInt(accountNumber);
-        const query1 = `SELECT * FROM users WHERE email='${email}'`;
+        const query1 = `SELECT * FROM users WHERE email='${email}' and type='cashier'`;
         Db.query(query1).then(result => {
-            if(result.rows.length) {
+            if(result.rows) {
                 const query2 = `SELECT * FROM accounts WHERE accountnumber='${parseAcc}'`;
                 Db.query(query2).then(result => {
                     if(result.rows) {
-                        const newBalance = result.rows[0].balance + parseAmount;
+                        const newBalance = parseFloat(result.rows[0].balance) + parseAmount;
                         const sql = `UPDATE accounts SET balance='${newBalance}' WHERE accountnumber='${parseAcc}'`;
                         Db.query(sql).then(result => {
                             console.log(result.rows);
@@ -129,6 +133,11 @@ class TransactionsController {
                             error: "Account number not found."
                         });
                     }
+                }).catch(error => {
+                    res.status(404).json({
+                        status: 404,
+                        error: "Account not found"
+                    });
                 });
             } else {
                 res.status(400).json({
@@ -160,7 +169,7 @@ class TransactionsController {
                 const admin = result.rows[0].isAdmin;
                 const query2 = `SELECT * FROM accounts WHERE accountnumber='${parseAcc}'`;
                 Db.query(query2).then(result => {
-                    if(result.rows.length) {
+                    if(result.rows) {
                         if(admin) {
                             const query3 = `SELECT * FROM transactions WHERE accountnumber='${result.rows[0].accountNumber}'`;
                             Db.query(query3).then(result => {
@@ -195,6 +204,11 @@ class TransactionsController {
                     });
                 });
             }
+        }).catch(error => {
+            res.status(404).json({
+                status: 404,
+                error: "User not found"
+            });
         });
     }
 
@@ -206,7 +220,7 @@ class TransactionsController {
         const transactionId = parseInt(id);
         const query = `SELECT * FROM transactions WHERE id = '${transactionId}'`;
         Db.query(query).then(result => {
-            if(result.rows.length) {
+            if(result.rows) {
                 res.status(200).json({
                     status: 200,
                     data: {
@@ -219,7 +233,17 @@ class TransactionsController {
                         accountBalance: result.rows[0].newbalance
                     }
                 });
+            } else {
+                res.status(404).json({
+                    status: 404,
+                    error: "Transaction not found"
+                });
             }
+        }).catch(error => {
+            res.status(404).json({
+                status: 404,
+                error: "Transaction not found"
+            });
         });
     }
 }
