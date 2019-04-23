@@ -112,4 +112,30 @@ describe("Test transactions db", () => {
                 });
         });
     });
+
+    describe("GET /", () => {
+        it("should get all transaction history for a specific account number", () => {
+            const email = "juliushirwa@gmail.com";
+            const accountNumber = 67603393;
+            chai.request(app)
+                .get(`/api/v2/accounts/${accountNumber}/transactions`)
+                .send(email)
+                .end((err, res) => {
+                    res.should.have.status(200);
+                    done();
+                });
+        });
+
+        it("should return an error if email not specified or not found", () => {
+            const email = "juliushi@gmail.com";
+            const accountNumber = 67603393;
+            chai.request(app)
+                .get(`/api/v2/accounts/${accountNumber}/transactions`)
+                .send(email)
+                .end((err, res) => {
+                    res.should.have.status(400);
+                    done();
+                });
+        });
+    });
 });

@@ -39,6 +39,7 @@ router.put("/api/v2/account/:accountNumber", accountControllerDb.activateOrDeact
 router.delete("/api/v2/account/:accountNumber", accountControllerDb.deleteAccount);
 router.post("/api/v2/transactions/:accountNumber/debit", transactionControllerDb.debit);
 router.post("/api/v2/transactions/:accountNumber/credit", transactionControllerDb.credit);
+router.get("/api/v2/accounts/:accountNumber/transactions", transactionControllerDb.userHistory);
 
 
 export default router;
