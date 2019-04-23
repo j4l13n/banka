@@ -65,7 +65,7 @@ describe("Test account from db", () => {
             };
             const accountNumber = accountCreated;
             chai.request(app)
-                .put(`/api/v2/account/${accountNumber}`)
+                .patch(`/api/v2/account/${accountNumber}`)
                 .send(acc)
                 .end((err, res) => {
                     res.should.have.status(200);

@@ -1,3 +1,5 @@
+import { stat } from "fs";
+
 class Validate {
     isValidEmail(email) {
         return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
@@ -11,8 +13,8 @@ class Validate {
         return /^\d*$/.test(number);
     }
 
-    isValidAccountType(status) {
-        if(status === "savings" || status === "current") {
+    isValidAccountType(type) {
+        if(type === "savings" || type === "current") {
             return true;
         } else {
             return false;
@@ -21,6 +23,14 @@ class Validate {
 
     isValidName(name) {
         return /^[a-zA-Z ]+$/.test(name);
+    }
+
+    isValidAccountStatus(status) {
+        if(status === "active" || status === "dormant" || status === "Active" || status === "Dormant" || status === "Draft" || status === "draft") {
+            return true;
+        } else {
+            return false;
+        }
     }
 }
 
