@@ -66,5 +66,50 @@ describe("Test transactions db", () => {
                     done();
                 });
         });
+
+        it("should credit for a specific account", done => {
+            const trans = {
+                email: "juliushirwa@gmail.com",
+                amount: 200
+            };
+            const acc = 67603393;
+            chai.request(app)
+                .post(`/api/v2/transactions/${acc}/credit`)
+                .send(trans)
+                .end((err, res) => {
+                    res.should.have.status(201);
+                    done();
+                });
+        });
+
+        it("should credit for a specific account", done => {
+            const trans = {
+                email: "juliushirwa@gmail.com",
+                amount: 200
+            };
+            const acc = 6760336666;
+            chai.request(app)
+                .post(`/api/v2/transactions/${acc}/credit`)
+                .send(trans)
+                .end((err, res) => {
+                    res.should.have.status(400);
+                    done();
+                });
+        });
+
+        it("should credit for a specific account", done => {
+            const trans = {
+                email: "juliushirw@gmail.com",
+                amount: 200
+            };
+            const acc = 67603393;
+            chai.request(app)
+                .post(`/api/v2/transactions/${acc}/credit`)
+                .send(trans)
+                .end((err, res) => {
+                    res.should.have.status(400);
+                    done();
+                });
+        });
     });
 });
