@@ -177,6 +177,31 @@ class TransactionsController {
             }
         });
     }
+
+    getTransaction(req, res) {
+        const {
+            id
+        } = req.params;
+
+        const transactionId = parseInt(id);
+        const query = `SELECT * FROM transactions WHERE id = '${transactionId}'`;
+        Db.query(query).then(result => {
+            if(result.rows.length) {
+                res.status(200).json({
+                    status: 200,
+                    data: {
+                        transactionId: result.rows[0].id,
+                        createOn: result.rows[0].createon,
+                        accountNumber: result.rows[0].accountnumber,
+                        amount: result.rows[0].amount,
+                        cashier: result.rows[0].cashier,
+                        TransactionType:result.rows[0].type,
+                        accountBalance: result.rows[0].newbalance
+                    }
+                });
+            }
+        });
+    }
 }
 
 const transactions = new TransactionsController();
