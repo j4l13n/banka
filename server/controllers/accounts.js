@@ -117,14 +117,34 @@ class AccountController {
     }
 
     getAll(req, res) {
-        Db.query("SELECT * FROM accounts").then((result) => {
-            if(result.rows.length) {
-                return res.json({
-                    status: 200,
-                    data: result.rows
-                });
-            }
-        });
+        const status = req.query.status;
+
+        if(status === "dormant" || status === "active") {
+            console.log(status);
+            Db.query(`SELECT * FROM accounts WHERE status='${status}'`).then((result) => {
+                if(result.rows.length) {
+                    console.log(result.rows);
+                    res.status(200).json({
+                        status: 200,
+                        data: result.rows
+                    });
+                }
+            });
+        } else {
+            Db.query("SELECT * FROM accounts").then((result) => {
+                if(result.rows.length) {
+                    return res.json({
+                        status: 200,
+                        data: result.rows
+                    });
+                }
+            });
+        }
+        
+    }
+
+    allActive(req, res) {
+        
     }
 }
 
