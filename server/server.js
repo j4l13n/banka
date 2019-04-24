@@ -14,6 +14,13 @@ app.use(bodyParser.urlencoded({ extended: false }));
 // Register my routes from routes folder
 app.use(router);
 
+app.get("/", (req, res) => {
+    res.status(200).json({
+        status: 200,
+        message: "Welcome to banka endpoint api, you just have to use banka endpoint documentation to use it."
+    });
+});
+
 app.get("*", (req, res) => {
     res.status(404).json({
         status: 404,

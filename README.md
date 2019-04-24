@@ -29,25 +29,22 @@ visit this link to browse [banka](https://j4l13n.github.io/banka/UI/)
 
 ### ENDPOINT API
 
-| Ressource URL                                 | Methods | Description                   |
-| --------------------------------------------- | ------- | ----------------------------- |
-| /                                             | GET     | welcome message               |
-| /api/v2/auth/signup                           | POST    | Create a user account         |
-| /api/v2/auth/signin                           | POST    | Login                         |
-| /api/v2/users                                 | GET     | Fetch all users               |
-| /api/v2/accounts                              | GET     | Fetch all accounts            |
-| /api/v2/accounts                              | POST    | Create a new account          |
-| /api/v2/account/:accountNumber                | PATCH   | Activate or Deactivate a      |
-|                                               |         |    specific user account      |
-| /api/v2/account/:accountNumber                | DELETE  | Delete an account             |
-| /api/v2/transactions/:accountNumber/debit     | POST    | Debit from an active account  |
-| /api/v2/transactions/:accountNumber/credit    | POST    | Credit to an active account   |
-| /api/v2/accounts/:accountNumber/transactions  | GET     | Fetch a specific transaction  |
-|                                               |         |                     history   |
-| /api/v2/transactions/:id                      | GET     | Fetch a specific transaction  |
-| /api/v2/user/:email/accounts                  | GET     | Fetch get specific user       |
-|                                               |         |   accounts                    |
-| /api/v2/accounts                              | GET     | Fetch all accounts            |
+| Ressource URL                                 | Methods | Description                            |
+| --------------------------------------------- | ------- | -------------------------------------- |
+| /                                             | GET     | welcome message                        |
+| /api/v2/auth/signup                           | POST    | Create a user account                  |
+| /api/v2/auth/signin                           | POST    | Login                                  |
+| /api/v2/users                                 | GET     | Fetch all users                        |
+| /api/v2/accounts                              | GET     | Fetch all accounts                     |
+| /api/v2/accounts                              | POST    | Create a new account                   |
+| /api/v2/account/:accountNumber                | PATCH   | Activate or Deactivate an account      |
+| /api/v2/account/:accountNumber                | DELETE  | Delete an account                      |
+| /api/v2/transactions/:accountNumber/debit     | POST    | Debit from an active account           |
+| /api/v2/transactions/:accountNumber/credit    | POST    | Credit to an active account            |
+| /api/v2/accounts/:accountNumber/transactions  | GET     | Fetch a specific transaction history   |
+| /api/v2/transactions/:id                      | GET     | Fetch a specific transaction           |
+| /api/v2/user/:email/accounts                  | GET     | Fetch get specific user accounts       |
+| /api/v2/accounts                              | GET     | Fetch all accounts                     |
 
 
 ## Tools Used
