@@ -1,4 +1,4 @@
-### Coveralls Report
+## Coveralls Report
 
 [![Build Status](https://travis-ci.org/vkarpov15/fizzbuzz-coverage.svg?branch=master)](https://travis-ci.org/vkarpov15/fizzbuzz-coverage)
 [![Coverage Status](https://coveralls.io/repos/vkarpov15/fizzbuzz-coverage/badge.svg)](https://coveralls.io/r/vkarpov15/fizzbuzz-coverage)
@@ -8,11 +8,11 @@
 
 Banka is an online platform to help users, admin and staff(cashier) to manage their activities.
 
-# Getting Started
+### Getting Started
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
 
-## Prerequisites
+### Prerequisites
 
 To install the software on your local machine, you need first to clone the repository or download the zip file and once this is set up you are going to need this packages. [NodeJS]
 
@@ -20,18 +20,18 @@ To install the software on your local machine, you need first to clone the repos
  [Node Package Installer - NPM] this usually comes with Node or YARN in case NPM doesn't work.
 ```
 
-## Installing
+### Installing
 
 The installation of this application is fairly straightforward, After cloning this repository to your local machine,CD into the package folder using your terminal and run the following
 
-## clone the app
+### clone the app
 
 ```
 > git clone https://github.com/j4l13n/banka.git
 ```
 
 
-## install packages
+### install packages
 
 ```
 > npm install
@@ -39,13 +39,13 @@ The installation of this application is fairly straightforward, After cloning th
 
 It will install the node_modules which will help you run the project on your local machine.
 
-## Run the server
+### Run the server
 
 ```
 > npm start
 ```
 
-## Run the test
+### Run the test
 
 ```
 > npm test
