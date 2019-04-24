@@ -6,7 +6,9 @@ class AccountController {
     create(req, res) {
         const randomInt = (low, high) =>  Math.floor(Math.random() * (high - low) + low);
         const {
-            email,
+            email
+        } = req.userInfo;
+        const {
             type
         } = req.body;
 
@@ -24,7 +26,7 @@ class AccountController {
                     accountNumber,
                     createOn,
                     owner,
-                    type,
+                    type.toLowerCase(),
                     status,
                     balance,
                 ];
@@ -61,7 +63,13 @@ class AccountController {
         Db.query(query).then(result => {
             console.log(result.rows);
             if(result.rows.length) {
-                const sql = `UPDATE accounts SET status='${status}' WHERE accountnumber='${acc}' RETURNING *`;
+                if(result.rows[0].status === status) {
+                    res.status(400).json({
+                        status: 400,
+                        error: "account is " + status
+                    });
+                } else {
+                    const sql = `UPDATE accounts SET status='${status}' WHERE accountnumber='${acc}' RETURNING *`;
                 Db.query(sql).then(result => {
                     console.log(result.rows);
                     if(result.rows) {
@@ -79,6 +87,7 @@ class AccountController {
                         });
                     }
                 });
+                }
             } else {
                 res.status(404).json({
                     status: 404,
