@@ -15,10 +15,10 @@ const router = Router();
 
 // banka version 2 api routes
 router.post("/api/v2/auth/signup", userValidate.validateSignup, userControllerDb.signup);
-router.post("/api/v2/auth/admin", userValidate.validateSignup, userControllerDb.createStaff);
+router.post("/api/v2/auth/admin", userValidate.validateAdminSignup, userControllerDb.createStaff);
 router.post("/api/v2/auth/signin", userValidate.validateSignin, userControllerDb.signin);
 router.get("/api/v2/users", userControllerDb.getAll);
-router.post("/api/v2/accounts", accountValidate.createValidate, accountControllerDb.create);
+router.post("/api/v2/accounts", protect.checkUser, accountValidate.createValidate, accountControllerDb.create);
 router.patch("/api/v2/account/:accountNumber", accountValidate.updateValidate, accountControllerDb.activateOrDeactivate);
 router.delete("/api/v2/account/:accountNumber", protect.checkAdmin, accountValidate.deleteValidate, accountControllerDb.deleteAccount);
 router.post("/api/v2/transactions/:accountNumber/debit", protect.checkCashier, transactionValidate.debitValidate, transactionControllerDb.debit);

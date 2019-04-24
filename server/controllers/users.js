@@ -26,7 +26,7 @@ class UserController{
             }else{
                 const token = jwt.sign({
                     email: email,
-                    isadmin: result.rows[0].isadmin
+                    isadmin: false
                 }, config.jwtSecret);
 
                 const encryptPassword = function(password, salt) {
@@ -119,7 +119,6 @@ class UserController{
                     const token = jwt.sign({
                         _id: result.rows[0].id,
                         email: result.rows[0].email,
-                        password: result.rows[0].password,
                         isAdmin: result.rows[0].isAdmin
                     }, config.jwtSecret);
             
@@ -156,8 +155,8 @@ class UserController{
             firstname,
             lastname,
             password,
+            type
         } = req.body;
-        const type = "cashier";
         const sql1 =`SELECT * FROM users WHERE email='${email}'`;
         
         Db.query(sql1).then((result) =>{

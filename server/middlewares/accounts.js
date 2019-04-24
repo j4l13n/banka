@@ -2,7 +2,7 @@ import validation from './../validations/validations';
 
 class AccountValidate {
     createValidate(req, res, next) {
-        if(!validation.isValidAccountType(req.body.type)) {
+        if(!validation.isValidAccountType(req.body.type.toLowerCase())) {
             res.status(400).json({
                 status: 400,
                 error: "type must be savings or current"

@@ -32,6 +32,14 @@ class Validate {
             return false;
         }
     }
+
+    isValidUserType(type) {
+        if(type === "admin" || type === "cashier") {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }
 
 const validate = new Validate();

@@ -25,13 +25,13 @@ const checkCashier = (req, res, next) => {
         } else {
             res.status(403).json({
                 status: 403,
-                error: "User not allowed to access this route"
+                error: "User not allowed for this access"
             });
         }
     } catch (error) {
         return res.status(401).send({
             status: 401,
-            error: "not allowed for access"
+            error: "User not allowed for this access"
         });
     }
 };
@@ -52,7 +52,7 @@ const checkAdmin = (req, res, next) => {
     } catch (error) {
         return res.status(401).send({
             status: 401,
-            error: "not allowed for access"
+            error: "not allowed for this access"
         });
     }
 };
