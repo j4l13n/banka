@@ -14,6 +14,41 @@ app.use(bodyParser.urlencoded({ extended: false }));
 // Register my routes from routes folder
 app.use(router);
 
+app.get("*", (req, res) => {
+    res.status(404).json({
+        status: 404,
+        error: "This endpoint is no available, you just have to check banka endpoint to documentation"
+    });
+});
+
+app.post("*", (req, res) => {
+    res.status(404).json({
+        status: 404,
+        error: "This endpoint is no available, you just have to check banka endpoint to documentation"
+    });
+});
+
+app.put("*", (req, res) => {
+    res.status(404).json({
+        status: 404,
+        error: "This endpoint is no available, you just have to check banka endpoint to documentation"
+    });
+});
+
+app.patch("*", (req, res) => {
+    res.status(404).json({
+        status: 404,
+        error: "This endpoint is no available, you just have to check banka endpoint to documentation"
+    });
+});
+
+app.delete("*", (req, res) => {
+    res.status(404).json({
+        status: 404,
+        error: "This endpoint is no available, you just have to check banka endpoint to documentation"
+    });
+});
+
 
 // Start the server on specified port
 app.listen(config.port, () => {
