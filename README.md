@@ -84,6 +84,15 @@ To install the software on your local machine, you need first to clone the repos
 
 The installation of this application is fairly straightforward, After cloning this repository to your local machine,CD into the package folder using your terminal and run the following
 
+## clone the app
+
+```
+> git clone https://github.com/j4l13n/banka.git
+```
+
+
+## install packages
+
 ```
 > npm install
 ```
