@@ -3,6 +3,9 @@ import bodyParser from 'body-parser';
 import router from './routes/routes';
 import config from './config/config';
 import userController from './controllers/users';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 // Instatiate express
 let app = express();

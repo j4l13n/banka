@@ -1,4 +1,4 @@
-import jwt from "jsonwebtoken";;
+import jwt from "jsonwebtoken";
 import Db  from "./../db/index";
 import moment from 'moment';
 import crypto from 'crypto';
@@ -18,7 +18,7 @@ class UserController{
         Db.query(sql1).then((result) =>{
             console.log(result.rows);
 
-            if (result.rows.length){
+            if (result.rows){
                 return res.status(400).json({
                     status: 400,
                     error: `user with ${email} as email already exists`
