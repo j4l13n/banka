@@ -34,7 +34,7 @@ class Validate {
     }
 
     isValidUserType(type) {
-        if(type === "admin" || type === "cashier") {
+        if(type === "admin" || type === "cashier" || type === "client") {
             return true;
         } else {
             return false;

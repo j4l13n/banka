@@ -2,10 +2,15 @@ import validation from './../validations/validations';
 
 class AccountValidate {
     createValidate(req, res, next) {
-        if(!validation.isValidAccountType(req.body.type.toLowerCase())) {
+        if(!req.body.type) {
             res.status(400).json({
                 status: 400,
-                error: "type must be savings or current"
+                error: `Type field is required`
+            });
+        } else if(!validation.isValidAccountType(req.body.type.toLowerCase())) {
+            res.status(400).json({
+                status: 400,
+                error: `type field must contain savings and current type only`
             });
         } else {
             next();
@@ -13,10 +18,15 @@ class AccountValidate {
     }
 
     updateValidate(req, res, next) {
-        if(!validation.isValidAccountStatus(req.body.status)) {
+        if(!req.body.status) {
             res.status(400).json({
                 status: 400,
-                error: "status must be active, dormant or draft"
+                error: `Status field is required`
+            });
+        } else if(!validation.isValidAccountStatus(req.body.status)) {
+            res.status(400).json({
+                status: 400,
+                error: `status field must contain active, dormant or draft`
             });
         } else {
             next();
