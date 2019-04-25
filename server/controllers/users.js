@@ -119,9 +119,9 @@ class UserController{
                 if(authenticate(password)){
                     console.log(result.rows[0].password);
                     const token = jwt.sign({
-                        _id: result.rows[0].id,
                         email: result.rows[0].email,
-                        isAdmin: result.rows[0].isAdmin
+                        type: result.rows[0].type,
+                        isadmin: result.rows[0].isAdmin
                     }, config.jwtSecret);
             
                     res.cookie("token", token, {
@@ -139,13 +139,13 @@ class UserController{
                 } else {
                     res.status(400).json({
                         status: 400,
-                        error: "password is not correct"
+                        error: `The password entered is not correct, try again`
                     });
                 }
             } else {
-                res.status(400).json({
-                    status: 400,
-                    error: "user does not exists"
+                res.status(404).json({
+                    status: 404,
+                    error: `the email was not found, you should signup first.`
                 });
             }
         });
@@ -223,11 +223,6 @@ class UserController{
                                 type: type,
                                 isAdmin: true
                             }
-                        });
-                    } else {
-                        res.status(400).json({
-                            status: 400,
-                            error: "Staff not created"
                         });
                     }
                 });

@@ -8,6 +8,8 @@ chai.should();
 const { expect } = chai; 
 
 const baseUrl = `/api/v2/`;
+let token = ``;
+let adminToken = ``;
 
 describe("Test all users routes", () => {
     describe("POST /user", () => {
@@ -376,9 +378,27 @@ describe("Test all users routes", () => {
                 });
         });
 
+        it("should create new admin", done => {
+            const user = {
+                email: "julien@gmail.com",
+                firstname: "hirwa",
+                lastname: "julien",
+                password: "Regedit56",
+                type: "cashier"
+            };
+            chai.request(app)
+            .post(`${baseUrl}auth/admin`)
+            .send(user)
+            .end((err, res) => {
+                res.should.have.status(201);
+                adminToken = res.body.data.token;
+                done();
+            });
+        });
+
         it("should return admin already exist", done => {
             const user = {
-                email: "admin@gmail.com",
+                email: "julien@gmail.com",
                 firstname: "hirwa",
                 lastname: "julien",
                 password: "Regedit56",
@@ -393,39 +413,6 @@ describe("Test all users routes", () => {
                 });
         });
 
-        it("should create normal user", done => {
-            const user = {
-                email: "new@gmail.com",
-                firstname: "hirwa",
-                lastname: "julien",
-                password: "Regedit56"
-            };
-            chai.request(app)
-            .post(`${baseUrl}auth/signup`)
-            .send(user)
-            .end((err, res) => {
-                res.should.have.status(201);
-                done();
-            });
-        });
-
-        it("should create new admin", done => {
-            const user = {
-                email: "julien@gmail.com",
-                firstname: "hirwa",
-                lastname: "julien",
-                password: "Regedit56",
-                type: "cashier"
-            };
-            chai.request(app)
-            .post(`${baseUrl}auth/admin`)
-            .send(user)
-            .end((err, res) => {
-                res.should.have.status(201);
-                done();
-            });
-        });
-
         it("it should login a user", done => {
             const user = {
                 email: "julien@gmail.com",
@@ -436,10 +423,72 @@ describe("Test all users routes", () => {
                 .send(user)
                 .end((err, res) => {
                     res.should.have.status(200);
+                    token = res.body.data.token;
+                    done();
+                });
+        });
+
+        it("it should return an error when email not found", done => {
+            const user = {
+                email: "juliushirwa@gmail.com",
+                password: "Regedit56"
+            };
+            chai.request(app)
+                .post(`${baseUrl}auth/signin`)
+                .send(user)
+                .end((err, res) => {
+                    res.should.have.status(404);
                     done();
                 });
         });
     });
+
+    describe("POST /", () => {
+        it("user should be able to create an account", done => {
+            const user = {
+                type: "current"
+            };
+            chai.request(app)
+                .post(`${baseUrl}accounts`)
+                .send(user)
+                .set("Authorization", "Bearer " + token)
+                .end((err, res) => {
+                    res.should.have.status(201);
+                    done();
+                });
+        });
+
+        describe("GET /users", () => {
+            it("should return all users for admin", done => {
+                chai.request(app)
+                    .get(`${baseUrl}users`)
+                    .set("Authorization", "Bearer " + adminToken)
+                    .end((err, res) => {
+                        res.should.have.status(200);
+                        done();
+                    });
+            });
+        });
+    });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     describe("drop all tables", () => {
         it("it should drop transactions table", () => {
