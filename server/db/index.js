@@ -2,6 +2,7 @@ import pg, { Pool } from 'pg';
 import dotenv from 'dotenv';
 import config from './../config/config'
 import moment from 'moment';
+import crypto from 'crypto';
 
 dotenv.config();
 
@@ -108,15 +109,12 @@ class Db {
         await this.query(this.accountsTable);
         await this.query(this.transactionsTable);
         await this.query("SELECT * FROM users WHERE email='admin@gmail.com'").then(result => {
-            if(result.rows) {
+            if(result.rows.length) {
                 console.log("Admin already exists")
             } else {
-                this.query(sql, newUser).then(result => {
-                    if(result.rows) {
-                        console.log("admin created");
-                    } else {
-                        console.log("Admin is not created");
-                    }
+                this.query(this.text, this.newUser).then(result => {
+                    console.log(this.newUser);
+                    console.log("Admin created")
                 });
             }
         });

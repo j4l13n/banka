@@ -376,54 +376,54 @@ describe("Test all users routes", () => {
                 });
         });
 
-        // it("should return admin already exist", done => {
-        //     const user = {
-        //         email: "admin@gmail.com",
-        //         firstname: "hirwa",
-        //         lastname: "julien",
-        //         password: "Regedit56",
-        //         type: "cashier"
-        //     };
-        //     chai.request(app)
-        //         .post(`${baseUrl}auth/admin`)
-        //         .send(user)
-        //         .end((err, res) => {
-        //             res.should.have.status(400);
-        //             done();
-        //         });
-        // });
+        it("should return admin already exist", done => {
+            const user = {
+                email: "julien@gmail.com",
+                firstname: "hirwa",
+                lastname: "julien",
+                password: "Regedit56",
+                type: "cashier"
+            };
+            chai.request(app)
+                .post(`${baseUrl}auth/admin`)
+                .send(user)
+                .end((err, res) => {
+                    res.should.have.status(400);
+                    done();
+                });
+        });
 
-        // it("should create new user", done => {
-        //     const user = {
-        //         email: "julien@gmail.com",
-        //         firstname: "hirwa",
-        //         lastname: "julien",
-        //         password: "Regedit56",
-        //     };
-        //     chai.request(app)
-        //     .post(`${baseUrl}auth/signup`)
-        //     .send(user)
-        //     .end((err, res) => {
-        //         res.should.have.status(201);
-        //         done();
-        //     });
-        // });
+        it("should create new user", done => {
+            const user = {
+                email: "julien@gmail.com",
+                firstname: "hirwa",
+                lastname: "julien",
+                password: "Regedit56",
+            };
+            chai.request(app)
+            .post(`${baseUrl}auth/signup`)
+            .send(user)
+            .end((err, res) => {
+                res.should.have.status(201);
+                done();
+            });
+        });
 
-        // it("should return user already exist", done => {
-        //     const user = {
-        //         email: "julien@gmail.com",
-        //         firstname: "hirwa",
-        //         lastname: "julien",
-        //         password: "Regedit56",
-        //     };
-        //     chai.request(app)
-        //         .post(`${baseUrl}auth/signup`)
-        //         .send(user)
-        //         .end((err, res) => {
-        //             res.should.have.status(400);
-        //             done();
-        //         });
-        // });
+        it("should return user already exist", done => {
+            const user = {
+                email: "julien@gmail.com",
+                firstname: "hirwa",
+                lastname: "julien",
+                password: "Regedit56",
+            };
+            chai.request(app)
+                .post(`${baseUrl}auth/signup`)
+                .send(user)
+                .end((err, res) => {
+                    res.should.have.status(400);
+                    done();
+                });
+        });
     });
 
     describe("drop all tables", () => {
