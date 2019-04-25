@@ -18,7 +18,7 @@ class UserController{
         Db.query(sql1).then((result) =>{
             console.log(result.rows);
 
-            if (result.rows){
+            if (result.rows.length){
                 return res.status(400).json({
                     status: 400,
                     error: `user with ${email} as email already exists`

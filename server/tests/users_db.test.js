@@ -10,6 +10,7 @@ const { expect } = chai;
 const baseUrl = `/api/v2/`;
 let token = ``;
 let adminToken = ``;
+let staffToken = ``;
 
 describe("Test all users routes", () => {
     describe("POST /user", () => {
@@ -384,7 +385,7 @@ describe("Test all users routes", () => {
                 firstname: "hirwa",
                 lastname: "julien",
                 password: "Regedit56",
-                type: "cashier"
+                type: "admin"
             };
             chai.request(app)
             .post(`${baseUrl}auth/admin`)
@@ -392,6 +393,58 @@ describe("Test all users routes", () => {
             .end((err, res) => {
                 res.should.have.status(201);
                 adminToken = res.body.data.token;
+                done();
+            });
+        });
+
+        it("should create new cashier", done => {
+            const user = {
+                email: "cashier@gmail.com",
+                firstname: "hirwa",
+                lastname: "julien",
+                password: "Regedit56",
+                type: "cashier"
+            };
+            chai.request(app)
+            .post(`${baseUrl}auth/admin`)
+            .send(user)
+            .end((err, res) => {
+                res.should.have.status(201);
+                staffToken = res.body.data.token;
+                done();
+            });
+        });
+
+        it("should return an error when user found", done => {
+            const user = {
+                email: "cashier@gmail.com",
+                firstname: "hirwa",
+                lastname: "julien",
+                password: "Regedit56",
+                type: "cashier"
+            };
+            chai.request(app)
+            .post(`${baseUrl}auth/signup`)
+            .send(user)
+            .end((err, res) => {
+                res.should.have.status(400);
+                done();
+            });
+        });
+
+        it("should create new user", done => {
+            const user = {
+                email: "user@gmail.com",
+                firstname: "hirwa",
+                lastname: "julien",
+                password: "Regedit56"
+            };
+            chai.request(app)
+            .post(`${baseUrl}auth/signup`)
+            .send(user)
+            .end((err, res) => {
+                res.should.have.status(201);
+                token = res.body.data.token;
                 done();
             });
         });
@@ -441,6 +494,8 @@ describe("Test all users routes", () => {
                     done();
                 });
         });
+
+        
     });
 
     describe("POST /", () => {

@@ -88,6 +88,16 @@ class Db {
         ];
         this.text = "INSERT INTO users(email,firstname,lastname,password,type,isadmin,created_date,modified_date,salt) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9) RETURNING *";
 
+        this.account = [
+            100000,
+            moment(new Date()),
+            1,
+            "savings",
+            "active",
+            2000,
+        ];
+        this.accountQuery = "INSERT INTO accounts(accountnumber, createon, owner, type, status, balance) VALUES($1,$2,$3,$4,$5,$6) RETURNING *";
+        
         this.initDb();
     }
 
@@ -117,6 +127,9 @@ class Db {
                     console.log("Admin created")
                 });
             }
+        });
+        await this.query(this.accountQuery, this.account).then(result => {
+            console.log("Account created");
         });
 
         console.log("users table created");
