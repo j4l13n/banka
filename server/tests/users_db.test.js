@@ -395,7 +395,7 @@ describe("Test all users routes", () => {
 
         it("should create normal user", done => {
             const user = {
-                email: "julien@gmail.com",
+                email: "new@gmail.com",
                 firstname: "hirwa",
                 lastname: "julien",
                 password: "Regedit56"

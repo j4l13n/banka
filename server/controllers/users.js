@@ -26,6 +26,7 @@ class UserController{
             }else{
                 const token = jwt.sign({
                     email: email,
+                    type: type,
                     isadmin: false
                 }, config.jwtSecret);
 
@@ -62,6 +63,7 @@ class UserController{
                 const sql = "INSERT INTO users(email,firstname,lastname,password,type,isadmin,created_date,modified_date,salt) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9) RETURNING *";
                 
                 Db.query(sql, newUser).then((result) => {
+                    console.log(newUser);
                     console.log(result.rows);
                     res.status(201).json({
                         status: 201,
