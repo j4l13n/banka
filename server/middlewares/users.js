@@ -1,4 +1,3 @@
-import validator from 'validator'; 
 import validation from './../validations/validations'; 
 
 class UserValidate {
