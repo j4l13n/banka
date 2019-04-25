@@ -74,7 +74,7 @@ class Db {
         const hashed_password = encryptPassword("regedit56", salt);
         
 
-        const newUser = [
+        this.newUser = [
             "admin@gmail.com",
             "admin",
             "admin",
@@ -85,7 +85,7 @@ class Db {
             moment(new Date()),
             salt
         ];
-        const sql = "INSERT INTO users(email,firstname,lastname,password,type,isadmin,created_date,modified_date,salt) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9) RETURNING *";
+        this.text = "INSERT INTO users(email,firstname,lastname,password,type,isadmin,created_date,modified_date,salt) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9) RETURNING *";
 
         this.initDb();
     }
