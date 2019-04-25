@@ -27,6 +27,7 @@ router.get("/api/v2/accounts/:accountNumber/transactions", protect.checkUser, tr
 router.get("/api/v2/transactions/:id", protect.checkUser, transactionValidate.idValidate, transactionControllerDb.getTransaction);
 router.get("/api/v2/user/:email/accounts", protect.checkUser, transactionValidate.emailIsValid, accountControllerDb.viewAccounts);
 router.get("/api/v2/accounts", protect.checkAdmin, accountControllerDb.getAll);
+router.get("/api/v2/user/accounts", protect.checkUser, accountControllerDb.viewUserAccounts);
 
 
 export default router;

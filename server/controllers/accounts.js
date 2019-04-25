@@ -215,6 +215,37 @@ class AccountController {
         }
         
     }
+
+    viewUserAccounts(req, res) {
+        const {
+            email
+        } = req.userInfo;
+        const query1 = `SELECT * FROM users WHERE email = '${email}'`;
+        Db.query(query1).then(result => {
+            if(result.rows.length) {
+                const owner = result.rows[0].id;
+                const query2 = `SELECT * FROM accounts WHERE owner='${owner}'`;
+                Db.query(query2).then(result => {
+                    if(result.rows.length) {
+                        res.status(200).json({
+                            status: 200,
+                            data: result.rows
+                        }); 
+                    } else {
+                        res.status(404).json({
+                            status: 404,
+                            error: `no accounts found for ${email}` 
+                        });
+                    }
+                });
+            } else {
+                res.status(404).json({
+                    status: 404,
+                    error: "user not found for checking his/her accounts"
+                });
+            }
+        });
+    }
 }
 
 const account = new AccountController();

@@ -1,18 +1,12 @@
 import pg, { Pool } from 'pg';
 import dotenv from 'dotenv';
+import config from './../config/config'
+import moment from 'moment';
 
 dotenv.config();
 
-let poolOptions;
-if (process.env.DATABASE_URL) {
-    poolOptions = { connectionString: process.env.DATABASE_URL };
-} else {
-    poolOptions = {
-        user: process.env.PGUSER,
-        host: process.env.PGHOST,
-        database: process.env.PGDB,
-        password: process.env.PGPASS,
-    };
+let poolOptions = {
+    connectionString: process.env.NODE_ENV === "test" ? config.testDbUrl : config.dbUrl 
 }
 
 class Db {
@@ -62,6 +56,37 @@ class Db {
         )
         `; 
 
+        const encryptPassword = function(password, salt) {
+            try {
+                return crypto
+                        .createHmac('sha1', salt)
+                        .update(password)
+                        .digest('hex');
+            } catch (err) {
+                
+            }
+        };
+        
+        const makeSalt = () => {
+            return Math.round((new Date().valueOf() * Math.random())) + '';
+        };
+        const salt = makeSalt();
+        const hashed_password = encryptPassword("regedit56", salt);
+        
+
+        const newUser = [
+            "admin@gmail.com",
+            "admin",
+            "admin",
+            hashed_password,
+            "cashier",
+            true,
+            moment(new Date()),
+            moment(new Date()),
+            salt
+        ];
+        const sql = "INSERT INTO users(email,firstname,lastname,password,type,isadmin,created_date,modified_date,salt) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9) RETURNING *";
+
         this.initDb();
     }
 
@@ -82,6 +107,20 @@ class Db {
         await this.query(this.usersTable);
         await this.query(this.accountsTable);
         await this.query(this.transactionsTable);
+        await this.query("SELECT * FROM users WHERE email='admin@gmail.com'").then(result => {
+            if(result.rows) {
+                console.log("Admin already exists")
+            } else {
+                this.query(sql, newUser).then(result => {
+                    if(result.rows) {
+                        console.log("admin created");
+                    } else {
+                        console.log("Admin is not created");
+                    }
+                });
+            }
+        });
+
         console.log("users table created");
     }
 }

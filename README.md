@@ -102,6 +102,6 @@ It will install the node_modules which will help you run the project on your loc
 
 - Karangwa Hirwa Julien <juliushirwa@gmail.com>
 
-## License & copyright
+### License & copyright
 
 Copyright (c) Karangwa Hirwa Julien
