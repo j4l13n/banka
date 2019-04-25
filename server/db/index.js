@@ -2,6 +2,7 @@ import pg, { Pool } from 'pg';
 import dotenv from 'dotenv';
 import config from './../config/config'
 import moment from 'moment';
+import crypto from 'crypto';
 
 dotenv.config();
 
@@ -87,6 +88,16 @@ class Db {
         ];
         this.text = "INSERT INTO users(email,firstname,lastname,password,type,isadmin,created_date,modified_date,salt) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9) RETURNING *";
 
+        this.account = [
+            100000,
+            moment(new Date()),
+            1,
+            "savings",
+            "active",
+            2000,
+        ];
+        this.accountQuery = "INSERT INTO accounts(accountnumber, createon, owner, type, status, balance) VALUES($1,$2,$3,$4,$5,$6) RETURNING *";
+        
         this.initDb();
     }
 
@@ -108,17 +119,17 @@ class Db {
         await this.query(this.accountsTable);
         await this.query(this.transactionsTable);
         await this.query("SELECT * FROM users WHERE email='admin@gmail.com'").then(result => {
-            if(result.rows) {
+            if(result.rows.length) {
                 console.log("Admin already exists")
             } else {
-                this.query(sql, newUser).then(result => {
-                    if(result.rows) {
-                        console.log("admin created");
-                    } else {
-                        console.log("Admin is not created");
-                    }
+                this.query(this.text, this.newUser).then(result => {
+                    console.log(this.newUser);
+                    console.log("Admin created")
                 });
             }
+        });
+        await this.query(this.accountQuery, this.account).then(result => {
+            console.log("Account created");
         });
 
         console.log("users table created");

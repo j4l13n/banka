@@ -184,14 +184,9 @@ class AccountController {
                 } else {
                     res.status(404).json({
                         status: 404,
-                        error: "No account found"
+                        error: `There is no account with active status`
                     });
                 }
-            }).catch(error => {
-                res.status(404).json({
-                    status: 404,
-                    error: "No account found"
-                });
             });
         } else {
             Db.query("SELECT * FROM accounts").then((result) => {
@@ -206,11 +201,6 @@ class AccountController {
                         error: "There is no created account yet, you just can create it"
                     });
                 }
-            }).catch(error => {
-                res.status(404).json({
-                    status: 404,
-                    error: "No accounts found in database"
-                });
             });
         }
         
@@ -234,14 +224,9 @@ class AccountController {
                     } else {
                         res.status(404).json({
                             status: 404,
-                            error: `no accounts found for ${email}` 
+                            error: `There is no accounts found for this user ${email}, you should create it first` 
                         });
                     }
-                });
-            } else {
-                res.status(404).json({
-                    status: 404,
-                    error: "user not found for checking his/her accounts"
                 });
             }
         });

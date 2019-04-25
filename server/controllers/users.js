@@ -18,7 +18,7 @@ class UserController{
         Db.query(sql1).then((result) =>{
             console.log(result.rows);
 
-            if (result.rows){
+            if (result.rows.length){
                 return res.status(400).json({
                     status: 400,
                     error: `user with ${email} as email already exists`
@@ -26,6 +26,7 @@ class UserController{
             }else{
                 const token = jwt.sign({
                     email: email,
+                    type: type,
                     isadmin: false
                 }, config.jwtSecret);
 
@@ -62,6 +63,7 @@ class UserController{
                 const sql = "INSERT INTO users(email,firstname,lastname,password,type,isadmin,created_date,modified_date,salt) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9) RETURNING *";
                 
                 Db.query(sql, newUser).then((result) => {
+                    console.log(newUser);
                     console.log(result.rows);
                     res.status(201).json({
                         status: 201,
@@ -117,9 +119,9 @@ class UserController{
                 if(authenticate(password)){
                     console.log(result.rows[0].password);
                     const token = jwt.sign({
-                        _id: result.rows[0].id,
                         email: result.rows[0].email,
-                        isAdmin: result.rows[0].isAdmin
+                        type: result.rows[0].type,
+                        isadmin: result.rows[0].isAdmin
                     }, config.jwtSecret);
             
                     res.cookie("token", token, {
@@ -137,13 +139,13 @@ class UserController{
                 } else {
                     res.status(400).json({
                         status: 400,
-                        error: "password is not correct"
+                        error: `The password entered is not correct, try again`
                     });
                 }
             } else {
-                res.status(400).json({
-                    status: 400,
-                    error: "user does not exists"
+                res.status(404).json({
+                    status: 404,
+                    error: `the email was not found, you should signup first.`
                 });
             }
         });
@@ -221,11 +223,6 @@ class UserController{
                                 type: type,
                                 isAdmin: true
                             }
-                        });
-                    } else {
-                        res.status(400).json({
-                            status: 400,
-                            error: "Staff not created"
                         });
                     }
                 });
