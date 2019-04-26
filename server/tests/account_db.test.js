@@ -52,16 +52,6 @@ describe("Test all accounts routes", () => {
             });
         });
 
-        it("should return all status found", done => {
-            chai.request(app)
-                .get(`${baseUrl}accounts?status=active`)
-                .set("Authorization", "Bearer " + adminToken)
-                .end((err, res) => {
-                    res.should.have.status(200);
-                    done();
-                });
-        });
-
         it("it should login a user", done => {
             const user = {
                 email: "hirwa@gmail.com",
