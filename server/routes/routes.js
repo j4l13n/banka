@@ -25,7 +25,7 @@ router.post("/api/v2/transactions/:accountNumber/debit", protect.checkCashier, t
 router.post("/api/v2/transactions/:accountNumber/credit", protect.checkCashier, transactionValidate.creditValidate, transactionControllerDb.credit);
 router.get("/api/v2/accounts/:accountNumber/transactions", protect.checkUser, transactionValidate.accountNumberValidate, transactionControllerDb.userHistory);
 router.get("/api/v2/transactions/:id", protect.checkUser, transactionValidate.idValidate, transactionControllerDb.getTransaction);
-router.get("/api/v2/user/:email/accounts", protect.checkUser, transactionValidate.emailIsValid, accountControllerDb.viewAccounts);
+router.get("/api/v2/user/:email/accounts", protect.checkAdminOrStaff, transactionValidate.emailIsValid, accountControllerDb.viewAccounts);
 router.get("/api/v2/accounts", protect.checkAdmin, accountControllerDb.getAll);
 router.get("/api/v2/user/accounts", protect.checkUser, accountControllerDb.viewUserAccounts);
 

@@ -59,7 +59,7 @@ class TransactionValidate {
         if(!validation.isValidNumber(req.params.id)) {
             res.status(400).json({
                 status: 400,
-                error: `Only digits number are allwed for id`
+                error: `Only digits number are allowed for id parameter`
             });
         } else {
             next();
