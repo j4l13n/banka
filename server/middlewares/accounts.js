@@ -1,6 +1,13 @@
 import validation from './../validations/validations';
 
 class AccountValidate {
+    /**
+     * 
+     * @param {object} req 
+     * @param {object} res 
+     * @param {object} next 
+     * @returns next object when validations passed
+     */
     createValidate(req, res, next) {
         if(!req.body.type) {
             res.status(400).json({
@@ -16,7 +23,13 @@ class AccountValidate {
             next();
         }
     }
-
+    /**
+     * 
+     * @param {object} req 
+     * @param {object} res 
+     * @param {object} next 
+     * @returns next object when validations passed
+     */
     updateValidate(req, res, next) {
         if(!req.body.status) {
             res.status(400).json({
@@ -32,7 +45,13 @@ class AccountValidate {
             next();
         }
     }
-
+    /**
+     * 
+     * @param {object} req 
+     * @param {object} res 
+     * @param {object} next 
+     * @returns next object when validations passed
+     */
     deleteValidate(req, res, next) {
         if(!validation.isValidNumber(req.params.accountNumber)) {
             res.status(400).json({

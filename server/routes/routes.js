@@ -13,7 +13,13 @@ dotenv.config();
 
 const router = Router();
 
-// banka version 2 api routes
+/**
+ * this is version 2 of Andela Developer Challenge
+ * Technologies:
+ * - postgresql
+ * - nodejs with express framework
+ * - git and github for version control
+ */
 router.post("/api/v2/auth/signup", userValidate.validateSignup, userControllerDb.signup);
 router.post("/api/v2/auth/admin", userValidate.validateAdminSignup, userControllerDb.createStaff);
 router.post("/api/v2/auth/signin", userValidate.validateSignin, userControllerDb.signin);

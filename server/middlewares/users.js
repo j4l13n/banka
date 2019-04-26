@@ -1,6 +1,13 @@
 import validation from './../validations/validations'; 
 
 class UserValidate {
+    /**
+     * 
+     * @param {object} req 
+     * @param {object} res 
+     * @param {object} next 
+     * @returns returns next if validations pass
+     */
     validateSignin(req, res, next) {
         if(!req.body.email) {
             res.status(400).json({
@@ -27,6 +34,13 @@ class UserValidate {
         }
     }
 
+    /**
+     * 
+     * @param {object} req 
+     * @param {object} res 
+     * @param {object} next 
+     * @returns returns next if validations pass
+     */
     validateSignup(req, res, next) {
         if(!req.body.email) {
             res.status(400).json({
@@ -72,7 +86,13 @@ class UserValidate {
             next();
         }
     }
-
+    /**
+     * 
+     * @param {object} req 
+     * @param {object} res 
+     * @param {object} next 
+     * @returns returns next if validations pass
+     */
     validateAdminSignup(req, res, next) {
         if(!req.body.email) {
             res.status(400).json({

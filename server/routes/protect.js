@@ -2,6 +2,14 @@ import jwt from 'jsonwebtoken';
 import config from './../config/config';
 import { decode } from 'punycode';
 
+/**
+ * 
+ * @param {object} req 
+ * @param {object} res 
+ * @param {object} next 
+ * @ return true if token are valid for a user
+ */
+
 const checkUser = (req, res, next) => {
     try {
         const token = req.headers.authorization.split(' ')[1];
@@ -15,6 +23,13 @@ const checkUser = (req, res, next) => {
         });
     }
 };
+/**
+ * 
+ * @param {object} req 
+ * @param {object} res 
+ * @param {object} next 
+ * @ return true if token are valid for a staff
+ */
 
 const checkCashier = (req, res, next) => {
     try {
@@ -37,6 +52,14 @@ const checkCashier = (req, res, next) => {
     }
 };
 
+/**
+ * 
+ * @param {object} req 
+ * @param {object} res 
+ * @param {object} next 
+ * @ return true if token are valid for a admin
+ */
+
 const checkAdmin = (req, res, next) => {
     try {
         const token = req.headers.authorization.split(' ')[1];
@@ -57,6 +80,13 @@ const checkAdmin = (req, res, next) => {
         });
     }
 };
+/**
+ * 
+ * @param {object} req 
+ * @param {object} res 
+ * @param {object} next 
+ * @ return true if token are valid for both admin and cashier
+ */
 
 const checkAdminOrStaff = (req, res, next) => {
     try {

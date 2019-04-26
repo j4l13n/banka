@@ -17,7 +17,7 @@ class TransactionsController {
         const query1 = `SELECT * FROM users WHERE email='${email}' and type='cashier'`;
         Db.query(query1).then(result => {
             if(result.rows) {
-                const query2 = `SELECT * FROM accounts WHERE accountnumber='${parseAcc}'`;
+                const query2 = `SELECT * FROM accounts WHERE accountnumber='${parseAcc}' and status='active'`;
                 Db.query(query2).then(result => {
                     if(result.rows.length) {
                         if(parseAmount < result.rows[0].balance) {
@@ -58,7 +58,7 @@ class TransactionsController {
                     } else {
                         res.status(404).json({
                             status: 404,
-                            error: `The account specified does not exist, you should create it first`
+                            error: `The account number specified does not exist, or might be not active. check nearest branch`
                         });
                     }
                 });
@@ -86,7 +86,7 @@ class TransactionsController {
         const query1 = `SELECT * FROM users WHERE email='${email}' and type='cashier'`;
         Db.query(query1).then(result => {
             if(result.rows) {
-                const query2 = `SELECT * FROM accounts WHERE accountnumber='${parseAcc}'`;
+                const query2 = `SELECT * FROM accounts WHERE accountnumber='${parseAcc}' and status='active'`;
                 Db.query(query2).then(result => {
                     if(result.rows.length) {
                         const newBalance = parseFloat(result.rows[0].balance) + parseAmount;
@@ -120,7 +120,7 @@ class TransactionsController {
                     } else {
                         res.status(400).json({
                             status: 400,
-                            error: `The account number specified does not exist, you should create it first`
+                            error: `The account number specified does not exist, or might be not active. check nearest branch`
                         });
                     }
                 });
