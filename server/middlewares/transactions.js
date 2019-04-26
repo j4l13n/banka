@@ -101,7 +101,7 @@ class TransactionValidate {
         if(!validation.isValidEmail(req.params.email)) {
             res.status(400).json({
                 status: 400,
-                error: "Email is not valid"
+                error: `the email you entered (${req.params.email}) is not valid, It must contain at least one @ and one dot`
             });
         } else {    
             next();

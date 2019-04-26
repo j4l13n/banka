@@ -63,21 +63,20 @@ class AccountController {
         Db.query(query).then(result => {
             console.log(result.rows);
             if(result.rows.length) {
-                if(result.rows[0].status === status) {
+                if(result.rows[0].status === status.toLowerCase()) {
                     res.status(400).json({
                         status: 400,
-                        error: "account is " + status
+                        error: `the account is already ${status.toLowerCase()}`
                     });
                 } else {
-                    const sql = `UPDATE accounts SET status='${status}' WHERE accountnumber='${acc}' RETURNING *`;
+                    const sql = `UPDATE accounts SET status='${status.toLowerCase()}' WHERE accountnumber='${acc}' RETURNING *`;
                 Db.query(sql).then(result => {
-                    console.log(result.rows);
                     if(result.rows) {
                         return res.status(200).json({
                             status: 200,
                             data: {
                                 accountNumber: acc,
-                                status: status
+                                status: status.toLowerCase()
                             }
                         });
                     } else {
@@ -115,24 +114,24 @@ class AccountController {
                     if(result.rows) {
                         return res.status(200).json({
                             status: 200,
-                            message: "Account successfully deleted"
+                            message: `the account with (${acc}) have been deleted successfully.`
                         });
                     } else {
                         res.status(404).json({
                             status: 404,
-                            error: "Account not deleted"
+                            error: `this account number (${acc}) is not successfully deleted`
                         });
                     }
                 }).catch(error => {
                     res.status(404).json({
                         status: 404,
-                        error: "Account not deleted"
+                        error: `The server encountered the problem, check for the administration`
                     });
                 });
             } else {
                 res.status(404).json({
                     status: 404,
-                    error: "Account not found to be deleted"
+                    error: `the account number with (${acc}) is not found for deletion`
                 });
             }
         });
@@ -156,14 +155,14 @@ class AccountController {
                     } else {
                         res.status(404).json({
                             status: 404,
-                            error: `no accounts found for ${email}` 
+                            error: `the user with ${email} has no account, you can create an account first.` 
                         });
                     }
                 });
             } else {
                 res.status(404).json({
                     status: 404,
-                    error: "user not found for checking his/her accounts"
+                    error: `the user with ${email} is not found.`
                 });
             }
         });
@@ -175,7 +174,7 @@ class AccountController {
         if(status === "dormant" || status === "active") {
             console.log(status);
             Db.query(`SELECT * FROM accounts WHERE status='${status}'`).then((result) => {
-                if(result.rows) {
+                if(result.rows.length) {
                     console.log(result.rows);
                     res.status(200).json({
                         status: 200,
@@ -190,7 +189,7 @@ class AccountController {
             });
         } else {
             Db.query("SELECT * FROM accounts").then((result) => {
-                if(result.rows) {
+                if(result.rows.length) {
                     return res.json({
                         status: 200,
                         data: result.rows
@@ -198,7 +197,7 @@ class AccountController {
                 } else {
                     res.status(404).json({
                         status: 404,
-                        error: "There is no created account yet, you just can create it"
+                        error: `There is no account found in the system, you may create one and check again.`
                     });
                 }
             });

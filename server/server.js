@@ -27,35 +27,35 @@ app.get("/", (req, res) => {
 app.get("*", (req, res) => {
     res.status(404).json({
         status: 404,
-        error: "This endpoint is no available, you just have to check banka endpoint to documentation"
+        error: "This endpoint is no available, you just have to check banka endpoint for documentation"
     });
 });
 
 app.post("*", (req, res) => {
     res.status(404).json({
         status: 404,
-        error: "This endpoint is no available, you just have to check banka endpoint to documentation"
+        error: "This endpoint is no available, you just have to check banka endpoint for documentation"
     });
 });
 
 app.put("*", (req, res) => {
     res.status(404).json({
         status: 404,
-        error: "This endpoint is no available, you just have to check banka endpoint to documentation"
+        error: "This endpoint is no available, you just have to check banka endpoint for documentation"
     });
 });
 
 app.patch("*", (req, res) => {
     res.status(404).json({
         status: 404,
-        error: "This endpoint is no available, you just have to check banka endpoint to documentation"
+        error: "This endpoint is no available, you just have to check banka endpoint for documentation"
     });
 });
 
 app.delete("*", (req, res) => {
     res.status(404).json({
         status: 404,
-        error: "This endpoint is no available, you just have to check banka endpoint to documentation"
+        error: "This endpoint is no available, you just have to check banka endpoint for documentation"
     });
 });
 

@@ -47,7 +47,7 @@ const checkCashier = (req, res, next) => {
     } catch (error) {
         return res.status(401).send({
             status: 401,
-            error: `You are logged in, you must first login or signup`
+            error: `You are not logged in, you must first login or signup`
         });
     }
 };
@@ -76,7 +76,7 @@ const checkAdmin = (req, res, next) => {
     } catch (error) {
         return res.status(401).send({
             status: 401,
-            error: `You are logged in, you must first login or signup`
+            error: `You are not logged in, you must first login or signup`
         });
     }
 };

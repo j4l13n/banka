@@ -36,7 +36,7 @@ class AccountValidate {
                 status: 400,
                 error: `Status field is required`
             });
-        } else if(!validation.isValidAccountStatus(req.body.status)) {
+        } else if(!validation.isValidAccountStatus(req.body.status.toLowerCase())) {
             res.status(400).json({
                 status: 400,
                 error: `status field must contain active, dormant or draft`

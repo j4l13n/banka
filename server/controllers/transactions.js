@@ -2,6 +2,13 @@ import Db from './../db/index';
 import moment from 'moment';
 
 class TransactionsController {
+    /**
+     * 
+     * this method is for debit
+     * @param {object} req 
+     * @param {object} res 
+     * @returns transactions created when validations passes
+     */
     debit(req, res) {
         const {
             email
@@ -52,7 +59,7 @@ class TransactionsController {
                         } else {
                             res.status(400).json({
                                 status: 400,
-                                error: "Your balance is not enough to withdraw."
+                                error: `the amount (${amount}) with not enought to widthraw from your account.`
                             });
                         }
                     } else {
@@ -65,12 +72,18 @@ class TransactionsController {
             } else {
                 res.status(400).json({
                     status: 400,
-                    error: "You are not allowed to debit, please use staff account!"
+                    error: "You are not allowed to debit, please use a staff account!"
                 });
             }
         });
     }
-
+    /**
+     * 
+     * this method is for credit
+     * @param {object} req 
+     * @param {object} res 
+     * @returns transactions created when validations passes
+     */
     credit(req, res) {
         const {
             email
@@ -137,7 +150,14 @@ class TransactionsController {
             });
         });
     }
-
+    /**
+     * 
+     * this method is for user 
+     * transaction history
+     * @param {object} req 
+     * @param {object} res 
+     * @returns transactions get all accounts
+     */
     userHistory(req, res) {
         const {
             accountNumber
@@ -178,25 +198,30 @@ class TransactionsController {
                         } else {
                             res.status(400).json({
                                 status: 400,
-                                error: "Not allowed to view this account history"
+                                error: `User with this email (${email})not allowed to view this account history`
                             });
                         }
                     }
                 }).catch(error => {
                     res.status(404).json({
                         status: 404,
-                        error: "Account number not found"
+                        error: `The account specified is not found, you should ask nearest agent`
                     });
                 });
             }
         }).catch(error => {
             res.status(404).json({
                 status: 404,
-                error: "User not found"
+                error: `the user with ${email} is not found from the system.`
             });
         });
     }
-
+    /**
+     * 
+     * @param {object} req 
+     * @param {object} res 
+     * @returns should get one specific transaction
+     */
     getTransaction(req, res) {
         const {
             id
@@ -221,13 +246,13 @@ class TransactionsController {
             } else {
                 res.status(404).json({
                     status: 404,
-                    error: "Transaction not found"
+                    error: `There is not transactions with the id ${transactionId}`
                 });
             }
         }).catch(error => {
             res.status(404).json({
                 status: 404,
-                error: "Transaction not found"
+                error: `There is not transactions with the id ${transactionId}`
             });
         });
     }

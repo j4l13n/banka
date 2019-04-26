@@ -5,6 +5,12 @@ import crypto from 'crypto';
 import config from './../config/config';
 
 class UserController{
+    /**
+     * 
+     * @param {object} req 
+     * @param {object} res
+     * @return if validations passes, user must be signed up 
+     */
     signup(req,res){
         const{
             email,
@@ -82,6 +88,12 @@ class UserController{
 
         });
     }
+    /**
+     * 
+     * @param {object} req 
+     * @param {object} res 
+     * @returns all users from the database
+     */
 
     getAll(req, res) {
         Db.query("SELECT * FROM users").then((result) => {
@@ -93,7 +105,12 @@ class UserController{
             }
         });
     }
-
+    /**
+     * 
+     * @param {object} req 
+     * @param {object} res 
+     * @returns if validations passes user must be logged in
+     */
     signin(req, res) {
         const {
             email,
@@ -151,6 +168,12 @@ class UserController{
         });
     }
 
+    /**
+     * 
+     * @param {object} req 
+     * @param {object} res
+     * @return admin or staff created if validations passes 
+     */
     createStaff(req, res) {
         const{
             email,
