@@ -31,7 +31,6 @@ class TransactionsController {
                             const newBalance = parseFloat(result.rows[0].balance) - parseAmount;
                             const sql = `UPDATE accounts SET balance='${newBalance}' WHERE accountnumber='${parseAcc}'`;
                             Db.query(sql).then(result => {
-                                console.log(result.rows);
                             });
                             const newTrans = [
                                 moment(new Date()),
@@ -44,7 +43,6 @@ class TransactionsController {
                             ];
                             const query3 = `INSERT INTO transactions(createOn,type,accountNumber,cashier,amount,oldBalance,newBalancee) VALUES($1,$2,$3,$4,$5,$6,$7) RETURNING *`;
                             Db.query(query3, newTrans).then(result => {
-                                console.log(result.rows);
                                 res.status(201).json({
                                     status: 201,
                                     data: {
@@ -105,7 +103,6 @@ class TransactionsController {
                         const newBalance = parseFloat(result.rows[0].balance) + parseAmount;
                         const sql = `UPDATE accounts SET balance='${newBalance}' WHERE accountnumber='${parseAcc}'`;
                         Db.query(sql).then(result => {
-                            console.log(result.rows);
                         });
                         const newTrans = [
                             moment(new Date()),
@@ -118,7 +115,6 @@ class TransactionsController {
                         ];
                         const query3 = `INSERT INTO transactions(createOn,type,accountNumber,cashier,amount,oldBalance,newBalancee) VALUES($1,$2,$3,$4,$5,$6,$7) RETURNING *`;
                         Db.query(query3, newTrans).then(result => {
-                            console.log(result.rows);
                             res.status(201).json({
                                 status: 201,
                                 data: {

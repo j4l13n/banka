@@ -21,7 +21,6 @@ class AccountController {
 
         Db.query(sql1).then(result => {
             if(result.rows.length) {
-                console.log(result.rows[0].email);
                 let accountNumber = randomInt(10000000, 99999999);
                 let createOn = new Date();
                 let status = "dormant";
@@ -35,10 +34,8 @@ class AccountController {
                     status,
                     balance,
                 ];
-                console.log(account);
                 const sql = "INSERT INTO accounts(accountnumber, createon, owner, type, status, balance) VALUES($1,$2,$3,$4,$5,$6) RETURNING *";
                 Db.query(sql, account).then(result => {
-                    console.log(result.rows);
                     res.status(201).json({
                         status: 201,
                         data: result.rows
@@ -69,7 +66,6 @@ class AccountController {
         } = req.body;
         const query = `SELECT * FROM accounts WHERE accountnumber='${acc}'`;
         Db.query(query).then(result => {
-            console.log(result.rows);
             if(result.rows.length) {
                 if(result.rows[0].status === status.toLowerCase()) {
                     res.status(400).json({
@@ -118,7 +114,6 @@ class AccountController {
             if(result.rows.length) {
                 const sql = `DELETE FROM accounts WHERE accountnumber='${acc}' RETURNING *`;
                 Db.query(sql).then(result => {
-                    console.log(result.rows);
                     if(result.rows) {
                         return res.status(200).json({
                             status: 200,
@@ -178,24 +173,8 @@ class AccountController {
 
     getAll(req, res) {
         const status = req.query.status;
-        
-        if(validation.isValidAccountStatus(status)) {
-            console.log(status);
-            Db.query(`SELECT * FROM accounts WHERE status='${status}'`).then((result) => {
-                if(result.rows.length) {
-                    console.log(result.rows);
-                    res.status(200).json({
-                        status: 200,
-                        data: result.rows
-                    });
-                } else {
-                    res.status(404).json({
-                        status: 404,
-                        error: `There is no account with active status`
-                    });
-                }
-            });
-        } else {
+
+        if(!status) {
             Db.query("SELECT * FROM accounts").then((result) => {
                 if(result.rows.length) {
                     return res.json({
@@ -209,6 +188,27 @@ class AccountController {
                     });
                 }
             });
+        } else {
+            if(validation.isValidAccountStatus(status)) {
+                Db.query(`SELECT * FROM accounts WHERE status='${status}'`).then((result) => {
+                    if(result.rows.length) {
+                        res.status(200).json({
+                            status: 200,
+                            data: result.rows
+                        });
+                    } else {
+                        res.status(404).json({
+                            status: 404,
+                            error: `There is no account with active status`
+                        });
+                    }
+                });
+            } else {
+                res.status(404).json({
+                    status: 404,
+                    error: `The status specified in the url is not valid, it should be active, dormant or draft.`
+                });
+            }
         }
         
     }

@@ -19,7 +19,7 @@ let poolOptions = {
 class Db {
     constructor() {
         this.pool = new Pool(poolOptions);
-        this.connect = async () => this.pool.connect();
+        this.connect = async () => await this.pool.connect();
 
         this.usersTable = `
         CREATE TABLE IF NOT EXISTS
