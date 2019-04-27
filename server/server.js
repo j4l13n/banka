@@ -24,6 +24,13 @@ app.get("/", (req, res) => {
     });
 });
 
+app.get("/api/v2", (req, res) => {
+    res.status(200).json({
+        status: 200,
+        message: "Welcome to banka endpoint api, you just have to use banka endpoint documentation to use it."
+    });
+});
+
 app.get("*", (req, res) => {
     res.status(404).json({
         status: 404,
