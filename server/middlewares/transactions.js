@@ -45,7 +45,7 @@ class TransactionValidate {
         } else if(!validation.isValidNumber(req.body.amount)) {
             res.status(400).json({
                 status: 400,
-                error: `to deposit the amount must be a number`
+                error: `to deposit the amount must be a positive number`
             });
         } else if(!validation.isValidNumber(req.params.accountNumber)) {
             res.status(400).json({

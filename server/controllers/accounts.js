@@ -1,8 +1,13 @@
 import Db from './../db/index';
-import config from './../config/config';
-import moment from 'moment';
+import validation from './../validations/validations';
 
 class AccountController {
+    /**
+     * 
+     * @param {object} req 
+     * @param {object} res 
+     * @return account is created when validations passes
+     */
     create(req, res) {
         const randomInt = (low, high) =>  Math.floor(Math.random() * (high - low) + low);
         const {
@@ -36,10 +41,7 @@ class AccountController {
                     console.log(result.rows);
                     res.status(201).json({
                         status: 201,
-                        data: {
-                            accountNumber: accountNumber,
-                            data: result.rows
-                        }
+                        data: result.rows
                     });
                 });
             } else {
@@ -50,7 +52,13 @@ class AccountController {
             }
         });
     }
-
+    /**
+     * 
+     * @param {object} req 
+     * @param {object} res 
+     * @body {object} status
+     * @returns account activated or deactivated
+     */
     activateOrDeactivate(req, res) {
         const {
             accountNumber
@@ -170,8 +178,8 @@ class AccountController {
 
     getAll(req, res) {
         const status = req.query.status;
-
-        if(status === "dormant" || status === "active") {
+        
+        if(validation.isValidAccountStatus(status)) {
             console.log(status);
             Db.query(`SELECT * FROM accounts WHERE status='${status}'`).then((result) => {
                 if(result.rows.length) {

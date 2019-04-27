@@ -164,17 +164,16 @@ class TransactionsController {
         } = req.params;
         const {
             email
-        } = req.body;
+        } = req.userInfo;
         const parseAcc = parseInt(accountNumber);
         const query1 = `SELECT * FROM users WHERE email='${email}'`;
         Db.query(query1).then(result => {
-            console.log(result.rows);
             if(result.rows.length) {
                 const owner = result.rows[0].id;
                 const admin = result.rows[0].isAdmin;
                 const query2 = `SELECT * FROM accounts WHERE accountnumber='${parseAcc}'`;
                 Db.query(query2).then(result => {
-                    if(result.rows) {
+                    if(result.rows.length) {
                         if(admin) {
                             const query3 = `SELECT * FROM transactions WHERE accountnumber='${result.rows[0].accountNumber}'`;
                             Db.query(query3).then(result => {
@@ -182,6 +181,11 @@ class TransactionsController {
                                     res.status(200).json({
                                         status: 200,
                                         data: result.rows
+                                    });
+                                } else {
+                                    res.status(404).json({
+                                        status: 404,
+                                        error: `with this account number ${parseAcc}, there is no transactions made.`
                                     });
                                 }
                             });
@@ -193,6 +197,11 @@ class TransactionsController {
                                         status: 200,
                                         data: result.rows
                                     });
+                                } else {
+                                    res.status(404).json({
+                                        status: 404,
+                                        error: `with this account number ${parseAcc}, there is no transactions made.`
+                                    });
                                 }
                             });
                         } else {
@@ -201,12 +210,22 @@ class TransactionsController {
                                 error: `User with this email (${email})not allowed to view this account history`
                             });
                         }
+                    } else {
+                        res.status(404).json({
+                            status: 404,
+                            error: `the account with ${parseAcc} is not found from the system.`
+                        });
                     }
                 }).catch(error => {
                     res.status(404).json({
                         status: 404,
                         error: `The account specified is not found, you should ask nearest agent`
                     });
+                });
+            } else {
+                res.status(404).json({
+                    status: 404,
+                    error: `the email used is not found, you must login or signup first.`
                 });
             }
         }).catch(error => {
