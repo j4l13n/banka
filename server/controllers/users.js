@@ -5,6 +5,12 @@ import crypto from 'crypto';
 import config from './../config/config';
 
 class UserController{
+    /**
+     * 
+     * @param {object} req 
+     * @param {object} res
+     * @return if validations passes, user must be signed up 
+     */
     signup(req,res){
         const{
             email,
@@ -16,7 +22,6 @@ class UserController{
         const sql1 =`SELECT * FROM users WHERE email='${email}'`;
         
         Db.query(sql1).then((result) =>{
-            console.log(result.rows);
 
             if (result.rows.length){
                 return res.status(400).json({
@@ -59,12 +64,9 @@ class UserController{
                     moment(new Date()),
                     salt
                 ];
-                console.log(newUser);
                 const sql = "INSERT INTO users(email,firstname,lastname,password,type,isadmin,created_date,modified_date,salt) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9) RETURNING *";
                 
                 Db.query(sql, newUser).then((result) => {
-                    console.log(newUser);
-                    console.log(result.rows);
                     res.status(201).json({
                         status: 201,
                         data: {
@@ -82,6 +84,12 @@ class UserController{
 
         });
     }
+    /**
+     * 
+     * @param {object} req 
+     * @param {object} res 
+     * @returns all users from the database
+     */
 
     getAll(req, res) {
         Db.query("SELECT * FROM users").then((result) => {
@@ -93,7 +101,12 @@ class UserController{
             }
         });
     }
-
+    /**
+     * 
+     * @param {object} req 
+     * @param {object} res 
+     * @returns if validations passes user must be logged in
+     */
     signin(req, res) {
         const {
             email,
@@ -117,7 +130,6 @@ class UserController{
                     return encryptPassword(plainText) === result.rows[0].password;
                 };
                 if(authenticate(password)){
-                    console.log(result.rows[0].password);
                     const token = jwt.sign({
                         email: result.rows[0].email,
                         type: result.rows[0].type,
@@ -151,6 +163,12 @@ class UserController{
         });
     }
 
+    /**
+     * 
+     * @param {object} req 
+     * @param {object} res
+     * @return admin or staff created if validations passes 
+     */
     createStaff(req, res) {
         const{
             email,
@@ -162,7 +180,6 @@ class UserController{
         const sql1 =`SELECT * FROM users WHERE email='${email}'`;
         
         Db.query(sql1).then((result) =>{
-            console.log(result.rows);
 
             if (result.rows.length){
                 return res.status(400).json({
@@ -200,11 +217,9 @@ class UserController{
                     moment(new Date()),
                     salt
                 ];
-                console.log(newUser);
                 const sql = "INSERT INTO users(email,firstname,lastname,password,type,isadmin,created_date,modified_date,salt) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9) RETURNING *";
                 
                 Db.query(sql, newUser).then((result) => {
-                    console.log(result.rows);
                     if(result.rows) {
                         const token = jwt.sign({
                             email: email,

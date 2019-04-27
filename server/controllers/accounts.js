@@ -1,8 +1,13 @@
 import Db from './../db/index';
-import config from './../config/config';
-import moment from 'moment';
+import validation from './../validations/validations';
 
 class AccountController {
+    /**
+     * 
+     * @param {object} req 
+     * @param {object} res 
+     * @return account is created when validations passes
+     */
     create(req, res) {
         const randomInt = (low, high) =>  Math.floor(Math.random() * (high - low) + low);
         const {
@@ -16,7 +21,6 @@ class AccountController {
 
         Db.query(sql1).then(result => {
             if(result.rows.length) {
-                console.log(result.rows[0].email);
                 let accountNumber = randomInt(10000000, 99999999);
                 let createOn = new Date();
                 let status = "dormant";
@@ -30,16 +34,11 @@ class AccountController {
                     status,
                     balance,
                 ];
-                console.log(account);
                 const sql = "INSERT INTO accounts(accountnumber, createon, owner, type, status, balance) VALUES($1,$2,$3,$4,$5,$6) RETURNING *";
                 Db.query(sql, account).then(result => {
-                    console.log(result.rows);
                     res.status(201).json({
                         status: 201,
-                        data: {
-                            accountNumber: accountNumber,
-                            data: result.rows
-                        }
+                        data: result.rows
                     });
                 });
             } else {
@@ -50,7 +49,13 @@ class AccountController {
             }
         });
     }
-
+    /**
+     * 
+     * @param {object} req 
+     * @param {object} res 
+     * @body {object} status
+     * @returns account activated or deactivated
+     */
     activateOrDeactivate(req, res) {
         const {
             accountNumber
@@ -61,23 +66,21 @@ class AccountController {
         } = req.body;
         const query = `SELECT * FROM accounts WHERE accountnumber='${acc}'`;
         Db.query(query).then(result => {
-            console.log(result.rows);
             if(result.rows.length) {
-                if(result.rows[0].status === status) {
+                if(result.rows[0].status === status.toLowerCase()) {
                     res.status(400).json({
                         status: 400,
-                        error: "account is " + status
+                        error: `the account is already ${status.toLowerCase()}`
                     });
                 } else {
-                    const sql = `UPDATE accounts SET status='${status}' WHERE accountnumber='${acc}' RETURNING *`;
+                    const sql = `UPDATE accounts SET status='${status.toLowerCase()}' WHERE accountnumber='${acc}' RETURNING *`;
                 Db.query(sql).then(result => {
-                    console.log(result.rows);
                     if(result.rows) {
                         return res.status(200).json({
                             status: 200,
                             data: {
                                 accountNumber: acc,
-                                status: status
+                                status: status.toLowerCase()
                             }
                         });
                     } else {
@@ -111,28 +114,27 @@ class AccountController {
             if(result.rows.length) {
                 const sql = `DELETE FROM accounts WHERE accountnumber='${acc}' RETURNING *`;
                 Db.query(sql).then(result => {
-                    console.log(result.rows);
                     if(result.rows) {
                         return res.status(200).json({
                             status: 200,
-                            message: "Account successfully deleted"
+                            message: `the account with (${acc}) have been deleted successfully.`
                         });
                     } else {
                         res.status(404).json({
                             status: 404,
-                            error: "Account not deleted"
+                            error: `this account number (${acc}) is not successfully deleted`
                         });
                     }
                 }).catch(error => {
                     res.status(404).json({
                         status: 404,
-                        error: "Account not deleted"
+                        error: `The server encountered the problem, check for the administration`
                     });
                 });
             } else {
                 res.status(404).json({
                     status: 404,
-                    error: "Account not found to be deleted"
+                    error: `the account number with (${acc}) is not found for deletion`
                 });
             }
         });
@@ -156,14 +158,14 @@ class AccountController {
                     } else {
                         res.status(404).json({
                             status: 404,
-                            error: `no accounts found for ${email}` 
+                            error: `the user with ${email} has no account, you can create an account first.` 
                         });
                     }
                 });
             } else {
                 res.status(404).json({
                     status: 404,
-                    error: "user not found for checking his/her accounts"
+                    error: `the user with ${email} is not found.`
                 });
             }
         });
@@ -172,25 +174,9 @@ class AccountController {
     getAll(req, res) {
         const status = req.query.status;
 
-        if(status === "dormant" || status === "active") {
-            console.log(status);
-            Db.query(`SELECT * FROM accounts WHERE status='${status}'`).then((result) => {
-                if(result.rows) {
-                    console.log(result.rows);
-                    res.status(200).json({
-                        status: 200,
-                        data: result.rows
-                    });
-                } else {
-                    res.status(404).json({
-                        status: 404,
-                        error: `There is no account with active status`
-                    });
-                }
-            });
-        } else {
+        if(!status) {
             Db.query("SELECT * FROM accounts").then((result) => {
-                if(result.rows) {
+                if(result.rows.length) {
                     return res.json({
                         status: 200,
                         data: result.rows
@@ -198,10 +184,31 @@ class AccountController {
                 } else {
                     res.status(404).json({
                         status: 404,
-                        error: "There is no created account yet, you just can create it"
+                        error: `There is no account found in the system, you may create one and check again.`
                     });
                 }
             });
+        } else {
+            if(validation.isValidAccountStatus(status)) {
+                Db.query(`SELECT * FROM accounts WHERE status='${status}'`).then((result) => {
+                    if(result.rows.length) {
+                        res.status(200).json({
+                            status: 200,
+                            data: result.rows
+                        });
+                    } else {
+                        res.status(404).json({
+                            status: 404,
+                            error: `There is no account with active status`
+                        });
+                    }
+                });
+            } else {
+                res.status(404).json({
+                    status: 404,
+                    error: `The status specified in the url is not valid, it should be active, dormant or draft.`
+                });
+            }
         }
         
     }

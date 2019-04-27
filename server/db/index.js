@@ -10,10 +10,16 @@ let poolOptions = {
     connectionString: process.env.NODE_ENV === "test" ? config.testDbUrl : config.dbUrl 
 }
 
+/**
+ * Db class is create for the initialization
+ * of the database by creating tables, admin
+ * for the firsttime you run the software 
+ */
+
 class Db {
     constructor() {
         this.pool = new Pool(poolOptions);
-        this.connect = async () => this.pool.connect();
+        this.connect = async () => await this.pool.connect();
 
         this.usersTable = `
         CREATE TABLE IF NOT EXISTS
@@ -56,7 +62,12 @@ class Db {
           newBalancee NUMERIC NOT NULL
         )
         `; 
-
+        /**
+         * 
+         * @param {object} password 
+         * @param {object} salt 
+         * @returns encrypted password with it salt value for decryption
+         */
         const encryptPassword = function(password, salt) {
             try {
                 return crypto
@@ -67,7 +78,9 @@ class Db {
                 
             }
         };
-        
+        /**
+         * @returns random value to create salt
+         */
         const makeSalt = () => {
             return Math.round((new Date().valueOf() * Math.random())) + '';
         };
@@ -100,7 +113,12 @@ class Db {
         
         this.initDb();
     }
-
+    /**
+     * 
+     * @param {object} sql 
+     * @param {object} data 
+     * @return it should run database queries for specific reason
+     */
     async query(sql, data = []) {
         const conn = await this.connect();
         try{
@@ -114,6 +132,10 @@ class Db {
             conn.release();
         }
     }
+    /**
+     * this initDb is for running
+     * queries when it is called
+     */
     async initDb() {
         await this.query(this.usersTable);
         await this.query(this.accountsTable);

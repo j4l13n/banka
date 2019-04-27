@@ -2,7 +2,7 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import router from './routes/routes';
 import config from './config/config';
-import userController from './controllers/users';
+import swaggerUi from 'swagger-ui-express';
 import dotenv from 'dotenv';
 
 dotenv.config();
@@ -24,38 +24,45 @@ app.get("/", (req, res) => {
     });
 });
 
+app.get("/api/v2", (req, res) => {
+    res.status(200).json({
+        status: 200,
+        message: "Welcome to banka endpoint api, you just have to use banka endpoint documentation to use it."
+    });
+});
+
 app.get("*", (req, res) => {
     res.status(404).json({
         status: 404,
-        error: "This endpoint is no available, you just have to check banka endpoint to documentation"
+        error: "This endpoint is not available, you just have to check banka endpoint for documentation"
     });
 });
 
 app.post("*", (req, res) => {
     res.status(404).json({
         status: 404,
-        error: "This endpoint is no available, you just have to check banka endpoint to documentation"
+        error: "This endpoint is not available, you just have to check banka endpoint for documentation"
     });
 });
 
 app.put("*", (req, res) => {
     res.status(404).json({
         status: 404,
-        error: "This endpoint is no available, you just have to check banka endpoint to documentation"
+        error: "This endpoint is no available, you just have to check banka endpoint for documentation"
     });
 });
 
 app.patch("*", (req, res) => {
     res.status(404).json({
         status: 404,
-        error: "This endpoint is no available, you just have to check banka endpoint to documentation"
+        error: "This endpoint is not available, you just have to check banka endpoint for documentation"
     });
 });
 
 app.delete("*", (req, res) => {
     res.status(404).json({
         status: 404,
-        error: "This endpoint is no available, you just have to check banka endpoint to documentation"
+        error: "This endpoint is not available, you just have to check banka endpoint for documentation"
     });
 });
 

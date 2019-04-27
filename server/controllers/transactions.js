@@ -2,6 +2,13 @@ import Db from './../db/index';
 import moment from 'moment';
 
 class TransactionsController {
+    /**
+     * 
+     * this method is for debit
+     * @param {object} req 
+     * @param {object} res 
+     * @returns transactions created when validations passes
+     */
     debit(req, res) {
         const {
             email
@@ -17,14 +24,13 @@ class TransactionsController {
         const query1 = `SELECT * FROM users WHERE email='${email}' and type='cashier'`;
         Db.query(query1).then(result => {
             if(result.rows) {
-                const query2 = `SELECT * FROM accounts WHERE accountnumber='${parseAcc}'`;
+                const query2 = `SELECT * FROM accounts WHERE accountnumber='${parseAcc}' and status='active'`;
                 Db.query(query2).then(result => {
-                    if(result.rows) {
+                    if(result.rows.length) {
                         if(parseAmount < result.rows[0].balance) {
                             const newBalance = parseFloat(result.rows[0].balance) - parseAmount;
                             const sql = `UPDATE accounts SET balance='${newBalance}' WHERE accountnumber='${parseAcc}'`;
                             Db.query(sql).then(result => {
-                                console.log(result.rows);
                             });
                             const newTrans = [
                                 moment(new Date()),
@@ -37,7 +43,6 @@ class TransactionsController {
                             ];
                             const query3 = `INSERT INTO transactions(createOn,type,accountNumber,cashier,amount,oldBalance,newBalancee) VALUES($1,$2,$3,$4,$5,$6,$7) RETURNING *`;
                             Db.query(query3, newTrans).then(result => {
-                                console.log(result.rows);
                                 res.status(201).json({
                                     status: 201,
                                     data: {
@@ -47,35 +52,36 @@ class TransactionsController {
                                         transactionType: result.rows[0].type,
                                         accountBalance: newBalance
                                     }
-                                }).catch(error => {
-                                    res.status(400).json({
-                                        status: 400,
-                                        error: "Account not created"
-                                    });
                                 });
                             });
                         } else {
                             res.status(400).json({
                                 status: 400,
-                                error: "Your balance is not enough to withdraw."
+                                error: `the amount (${amount}) with not enought to widthraw from your account.`
                             });
                         }
+                    } else {
+                        res.status(404).json({
+                            status: 404,
+                            error: `The account number specified does not exist, or might be not active. check nearest branch`
+                        });
                     }
-                }).catch(error => {
-                    res.status(404).json({
-                        status: 404,
-                        error: "Account not found"
-                    });
                 });
             } else {
                 res.status(400).json({
                     status: 400,
-                    error: "You are not allowed to debit, please use staff account!"
+                    error: "You are not allowed to debit, please use a staff account!"
                 });
             }
         });
     }
-
+    /**
+     * 
+     * this method is for credit
+     * @param {object} req 
+     * @param {object} res 
+     * @returns transactions created when validations passes
+     */
     credit(req, res) {
         const {
             email
@@ -91,13 +97,12 @@ class TransactionsController {
         const query1 = `SELECT * FROM users WHERE email='${email}' and type='cashier'`;
         Db.query(query1).then(result => {
             if(result.rows) {
-                const query2 = `SELECT * FROM accounts WHERE accountnumber='${parseAcc}'`;
+                const query2 = `SELECT * FROM accounts WHERE accountnumber='${parseAcc}' and status='active'`;
                 Db.query(query2).then(result => {
-                    if(result.rows) {
+                    if(result.rows.length) {
                         const newBalance = parseFloat(result.rows[0].balance) + parseAmount;
                         const sql = `UPDATE accounts SET balance='${newBalance}' WHERE accountnumber='${parseAcc}'`;
                         Db.query(sql).then(result => {
-                            console.log(result.rows);
                         });
                         const newTrans = [
                             moment(new Date()),
@@ -110,7 +115,6 @@ class TransactionsController {
                         ];
                         const query3 = `INSERT INTO transactions(createOn,type,accountNumber,cashier,amount,oldBalance,newBalancee) VALUES($1,$2,$3,$4,$5,$6,$7) RETURNING *`;
                         Db.query(query3, newTrans).then(result => {
-                            console.log(result.rows);
                             res.status(201).json({
                                 status: 201,
                                 data: {
@@ -121,23 +125,13 @@ class TransactionsController {
                                     accountBalance: newBalance
                                 }
                             });
-                        }).catch(error => {
-                            res.status(400).json({
-                                status: 400,
-                                error: "User was not created. " + error
-                            });
                         });
                     } else {
                         res.status(400).json({
                             status: 400,
-                            error: "Account number not found."
+                            error: `The account number specified does not exist, or might be not active. check nearest branch`
                         });
                     }
-                }).catch(error => {
-                    res.status(404).json({
-                        status: 404,
-                        error: "Account not found"
-                    });
                 });
             } else {
                 res.status(400).json({
@@ -152,24 +146,30 @@ class TransactionsController {
             });
         });
     }
-
+    /**
+     * 
+     * this method is for user 
+     * transaction history
+     * @param {object} req 
+     * @param {object} res 
+     * @returns transactions get all accounts
+     */
     userHistory(req, res) {
         const {
             accountNumber
         } = req.params;
         const {
             email
-        } = req.body;
+        } = req.userInfo;
         const parseAcc = parseInt(accountNumber);
         const query1 = `SELECT * FROM users WHERE email='${email}'`;
         Db.query(query1).then(result => {
-            console.log(result.rows);
             if(result.rows.length) {
                 const owner = result.rows[0].id;
                 const admin = result.rows[0].isAdmin;
                 const query2 = `SELECT * FROM accounts WHERE accountnumber='${parseAcc}'`;
                 Db.query(query2).then(result => {
-                    if(result.rows) {
+                    if(result.rows.length) {
                         if(admin) {
                             const query3 = `SELECT * FROM transactions WHERE accountnumber='${result.rows[0].accountNumber}'`;
                             Db.query(query3).then(result => {
@@ -177,6 +177,11 @@ class TransactionsController {
                                     res.status(200).json({
                                         status: 200,
                                         data: result.rows
+                                    });
+                                } else {
+                                    res.status(404).json({
+                                        status: 404,
+                                        error: `with this account number ${parseAcc}, there is no transactions made.`
                                     });
                                 }
                             });
@@ -188,30 +193,50 @@ class TransactionsController {
                                         status: 200,
                                         data: result.rows
                                     });
+                                } else {
+                                    res.status(404).json({
+                                        status: 404,
+                                        error: `with this account number ${parseAcc}, there is no transactions made.`
+                                    });
                                 }
                             });
                         } else {
                             res.status(400).json({
                                 status: 400,
-                                error: "Not allowed to view this account history"
+                                error: `User with this email (${email})not allowed to view this account history`
                             });
                         }
+                    } else {
+                        res.status(404).json({
+                            status: 404,
+                            error: `the account with ${parseAcc} is not found from the system.`
+                        });
                     }
                 }).catch(error => {
                     res.status(404).json({
                         status: 404,
-                        error: "Account number not found"
+                        error: `The account specified is not found, you should ask nearest agent`
                     });
+                });
+            } else {
+                res.status(404).json({
+                    status: 404,
+                    error: `the email used is not found, you must login or signup first.`
                 });
             }
         }).catch(error => {
             res.status(404).json({
                 status: 404,
-                error: "User not found"
+                error: `the user with ${email} is not found from the system.`
             });
         });
     }
-
+    /**
+     * 
+     * @param {object} req 
+     * @param {object} res 
+     * @returns should get one specific transaction
+     */
     getTransaction(req, res) {
         const {
             id
@@ -236,13 +261,13 @@ class TransactionsController {
             } else {
                 res.status(404).json({
                     status: 404,
-                    error: "Transaction not found"
+                    error: `There is not transactions with the id ${transactionId}`
                 });
             }
         }).catch(error => {
             res.status(404).json({
                 status: 404,
-                error: "Transaction not found"
+                error: `There is not transactions with the id ${transactionId}`
             });
         });
     }

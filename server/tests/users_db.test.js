@@ -495,6 +495,32 @@ describe("Test all users routes", () => {
                 });
         });
 
+        it("should return an error when accounts not found", done => {
+            const email = "admin@gmail.com";
+            chai.request(app)
+                .get(`${baseUrl}user/${email}/accounts`)
+                .set("Authorization", "Bearer " + staffToken)
+                .end((err, res) => {
+                    res.should.have.status(404);
+                    done();
+                });
+        });
+
+        it("should not create a transaction from an unknown account", done => {
+            const account = {
+                amount: 2000
+            };
+            const accountNumber = "100000";
+            chai.request(app)
+                .post(`${baseUrl}transactions/${accountNumber}/credit`)
+                .set("Authorization", "Bearer " + staffToken)
+                .send(account)
+                .end((err, res) => {
+                    res.should.have.status(400);
+                    done();
+                });
+        });
+
         
     });
 
@@ -523,6 +549,17 @@ describe("Test all users routes", () => {
                         done();
                     });
             });
+
+            it("should return an error when accounts not found", done => {
+                const id = 10000000;
+                chai.request(app)
+                    .get(`${baseUrl}transactions/${id}`)
+                    .set("Authorization", "Bearer " + staffToken)
+                    .end((err, res) => {
+                        res.should.have.status(404);
+                        done();
+                    });
+            });
         });
     });
 
@@ -547,16 +584,9 @@ describe("Test all users routes", () => {
 
     describe("drop all tables", () => {
         it("it should drop transactions table", () => {
-            Db.query("DELETE FROM transactions");
-        });
-
-        it("it should drop accounts table", () => {
-            Db.query("DELETE FROM accounts");
-        });
-
-        it("it should drop accounts table", () => {
+            Db.query("DELETE FROM transactions WHERE id > 1");
+            Db.query("delete from accounts where id > 1");
             Db.query("DELETE FROM users");
         });
-        
     });
 });
