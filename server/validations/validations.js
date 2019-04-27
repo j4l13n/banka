@@ -17,7 +17,13 @@ class Validate {
      */
 
     isValidPassword(password) {
-        return /(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}/.test(password);
+        if(/\s/.test(password)) {
+            return false;
+        } else if(/(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}/.test(password)) {
+            return true;
+        } else {
+            return false;
+        }
     }
     /**
      * 

@@ -73,10 +73,7 @@ class UserController{
                             token: token,
                             firstname: firstname,
                             lastname: lastname,
-                            email: email,
-                            hashed_password: hashed_password,
-                            type: type,
-                            isAdmin: false
+                            email: email
                         }
                     });
                 });
@@ -96,7 +93,11 @@ class UserController{
             if(result.rows.length) {
                 return res.json({
                     status: 200,
-                    data: result.rows
+                    data: {
+                        firstname: result.rows[0].firstname,
+                        lastname: result.rows[0].lastname,
+                        email: result.rows[0].email
+                    }
                 });
             }
         });
@@ -233,10 +234,7 @@ class UserController{
                                 token: token,
                                 firstname: firstname,
                                 lastname: lastname,
-                                email: email,
-                                hashed_password: hashed_password,
-                                type: type,
-                                isAdmin: true
+                                email: email
                             }
                         });
                     }
