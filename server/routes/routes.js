@@ -475,5 +475,27 @@ router.get("/api/v2/accounts", protect.checkAdmin, accountControllerDb.getAll);
  *            
  */
 router.get("/api/v2/user/accounts", protect.checkUser, accountControllerDb.viewUserAccounts);
+/**
+ * @swagger
+ * /accounts/{accountNumber}:
+ *  get:
+ *      tags:
+ *          - users
+ *      descriptions: get an account
+ *      produces:
+ *          - application/json
+ *      parameters:
+ *          - name: accountNumber
+ *            in: path
+ *            type: integer
+ *            description: account object
+ *            required: true
+ *      responses:
+ *          200:
+ *              description: get a specific account details
+ *          404:
+ *              description: an account was not found
+ */
+router.get("/api/v2/accounts/:accountNumber", protect.checkUser, accountValidate.getAccountValidate, accountControllerDb.getAccount);
 
 export default router;

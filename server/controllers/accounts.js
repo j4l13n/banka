@@ -104,6 +104,12 @@ class AccountController {
             });
         });
     }
+    /**
+     * 
+     * @param {object} req 
+     * @param {object} res 
+     * @returns account deleted if validations passes
+     */
     deleteAccount(req, res) {
         const {
             accountNumber
@@ -139,7 +145,12 @@ class AccountController {
             }
         });
     }
-
+    /**
+     * 
+     * @param {object} req 
+     * @param {object} res 
+     * @returns returns user accounts
+     */
     viewAccounts(req, res) {
         const {
             email
@@ -171,6 +182,12 @@ class AccountController {
         });
     }
 
+    /**
+     * 
+     * @param {object} req 
+     * @param {object} res 
+     * @returns all accounts from database
+     */
     getAll(req, res) {
         const status = req.query.status;
 
@@ -212,7 +229,12 @@ class AccountController {
         }
         
     }
-
+    /**
+     * 
+     * @param {object} req 
+     * @param {object} res 
+     * @returns user's accounts
+     */
     viewUserAccounts(req, res) {
         const {
             email
@@ -234,6 +256,55 @@ class AccountController {
                             error: `There is no accounts found for this user ${email}, you should create it first` 
                         });
                     }
+                });
+            }
+        });
+    }
+
+    /**
+     * 
+     * @param {object} req 
+     * @param {object} res 
+     * @returns one account is returned
+     */
+    getAccount(req, res) {
+        const {
+            accountNumber
+        } = req.params;
+        const {
+            email
+        } = req.userInfo;
+        const parseAcc = parseInt(accountNumber);
+        const query1 = `SELECT * FROM accounts WHERE accountnumber='${parseAcc}'`;
+        Db.query(query1).then(result => {
+            if(result.rows.length) {
+                const details = result.rows;
+                const query2 = `SELECT * FROM users WHERE email='${email}'`;
+                Db.query(query2).then(result => {
+                    if(result.rows.length) {
+                        if(result.rows.owner === details.id) {
+                            res.status(200).json({
+                                status: 200,
+                                data: details
+                            });
+                        } else {
+                            res.status(403).json({
+                                status: 403,
+                                error: `The account provided is not yours please ensure that is written well`
+                            });
+                        }
+                    } else {
+                        res.status(404).json({
+                            status: 404,
+                            error: `you must login or signup for accessing the endpoint api`
+                        });
+                    }
+                });
+                
+            } else {
+                res.status(404).json({
+                    status: 200,
+                    error: `There is no account with the one you provided ${parseAcc}`
                 });
             }
         });

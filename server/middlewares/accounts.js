@@ -62,6 +62,23 @@ class AccountValidate {
             next();
         }
     }
+    /**
+     * 
+     * @param {object} req 
+     * @param {object} res 
+     * @param {object} next 
+     * @returns next method if validation passes
+     */
+    getAccountValidate(req, res, next) {
+        if(!validation.isValidNumber(req.params.accountNumber)) {
+            res.status(400).json({
+                status: 400,
+                error: "you account number must contain only digits"
+            });
+        } else {
+            next();
+        }
+    }
 }
 
 const accountValidate = new AccountValidate();
