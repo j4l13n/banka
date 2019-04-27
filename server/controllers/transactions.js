@@ -166,12 +166,12 @@ class TransactionsController {
         Db.query(query1).then(result => {
             if(result.rows.length) {
                 const owner = result.rows[0].id;
-                const admin = result.rows[0].isAdmin;
+                const admin = result.rows[0].isadmin;
                 const query2 = `SELECT * FROM accounts WHERE accountnumber='${parseAcc}'`;
                 Db.query(query2).then(result => {
                     if(result.rows.length) {
                         if(admin) {
-                            const query3 = `SELECT * FROM transactions WHERE accountnumber='${result.rows[0].accountNumber}'`;
+                            const query3 = `SELECT * FROM transactions WHERE accountnumber='${result.rows[0].accountnumber}'`;
                             Db.query(query3).then(result => {
                                 if(result.rows.length){
                                     res.status(200).json({
