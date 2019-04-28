@@ -18,7 +18,7 @@ let swaggerDefinition = {
         version: '1.0.0',
         description: 'Banka Documentation with Swagger',
     },
-    host: 'https://arcane-fjord-40797.herokuapp.com',
+    host: 'localhost:5000',
     basePath: '/api/v2',
 };
 
