@@ -75,20 +75,13 @@ class AccountController {
                 } else {
                     const sql = `UPDATE accounts SET status='${status.toLowerCase()}' WHERE accountnumber='${acc}' RETURNING *`;
                 Db.query(sql).then(result => {
-                    if(result.rows) {
-                        return res.status(200).json({
-                            status: 200,
-                            data: {
-                                accountNumber: acc,
-                                status: status.toLowerCase()
-                            }
-                        });
-                    } else {
-                        res.status(404).json({
-                            status: 404,
-                            error: "Account not updated"
-                        });
-                    }
+                    return res.status(200).json({
+                        status: 200,
+                        data: {
+                            accountNumber: acc,
+                            status: status.toLowerCase()
+                        }
+                    });
                 });
                 }
             } else {
@@ -97,11 +90,6 @@ class AccountController {
                     error: "Account not found"
                 });
             }
-        }).catch(error => {
-            res.status(404).json({
-                status: 404,
-                error: "Account not found"
-            });
         });
     }
     /**
@@ -120,21 +108,9 @@ class AccountController {
             if(result.rows.length) {
                 const sql = `DELETE FROM accounts WHERE accountnumber='${acc}' RETURNING *`;
                 Db.query(sql).then(result => {
-                    if(result.rows) {
-                        return res.status(200).json({
-                            status: 200,
-                            message: `the account with (${acc}) have been deleted successfully.`
-                        });
-                    } else {
-                        res.status(404).json({
-                            status: 404,
-                            error: `this account number (${acc}) is not successfully deleted`
-                        });
-                    }
-                }).catch(error => {
-                    res.status(404).json({
-                        status: 404,
-                        error: `The server encountered the problem, check for the administration`
+                    return res.status(200).json({
+                        status: 200,
+                        message: `the account with (${acc}) have been deleted successfully.`
                     });
                 });
             } else {
@@ -216,7 +192,7 @@ class AccountController {
                     } else {
                         res.status(404).json({
                             status: 404,
-                            error: `There is no account with active status`
+                            error: `There is no account with ${status} status`
                         });
                     }
                 });
@@ -271,40 +247,18 @@ class AccountController {
         const {
             accountNumber
         } = req.params;
-        const {
-            email
-        } = req.userInfo;
         const parseAcc = parseInt(accountNumber);
         const query1 = `SELECT * FROM accounts WHERE accountnumber='${parseAcc}'`;
         Db.query(query1).then(result => {
             if(result.rows.length) {
-                const details = result.rows;
-                const query2 = `SELECT * FROM users WHERE email='${email}'`;
-                Db.query(query2).then(result => {
-                    if(result.rows.length) {
-                        if(result.rows.owner === details.id) {
-                            res.status(200).json({
-                                status: 200,
-                                data: details
-                            });
-                        } else {
-                            res.status(403).json({
-                                status: 403,
-                                error: `The account provided is not yours please ensure that is written well`
-                            });
-                        }
-                    } else {
-                        res.status(404).json({
-                            status: 404,
-                            error: `you must login or signup for accessing the endpoint api`
-                        });
-                    }
+                res.status(200).json({
+                    status: 200,
+                    data: result.rows
                 });
-                
             } else {
                 res.status(404).json({
-                    status: 200,
-                    error: `There is no account with the one you provided ${parseAcc}`
+                    status: 404,
+                    error: `There is no account found with the one who provided the account number ${parseAcc}`
                 });
             }
         });

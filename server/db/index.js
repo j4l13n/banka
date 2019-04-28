@@ -110,7 +110,7 @@ class Db {
             2000,
         ];
         this.accountQuery = "INSERT INTO accounts(accountnumber, createon, owner, type, status, balance) VALUES($1,$2,$3,$4,$5,$6) RETURNING *";
-        
+        this.test = `SELECT * FROM users WHERE email='admin@gmail.com'`;
         this.initDb();
     }
     /**
@@ -140,13 +140,11 @@ class Db {
         await this.query(this.usersTable);
         await this.query(this.accountsTable);
         await this.query(this.transactionsTable);
-        await this.query("SELECT * FROM users WHERE email='admin@gmail.com'").then(result => {
+        await this.query(this.test).then(result => {
             if(result.rows.length) {
-                console.log("Admin already exists")
+                
             } else {
                 this.query(this.text, this.newUser).then(result => {
-                    console.log(this.newUser);
-                    console.log("Admin created")
                 });
             }
         });

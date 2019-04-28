@@ -139,11 +139,6 @@ class TransactionsController {
                     error: "You are not allowed to credit, please use staff account!"
                 });
             }
-        }).catch(error => {
-            res.status(404).json({
-                status: 404,
-                error: error
-            });
         });
     }
     /**
@@ -165,27 +160,12 @@ class TransactionsController {
         const query1 = `SELECT * FROM users WHERE email='${email}'`;
         Db.query(query1).then(result => {
             if(result.rows.length) {
-                const owner = result.rows[0].id;
+                const owner = parseInt(result.rows[0].id);
                 const admin = result.rows[0].isadmin;
-                const query2 = `SELECT * FROM accounts WHERE accountnumber='${parseAcc}'`;
+                const query2 = `SELECT * FROM accounts WHERE accountnumber='${parseAcc}' and owner='${owner}'`;
                 Db.query(query2).then(result => {
                     if(result.rows.length) {
-                        if(admin) {
-                            const query3 = `SELECT * FROM transactions WHERE accountnumber='${result.rows[0].accountnumber}'`;
-                            Db.query(query3).then(result => {
-                                if(result.rows.length){
-                                    res.status(200).json({
-                                        status: 200,
-                                        data: result.rows
-                                    });
-                                } else {
-                                    res.status(404).json({
-                                        status: 404,
-                                        error: `with this account number ${parseAcc}, there is no transactions made.`
-                                    });
-                                }
-                            });
-                        } else if(owner === result.rows[0].owner) {
+                        if(owner === result.rows[0].owner) {
                             const query4 = `SELECT * FROM transactions WHERE accountnumber='${parseAcc}'`;
                             Db.query(query4).then(result => {
                                 if(result.rows.length){
@@ -203,7 +183,7 @@ class TransactionsController {
                         } else {
                             res.status(400).json({
                                 status: 400,
-                                error: `User with this email (${email})not allowed to view this account history`
+                                error: `User with this email (${email}) not allowed to view this account history`
                             });
                         }
                     } else {
@@ -212,11 +192,6 @@ class TransactionsController {
                             error: `the account with ${parseAcc} is not found from the system.`
                         });
                     }
-                }).catch(error => {
-                    res.status(404).json({
-                        status: 404,
-                        error: `The account specified is not found, you should ask nearest agent`
-                    });
                 });
             } else {
                 res.status(404).json({
@@ -224,11 +199,6 @@ class TransactionsController {
                     error: `the email used is not found, you must login or signup first.`
                 });
             }
-        }).catch(error => {
-            res.status(404).json({
-                status: 404,
-                error: `the user with ${email} is not found from the system.`
-            });
         });
     }
     /**
@@ -245,7 +215,7 @@ class TransactionsController {
         const transactionId = parseInt(id);
         const query = `SELECT * FROM transactions WHERE id = '${transactionId}'`;
         Db.query(query).then(result => {
-            if(result.rows) {
+            if(result.rows.length) {
                 res.status(200).json({
                     status: 200,
                     data: {
@@ -264,11 +234,6 @@ class TransactionsController {
                     error: `There is not transactions with the id ${transactionId}`
                 });
             }
-        }).catch(error => {
-            res.status(404).json({
-                status: 404,
-                error: `There is not transactions with the id ${transactionId}`
-            });
         });
     }
 }

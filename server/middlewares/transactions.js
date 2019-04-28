@@ -36,7 +36,6 @@ class TransactionValidate {
      * @returns next if validations have passed
      */
     creditValidate(req, res, next) {
-
         if(!req.body.amount) {
             res.status(400).json({
                 status: 400,
