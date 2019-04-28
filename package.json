@@ -10,6 +10,10 @@
     "db-start": "babel-node server/db createTables",
     "coverage": "npm test && nyc report --reporter=text-lcov | coveralls"
   },
+  "engines": {
+    "node": "10.x",
+    "npm": "5.x"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/j4l13n/banka.git"
