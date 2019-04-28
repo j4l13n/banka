@@ -48,6 +48,27 @@ app.use(bodyParser.urlencoded({ extended: false }));
 // Register my routes from routes folder
 app.use(router);
 
+
+ /**
+ * @swagger
+ * /:
+ *   get:
+ *     tags:
+ *       - banka welcome
+ *     description: Returns welcome message
+ *     produces:
+ *       - application/json
+ *     responses:
+ *       200:
+ *         description: a message of welcome to banka
+ */
+router.get("/", (req, res) => {
+    res.status(200).json({
+        status: 200,
+        message: "Welcome to banka endpoint api documentation, you just have to use banka endpoint documentation to use it."
+    });
+});
+
 app.get("*", (req, res) => {
     res.status(404).json({
         status: 404,
