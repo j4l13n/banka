@@ -18,7 +18,7 @@ let swaggerDefinition = {
         version: '1.0.0',
         description: 'Banka Documentation with Swagger',
     },
-    host: 'localhost:5000',
+    host: 'localhost:4000',
     basePath: '/api/v2',
 };
 
