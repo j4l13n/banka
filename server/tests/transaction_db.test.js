@@ -9,6 +9,7 @@ let token = ``;
 let adminToken = ``;
 let fakeToken = `alepfr239847hjg`;
 let cashierToken = ``;
+let accountN = 0;
 
 describe("Transaction test", () => {
 
@@ -49,6 +50,21 @@ describe("Transaction test", () => {
             });
         });
 
+        it("it should login a user", done => {
+            const user = {
+                email: "another@gmail.com",
+                password: "Regedit56"
+            };
+            chai.request(app)
+                .post(`${baseUrl}auth/signin`)
+                .send(user)
+                .end((err, res) => {
+                    res.should.have.status(200);
+                    token = res.body.data.token;
+                    done();
+                });
+        });
+
         it("should return an error when email is not valid is parameter", done => {
             const email = "julien@gmailcom";
             chai.request(app)
@@ -81,5 +97,86 @@ describe("Transaction test", () => {
                     done();
                 });
         });
+
+
+
+        it("should return an error when id is not provided", done => {
+            let id = `39j`;
+            chai.request(app)
+                .get(`${baseUrl}transactions/${id}`)
+                .set("Authorization", "Bearer " + token)
+                .end((err, res) => {
+                    res.should.have.status(400);
+                    done();
+                });
+        });
+        
+        it("should return an error when id is not provided", done => {
+            const accountNumber = "je34556";
+            chai.request(app)
+                .get(`${baseUrl}accounts/${accountNumber}/transactions`)
+                .set("Authorization", "Bearer " + token)
+                .end((err, res) => {
+                    res.should.have.status(400);
+                    done();
+                });
+        });
+
+        it("should return when account type is not valid before creating", done => {
+            let acc = {
+                type: "dhei"
+            };
+            chai.request(app)
+                .post(`${baseUrl}accounts`)
+                .set("Authorization", "Bearer " + token)
+                .send(acc)
+                .end((err, res) => {
+                    res.should.have.status(400);
+                    done();
+                });
+        });
+
+        it("should return when type is not provided before creating", done => {
+            chai.request(app)
+                .post(`${baseUrl}accounts`)
+                .set("Authorization", "Bearer " + token)
+                .end((err, res) => {
+                    res.should.have.status(400);
+                    done();
+                });
+        });
+
+        it("should return error when no account found", done => {
+            chai.request(app)
+                .get(`${baseUrl}accounts`)
+                .set("Authorization", "Bearer " + adminToken)
+                .end((err, res) => {
+                    res.should.have.status(404);
+                    done();
+                });
+        });
+
+        it("should return an error when transaction not found", done => {
+            const id = 100;
+            chai.request(app)
+                .get(`${baseUrl}transactions/${id}`)
+                .set("Authorization", "Bearer " + token)
+                .end((err, res) => {
+                    res.should.have.status(404);
+                    done();
+                });
+        });
+
+        it("should return not found error transactions for a specific user account", done => {
+            const accountNumber = "10000000";
+            chai.request(app)
+                .get(`${baseUrl}accounts/${accountNumber}/transactions`)
+                .set("Authorization", "Bearer " + token)
+                .end((err, res) => {
+                    res.should.have.status(404);
+                    done();
+                });
+        });
+
     });
 });

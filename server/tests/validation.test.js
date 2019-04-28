@@ -63,4 +63,8 @@ describe("Validation test", () => {
     it("should return false if account status if valid", () => {
         expect(validate.isValidAccountStatus("hello")).to.equal(false);
     });
+
+    it("should return false when a password contains spaces", () => {
+        expect(validate.isValidPassword("Regedit  56")).to.equal(false);
+    });
 });

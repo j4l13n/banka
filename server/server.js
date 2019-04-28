@@ -2,13 +2,44 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import router from './routes/routes';
 import config from './config/config';
-import swaggerUi from 'swagger-ui-express';
+const swaggerUi = require('swagger-ui-express');
 import dotenv from 'dotenv';
+const swaggerJSDoc = require('swagger-jsdoc');
 
 dotenv.config();
 
 // Instatiate express
 let app = express();
+
+// swagger definition
+let swaggerDefinition = {
+    info: {
+        title: 'Banka Documentation API',
+        version: '1.0.0',
+        description: 'Banka Documentation with Swagger',
+    },
+    host: 'localhost:5000',
+    basePath: '/api/v2',
+};
+
+let options = {
+    //import swaggerDefinitions
+    swaggerDefinition: swaggerDefinition,
+    // path to the API docs
+    apis: ['./**/routes/*.js','routes.js'],
+};
+
+// initialize swagger-jsdoc
+let swaggerSpec = swaggerJSDoc(options);
+
+// serve swagger 
+app.get('/swagger.json', function(req, res) {
+    res.setHeader('Content-Type', 'application/json');
+    res.send(swaggerSpec);
+});
+
+// 
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 // Configure app to user bodyParser
 app.use(bodyParser.json());
@@ -16,20 +47,6 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 // Register my routes from routes folder
 app.use(router);
-
-app.get("/", (req, res) => {
-    res.status(200).json({
-        status: 200,
-        message: "Welcome to banka endpoint api, you just have to use banka endpoint documentation to use it."
-    });
-});
-
-app.get("/api/v2", (req, res) => {
-    res.status(200).json({
-        status: 200,
-        message: "Welcome to banka endpoint api, you just have to use banka endpoint documentation to use it."
-    });
-});
 
 app.get("*", (req, res) => {
     res.status(404).json({

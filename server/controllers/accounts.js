@@ -75,20 +75,13 @@ class AccountController {
                 } else {
                     const sql = `UPDATE accounts SET status='${status.toLowerCase()}' WHERE accountnumber='${acc}' RETURNING *`;
                 Db.query(sql).then(result => {
-                    if(result.rows) {
-                        return res.status(200).json({
-                            status: 200,
-                            data: {
-                                accountNumber: acc,
-                                status: status.toLowerCase()
-                            }
-                        });
-                    } else {
-                        res.status(404).json({
-                            status: 404,
-                            error: "Account not updated"
-                        });
-                    }
+                    return res.status(200).json({
+                        status: 200,
+                        data: {
+                            accountNumber: acc,
+                            status: status.toLowerCase()
+                        }
+                    });
                 });
                 }
             } else {
@@ -97,13 +90,14 @@ class AccountController {
                     error: "Account not found"
                 });
             }
-        }).catch(error => {
-            res.status(404).json({
-                status: 404,
-                error: "Account not found"
-            });
         });
     }
+    /**
+     * 
+     * @param {object} req 
+     * @param {object} res 
+     * @returns account deleted if validations passes
+     */
     deleteAccount(req, res) {
         const {
             accountNumber
@@ -114,21 +108,9 @@ class AccountController {
             if(result.rows.length) {
                 const sql = `DELETE FROM accounts WHERE accountnumber='${acc}' RETURNING *`;
                 Db.query(sql).then(result => {
-                    if(result.rows) {
-                        return res.status(200).json({
-                            status: 200,
-                            message: `the account with (${acc}) have been deleted successfully.`
-                        });
-                    } else {
-                        res.status(404).json({
-                            status: 404,
-                            error: `this account number (${acc}) is not successfully deleted`
-                        });
-                    }
-                }).catch(error => {
-                    res.status(404).json({
-                        status: 404,
-                        error: `The server encountered the problem, check for the administration`
+                    return res.status(200).json({
+                        status: 200,
+                        message: `the account with (${acc}) have been deleted successfully.`
                     });
                 });
             } else {
@@ -139,7 +121,12 @@ class AccountController {
             }
         });
     }
-
+    /**
+     * 
+     * @param {object} req 
+     * @param {object} res 
+     * @returns returns user accounts
+     */
     viewAccounts(req, res) {
         const {
             email
@@ -171,6 +158,12 @@ class AccountController {
         });
     }
 
+    /**
+     * 
+     * @param {object} req 
+     * @param {object} res 
+     * @returns all accounts from database
+     */
     getAll(req, res) {
         const status = req.query.status;
 
@@ -199,7 +192,7 @@ class AccountController {
                     } else {
                         res.status(404).json({
                             status: 404,
-                            error: `There is no account with active status`
+                            error: `There is no account with ${status} status`
                         });
                     }
                 });
@@ -212,7 +205,12 @@ class AccountController {
         }
         
     }
-
+    /**
+     * 
+     * @param {object} req 
+     * @param {object} res 
+     * @returns user's accounts
+     */
     viewUserAccounts(req, res) {
         const {
             email
@@ -234,6 +232,33 @@ class AccountController {
                             error: `There is no accounts found for this user ${email}, you should create it first` 
                         });
                     }
+                });
+            }
+        });
+    }
+
+    /**
+     * 
+     * @param {object} req 
+     * @param {object} res 
+     * @returns one account is returned
+     */
+    getAccount(req, res) {
+        const {
+            accountNumber
+        } = req.params;
+        const parseAcc = parseInt(accountNumber);
+        const query1 = `SELECT * FROM accounts WHERE accountnumber='${parseAcc}'`;
+        Db.query(query1).then(result => {
+            if(result.rows.length) {
+                res.status(200).json({
+                    status: 200,
+                    data: result.rows
+                });
+            } else {
+                res.status(404).json({
+                    status: 404,
+                    error: `There is no account found with the one who provided the account number ${parseAcc}`
                 });
             }
         });
