@@ -40,6 +40,10 @@ const router = Router();
  *      responses:
  *          201:
  *              description: Successfully created
+ *          404:
+ *              description: the user was not found, login again and try again
+ *          400:
+ *              description: all fields are required
  */
 /**
  * @swagger
@@ -75,6 +79,14 @@ router.post("/api/v2/auth/signup", userValidate.validateSignup, userControllerDb
  *      responses:
  *          201:
  *              description: Successfully created
+ *          401:
+ *              description: you are not allowed to access this endpoint, only staff and admin can
+ *          403:
+ *              description: you must be logged in or signup first
+ *          404:
+ *              description: the user was not found, login again and try again
+ *          400:
+ *              description: all fields are required
  */
 /**
  * @swagger
@@ -112,6 +124,10 @@ router.post("/api/v2/auth/admin", userValidate.validateAdminSignup, userControll
  *      responses:
  *          201:
  *              description: Successfully logged in
+ *          404:
+ *              description: the user was not found, login again and try again
+ *          400:
+ *              description: all fields are required
  */
 /**
  * @swagger
@@ -145,19 +161,11 @@ router.post("/api/v2/auth/signin", userValidate.validateSignin, userControllerDb
  *          200:
  *              description: all data fetched
  *          401:
+ *              description: the user must first login or signup to access this endpoint
+ *          404:
+ *              description: the user was not found, login again and try again
+ *          403:
  *              description: you are not authorized to access this endpoint api.
- */
-/**
- * @swagger
- * definition:
- *  users:
- *      properties:
- *          email:
- *              type: string
- *          isadmin:
- *              type: string
- *          type:
- *              type: string    
  */
 router.get("/api/v2/users", protect.checkAdmin, userControllerDb.getAll);
 /**
@@ -180,12 +188,14 @@ router.get("/api/v2/users", protect.checkAdmin, userControllerDb.getAll);
  *            description: account object
  *            required: true
  *            schema:
- *              $ref: '#/definitions/account'
+ *              $ref: '#/definitions/accounts'
  *      responses:
  *          201:
  *              description: The account created successfully
  *          401:
- *              description: you are not allowed to create an account
+ *              description: you are not allowed to access this endpoint, only staff and admin can
+ *          403:
+ *              description: you must be logged in or signup first
  *          400:
  *              description: all field are required
  */
@@ -221,7 +231,9 @@ router.post("/api/v2/accounts", protect.checkUser, accountValidate.createValidat
  *          200:
  *              description: account was activated or deactivated successfully
  *          401:
- *              description: you must first login or signup to access this link
+ *              description: you are not allowed to access this endpoint, only staff and admin can
+ *          403:
+ *              description: you must be logged in or signup first
  *          404:
  *              description: the account was not found to be activated or deactivated
  */
@@ -249,7 +261,9 @@ router.patch("/api/v2/account/:accountNumber", protect.checkAdmin, accountValida
  *          200:
  *              description: account was deleted successfully
  *          401:
- *              description: you must first login or signup to access this link
+ *              description: you are not allowed to access this endpoint, only staff and admin can
+ *          403:
+ *              description: you must be logged in or signup first
  *          404:
  *              description: the account was not found to be deleted
  */
@@ -269,16 +283,31 @@ router.delete("/api/v2/account/:accountNumber", protect.checkAdmin, accountValid
  *            type: string
  *            description: Add Bearer Token
  *            required: true
+ *          - name: body
+ *            in: body
+ *            required: true
+ *            type: integer
+ *            description: the amount to debit
  *            schema:
  *              $ref: '#/definitions/transaction'
  *      responses:
  *          201:
  *              description: the transaction successfully created
- *          401:
+ *          403:
  *              description: you are not allowed to access this endpoint, only staff and admin can
+ *          401:
+ *              description: You are not logged in, you must first login or signup
  *          404:
  *              description: the account provided was not found
  *          
+ */
+/**
+ * @swagger
+ * definition:
+ *  transaction:
+ *      properties:
+ *          amount:
+ *              type: integer
  */
 router.post("/api/v2/transactions/:accountNumber/debit", protect.checkCashier, transactionValidate.debitValidate, transactionControllerDb.debit);
 /**
@@ -296,6 +325,11 @@ router.post("/api/v2/transactions/:accountNumber/debit", protect.checkCashier, t
  *            type: string
  *            description: Add Bearer Token
  *            required: true
+ *          - name: body
+ *            in: body
+ *            required: true
+ *            type: integer
+ *            description: the amount to credit
  *            schema:
  *              $ref: '#/definitions/transaction'
  *      responses:
@@ -303,9 +337,19 @@ router.post("/api/v2/transactions/:accountNumber/debit", protect.checkCashier, t
  *              description: the transaction successfully created
  *          401:
  *              description: you are not allowed to access this endpoint, only staff and admin can
+ *          403:
+ *              description: you must be logged in or signup first
  *          404:
  *              description: the account provided was not found
  *          
+ */
+/**
+ * @swagger
+ * definition:
+ *  transaction:
+ *      properties:
+ *          amount:
+ *              type: integer
  */
 router.post("/api/v2/transactions/:accountNumber/credit", protect.checkCashier, transactionValidate.creditValidate, transactionControllerDb.credit);
 /**
@@ -327,13 +371,24 @@ router.post("/api/v2/transactions/:accountNumber/credit", protect.checkCashier, 
  *            in: header
  *            description: Add Bearer Token
  *            type: string
+ *            required: true
  *      responses:
  *          200:
  *              description: transaction successfully found
  *          401:
- *              description: you must first login or signup
+ *              description: you are not logged in, you must first login or signup
+ *          403:
+ *              description: you are not allowed to access this endpoint
  *          404:
  *              description: the transaction with account number provided was not found
+ */
+/**
+ * @swagger
+ * definition:
+ *  transaction:
+ *      properties:
+ *          amount:
+ *              type: integer
  */
 router.get("/api/v2/accounts/:accountNumber/transactions", protect.checkUser, transactionValidate.accountNumberValidate, transactionControllerDb.userHistory);
 /**
@@ -355,11 +410,14 @@ router.get("/api/v2/accounts/:accountNumber/transactions", protect.checkUser, tr
  *            in: header
  *            description: Add Bearer Token
  *            type: string
+ *            required: true
  *      responses:
  *          200:
  *              description: transaction successfully found
  *          401:
- *              description: you must first login or signup
+ *              description: you are not logged in, you must first login or signup
+ *          403:
+ *              description: you are not allowed to access this endpoint
  *          404:
  *              description: the transaction with id provided was not found
  */
@@ -398,7 +456,7 @@ router.get("/api/v2/transactions/:id", protect.checkUser, transactionValidate.id
  */
 /**
  * @swagger
- * definitions:
+ * definition:
  *  accounts:
  *      email: 
  *          type: string
@@ -423,7 +481,11 @@ router.get("/api/v2/user/:email/accounts", protect.checkAdminOrStaff, transactio
  *          200:
  *              description: all accounts fetched
  *          401:
- *              description: you are not authorized to access this endpoint api.
+ *              description: you are not logged in, you must first login or signup
+ *          403:
+ *              description: you are not allowed to access this endpoint
+ *          404:
+ *              description: ythere is no account found from the system
  */
 router.get("/api/v2/accounts", protect.checkAdmin, accountControllerDb.getAll);
 /**
@@ -447,7 +509,9 @@ router.get("/api/v2/accounts", protect.checkAdmin, accountControllerDb.getAll);
  *          200:
  *              description: all accounts fetched
  *          401:
- *              description: you must first login or signup
+ *              description: you are not logged in, you must first login or signup
+ *          403:
+ *              description: you are not allowed to access this endpoint
  *          404:
  *              description: there no account for the provided user email
  *            
@@ -471,6 +535,10 @@ router.get("/api/v2/user/accounts", protect.checkUser, accountControllerDb.viewU
  *      responses:
  *          200:
  *              description: get a specific account details
+ *          401:
+ *              description: you are not logged in, you must first login or signup
+ *          403:
+ *              description: you are not allowed to access this endpoint
  *          404:
  *              description: an account was not found
  */

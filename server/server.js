@@ -4,7 +4,8 @@ import router from './routes/routes';
 import config from './config/config';
 const swaggerUi = require('swagger-ui-express');
 import dotenv from 'dotenv';
-const swaggerJSDoc = require('swagger-jsdoc');
+import swaggerJSDoc from 'swagger-jsdoc';
+import path from 'path';
 
 dotenv.config();
 
@@ -18,10 +19,10 @@ let swaggerDefinition = {
         version: '1.0.0',
         description: 'Banka Documentation with Swagger',
     },
-    host: 'arcane-fjord-40797.herokuapp.com',
+    host: 'localhost:4000',
     basePath: '/api/v2',
 };
-
+// arcane-fjord-40797.herokuapp.com
 let options = {
     //import swaggerDefinitions
     swaggerDefinition: swaggerDefinition,
@@ -32,42 +33,16 @@ let options = {
 // initialize swagger-jsdoc
 let swaggerSpec = swaggerJSDoc(options);
 
-// serve swagger 
-app.get('/swagger.json', function(req, res) {
-    res.setHeader('Content-Type', 'application/json');
-    res.send(swaggerSpec);
-});
-
-// 
+// Access swagger ui documentation on this route
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 // Configure app to user bodyParser
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(express.static(path.join(__dirname, './../UI')));
 
 // Register my routes from routes folder
 app.use(router);
-
-
- /**
- * @swagger
- * /:
- *   get:
- *     tags:
- *       - banka welcome
- *     description: Returns welcome message
- *     produces:
- *       - application/json
- *     responses:
- *       200:
- *         description: a message of welcome to banka
- */
-router.get("/", (req, res) => {
-    res.status(200).json({
-        status: 200,
-        message: "Welcome to banka endpoint api documentation, you just have to use banka endpoint documentation to use it."
-    });
-});
 
 app.get("*", (req, res) => {
     res.status(404).json({

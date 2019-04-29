@@ -42,10 +42,7 @@ class AccountController {
                     });
                 });
             } else {
-                res.status(404).json({
-                    status: 404,
-                    error: "account not create, user must specify a valid email address"
-                }); 
+                
             }
         });
     }

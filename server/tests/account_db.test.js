@@ -460,6 +460,36 @@ describe("Test all accounts routes", () => {
                 });
         });
 
+        it("should return an error when amount is greater than balance", done => {
+            const accountNumber = parseInt(accountN);
+            const amount = {
+                amount: 10000
+            };
+            chai.request(app)
+                .post(`${baseUrl}transactions/${accountNumber}/debit`)
+                .set("Authorization", "Bearer " + cashierToken)
+                .send(amount)
+                .end((err, res) => {
+                    res.should.have.status(400);
+                    done();
+                });
+        });
+
+        it("should return an error when amount is greater than balance", done => {
+            const accountNumber = "122256";
+            const amount = {
+                amount: 1000
+            };
+            chai.request(app)
+                .post(`${baseUrl}transactions/${accountNumber}/debit`)
+                .set("Authorization", "Bearer " + cashierToken)
+                .send(amount)
+                .end((err, res) => {
+                    res.should.have.status(404);
+                    done();
+                });
+        });
+
         it("should get all transactions for a specific user account", done => {
             const accountNumber = parseInt(accountN);
             chai.request(app)

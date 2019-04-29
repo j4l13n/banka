@@ -57,7 +57,7 @@ class TransactionsController {
                         } else {
                             res.status(400).json({
                                 status: 400,
-                                error: `the amount (${amount}) with not enought to widthraw from your account.`
+                                error: `the account of (${parseAcc}) has not enought balance to widthraw.`
                             });
                         }
                     } else {
